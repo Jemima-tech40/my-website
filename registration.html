@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  :root {
+  --black: #0a0a0f;
+  --deep: #0f0f1a;
+  --card: #13131f;
+  --border: #1e1e30;
+  --gold: #c9a84c;
+  --gold-light: #f0c96e;
+  --gold-dim: rgba(201,168,76,0.15);
+  --white: #f5f4ef;
+  --muted: #8a8a9a;
+  --accent: #4c6ef5;
+  --accent2: #9b59f5;
+  --green: #22c55e;
+  --red: #ef4444;
+  --r: 8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 70px;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--white); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 8px 14px; border-radius: 6px;
+  cursor: pointer; transition: all .2s;
+  text-decoration: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--border); }
+.nav-actions { display: flex; gap: 10px; }
+.btn-outline {
+  padding: 8px 20px; border-radius: 6px;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+  cursor: pointer; background: transparent; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-outline:hover { background: var(--gold); color: var(--black); }
+.btn-solid {
+  padding: 8px 20px; border-radius: 6px;
+  background: var(--gold); color: var(--black);
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
+  cursor: pointer; border: none; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-solid:hover { background: var(--gold-light); }
+* ── PAGES ── */
+.page { display: none; min-height: 100vh; padding-top: 70px; }
+.page.active { display: block; }
+
+/* ── SECTION COMMONS ── */
+.section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
+  color: var(--white); margin-bottom: 24px;
+}
+.section-title em { color: var(--gold); font-style: normal; }
+.section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+/* ── GOLD LINE ── */
+.gold-line { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); width: 60px; margin-bottom: 24px; }
+
+.form-group { margin-bottom: 20px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+label {
+  display: block; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.05em; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;
+}
+input, textarea, select {
+  width: 100%; padding: 12px 16px; border-radius: 8px;
+  background: var(--deep); border: 1px solid var(--border);
+  color: var(--white); font-size: 0.88rem; font-family: 'DM Sans', sans-serif;
+  transition: border-color .2s; outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+input::placeholder, textarea::placeholder { color: var(--muted); }
+textarea { resize: vertical; min-height: 120px; }
+select option { background: var(--deep); }
+.form-hint { font-size: 0.73rem; color: var(--muted); margin-top: 5px; }
+.form-error { font-size: 0.73rem; color: var(--red); margin-top: 5px; display: none; }
+.form-success { padding: 12px 16px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; color: var(--green); font-size: 0.85rem; margin-bottom: 20px; display: none; }
+.btn-full { width: 100%; padding: 14px; font-size: 0.95rem; }
+.checkbox-row { display: flex; gap: 10px; align-items: flex-start; }
+.checkbox-row input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; flex-shrink: 0; accent-color: var(--gold); }
+.checkbox-row label { text-transform: none; font-size: 0.82rem; margin-bottom: 0; cursor: pointer; }
+.checkbox-row label a { color: var(--gold); text-decoration: none; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.divider span { font-size: 0.78rem; color: var(--muted); }
+.strength-bar { height: 4px; border-radius: 100px; background: var(--border); margin-top: 8px; overflow: hidden; }
+.strength-fill { height: 100%; border-radius: 100px; transition: all .3s; width: 0; }
+.strength-label { font-size: 0.72rem; margin-top: 4px; }
+.input-wrap { position: relative; }
+.input-wrap input { padding-right: 44px; }
+.eye-btn {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  cursor: pointer; color: var(--muted); font-size: 1rem; background: none; border: none;
+}
+.eye-btn:hover { color: var(--white); }
+.captcha-box {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--deep); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; margin-bottom: 20px;
+}
+.captcha-check { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+.captcha-check.checked { background: var(--green); border-color: var(--green); color: white; font-size: 0.7rem; }
+.captcha-text { font-size: 0.82rem; color: var(--muted); }
+.captcha-logo { margin-left: auto; font-size: 0.65rem; color: var(--muted); text-align: center; }
+
+
+/* ══════════════════════
+   REGISTER PAGE
+══════════════════════ */
+.reg-page {
+  min-height: calc(100vh - 70px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 48px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(76,110,245,0.06), transparent 60%);
+}
+.reg-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 48px; width: 100%; max-width: 720px;
+}
+.reg-tabs { display: flex; gap: 0; background: var(--deep); border-radius: 8px; padding: 4px; margin-bottom: 36px; }
+.reg-tab {
+  flex: 1; padding: 10px; text-align: center; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  color: var(--muted); transition: all .2s; position: relative;
+}
+.reg-tab.active { background: var(--gold); color: var(--black); }
+.reg-form { display: none; }
+.reg-form.active { display: block; }
+.reg-step-header { text-align: center; margin-bottom: 32px; }
+.reg-step-header h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+.reg-step-header p { font-size: 0.85rem; color: var(--muted); }
+.step-progress { display: flex; gap: 8px; justify-content: center; margin-bottom: 32px; }
+.step-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); transition: all .3s;
+}
+.step-dot.done { background: var(--green); }
+.step-dot.active { background: var(--gold); width: 24px; border-radius: 100px; }
+.role-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.role-card {
+  background: var(--deep); border: 2px solid var(--border); border-radius: 10px;
+  padding: 20px; cursor: pointer; transition: all .2s; text-align: center;
+}
+.role-card:hover { border-color: rgba(201,168,76,0.4); }
+.role-card.selected { border-color: var(--gold); background: var(--gold-dim); }
+.role-icon { font-size: 2rem; margin-bottom: 10px; }
+.role-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+.role-card p { font-size: 0.75rem; color: var(--muted); }
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: 8px;
+  padding: 32px; text-align: center; cursor: pointer;
+  transition: all .2s; background: var(--deep);
+}
+.upload-zone:hover { border-color: var(--gold); background: var(--gold-dim); }
+.upload-zone span { font-size: 2rem; display: block; margin-bottom: 8px; }
+.upload-zone p { font-size: 0.82rem; color: var(--muted); }
+
+/* ══════════════════════
+   TOAST / ALERT
+══════════════════════ */
+.toast {
+  position: fixed; bottom: 32px; right: 32px; z-index: 9999;
+  background: var(--card); border: 1px solid var(--gold);
+  border-radius: 10px; padding: 16px 24px;
+  font-size: 0.88rem; color: var(--white);
+  display: flex; gap: 12px; align-items: center;
+  transform: translateY(100px); opacity: 0;
+  transition: all .35s cubic-bezier(.175,.885,.32,1.275);
+  max-width: 320px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { font-size: 1.2rem; }
+
+</style>
+<body>
+  <nav>
+  <div class="nav-logo" onclick="goPage('home')">Elevate<span>Edge</span></div>
+  <div class="nav-links">
+    <a onclick="goPage('home')" id="nav-home" class="active" href="login.html">Login</a>
+    <a onclick="goPage('about')" id="nav-about" href="registration.html">Registration</a>
+    
+  </div>
+  </nav>
+  <div class="page" id="page-register">
+  <div class="reg-page">
+    <div class="reg-card">
+      <div class="auth-logo" style="margin-bottom:6px">Elevate<span style="color:var(--white)">Edge</span></div>
+      <div class="auth-subtitle" style="text-align:center;margin-bottom:24px">Create your account</div>
+      <div class="reg-tabs">
+        <div class="reg-tab active" id="rtab-ent" onclick="setRegTab('entrepreneur')">🚀 Entrepreneur</div>
+        <div class="reg-tab" id="rtab-cli" onclick="setRegTab('client')">👤 Client</div>
+      </div>
+
+      <!-- ENTREPRENEUR FORM -->
+      <div class="reg-form active" id="reg-entrepreneur">
+        <div class="step-progress" id="ent-steps">
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+        </div>
+
+        <!-- ENT STEP 1 -->
+        <div id="ent-step-1">
+          <div class="reg-step-header">
+            <h2>Personal Information</h2>
+            <p>Tell us about yourself to create your entrepreneur profile</p>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input id="e-fname" placeholder="...."><div class="form-error" id="e-fname-err">Required</div></div>
+            <div class="form-group"><label>Last Name</label><input id="e-lname" placeholder="..."><div class="form-error" id="e-lname-err">Required</div></div>
+          </div>
+          <div class="form-group"><label>Email Address</label><input id="e-email" type="email" placeholder="marcus@brand.com"><div class="form-error" id="e-email-err">Enter a valid email</div></div>
+          <div class="form-group"><label>Phone Number</label><input id="e-phone" type="tel" placeholder="+237..."></div>
+          <div class="form-group"><label>Country</label>
+            <select id="e-country">
+              <option value="">Select country…</option>
+              <option>United States</option><option>cameroun</option><option>Nigeria</option><option>Cote d'ivoire</option><option>Senegal</option><option>Niger</option><option>South Africa</option><option>Other</option>
+            </select>
+          </div>
+          <button class="btn-solid btn-full" onclick="entNext(1)">Continue →</button>
+        </div>
+
+        <!-- ENT STEP 2 -->
+        <div id="ent-step-2" style="display:none">
+          <div class="reg-step-header">
+            <h2>Business Profile</h2>
+            <p>Showcase your expertise to attract the right clients</p>
+          </div>
+          <div class="form-group"><label>Business / Brand Name</label><input id="e-biz" placeholder="Sterling Creative Studio"></div>
+          <div class="form-group"><label>Primary Service Category</label>
+            <select id="e-cat">
+              <option value="">Choose your specialty…</option>
+              <option>Brand Design</option><option>Web Development</option><option>Digital Marketing</option><option>Business Strategy</option><option>AI & Automation</option><option>Cybersecurity</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Years of Experience</label>
+            <select id="e-exp">
+              <option value="">Select…</option>
+              <option>1–2 years</option><option>3–5 years</option><option>5–10 years</option><option>10+ years</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Professional Bio</label><textarea id="e-bio" placeholder="Tell clients about your expertise, achievements, and what makes you unique…"></textarea></div>
+          <div class="form-group"><label>Portfolio URL (optional)</label><input id="e-portfolio" placeholder="https://yourportfolio.com"></div>
+          <div class="form-group"><label>Upload Profile Photo</label>
+            <div class="upload-zone" onclick="document.getElementById('e-photo').click()">
+              <span>📷</span><p>Click to upload · PNG, JPG up to 5MB</p>
+              <input type="file" id="e-photo" accept="image/*" style="display:none">
+            </div>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button class="btn-outline" style="flex:1;padding:14px" onclick="entBack(2)">← Back</button>
+            <button class="btn-solid" style="flex:2;padding:14px" onclick="entNext(2)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- ENT STEP 3 -->
+        <div id="ent-step-3" style="display:none">
+          <div class="reg-step-header">
+            <h2>Account Security</h2>
+            <p>Set up strong credentials to protect your account</p>
+          </div>
+          <div class="form-group"><label>Create Password</label>
+            <div class="input-wrap">
+              <input id="e-pass" type="password" placeholder="••••••••" oninput="checkStrength('e-pass','e-str','e-str-label')">
+              <button class="eye-btn" onclick="togglePass('e-pass',this)">👁</button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="e-str"></div></div>
+            <div class="strength-label" id="e-str-label" style="color:var(--muted);font-size:0.72rem"></div>
+          </div>
+          <div class="form-group"><label>Confirm Password</label>
+            <div class="input-wrap">
+              <input id="e-pass2" type="password" placeholder="••••••••">
+              <button class="eye-btn" onclick="togglePass('e-pass2',this)">👁</button>
+            </div>
+            <div class="form-error" id="e-pass-err">Passwords do not match</div>
+          </div>
+          <div class="form-group" style="margin-bottom:8px">
+            <div class="checkbox-row"><input type="checkbox" id="e-2fa"><label for="e-2fa">Enable Two-Factor Authentication (highly recommended) 🛡️</label></div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox-row"><input type="checkbox" id="e-terms"><label for="e-terms">I agree to the <a onclick="goPage('home')">Terms of Service</a> and <a onclick="goPage('home')">Privacy Policy</a></label></div>
+            <div class="form-error" id="e-terms-err">You must accept the terms</div>
+          </div>
+          <div class="captcha-box">
+            <div class="captcha-check" id="reg-ent-captcha" onclick="toggleCaptcha('reg-ent-captcha')">
+              <span id="reg-ent-captcha-check" style="display:none">✓</span>
+            </div>
+            <span class="captcha-text">I'm not a robot</span>
+            <div class="captcha-logo">🔐<br>Secure</div>
+          </div>
+          <div id="reg-ent-success" class="form-success"></div>
+          <div style="display:flex;gap:12px">
+            <button class="btn-outline" style="flex:1;padding:14px" onclick="entBack(3)">← Back</button>
+            <button class="btn-solid" style="flex:2;padding:14px" onclick="submitEntReg()">Create Account 🚀</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLIENT FORM -->
+      <div class="reg-form" id="reg-client">
+        <div class="reg-step-header">
+          <h2>Create Client Account</h2>
+          <p>Find and connect with the best entrepreneurs for your projects</p>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input id="cl-fname" placeholder="Sarah"></div>
+          <div class="form-group"><label>Last Name</label><input id="cl-lname" placeholder="Johnson"></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input id="cl-email" type="email" placeholder="sarah@company.com"></div>
+        <div class="form-group"><label>Company (optional)</label><input id="cl-company" placeholder="Johnson & Co."></div>
+        <div class="form-group"><label>What are you looking for?</label>
+          <select id="cl-need">
+            <option value="">Select your main need…</option>
+            <option>Design Services</option><option>Development</option><option>Marketing</option><option>Strategy Consulting</option><option>AI Solutions</option><option>Multiple Services</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Create Password</label>
+          <div class="input-wrap">
+            <input id="cl-pass" type="password" placeholder="••••••••" oninput="checkStrength('cl-pass','cl-str','cl-str-label')">
+            <button class="eye-btn" onclick="togglePass('cl-pass',this)">👁</button>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="cl-str"></div></div>
+          <div class="strength-label" id="cl-str-label" style="color:var(--muted);font-size:0.72rem"></div>
+        </div>
+        <div class="form-group"><label>Confirm Password</label>
+          <div class="input-wrap">
+            <input id="cl-pass2" type="password" placeholder="••••••••">
+            <button class="eye-btn" onclick="togglePass('cl-pass2',this)">👁</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-row"><input type="checkbox" id="cl-2fa"><label for="cl-2fa">Enable Two-Factor Authentication 🛡️</label></div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-row"><input type="checkbox" id="cl-terms"><label for="cl-terms">I agree to the <a onclick="goPage('home')">Terms of Service</a> and <a onclick="goPage('home')">Privacy Policy</a></label></div>
+        </div>
+        <div class="captcha-box">
+          <div class="captcha-check" id="reg-cli-captcha" onclick="toggleCaptcha('reg-cli-captcha')">
+            <span id="reg-cli-captcha-check" style="display:none">✓</span>
+          </div>
+          <span class="captcha-text">I'm not a robot</span>
+          <div class="captcha-logo">🔐<br>Secure</div>
+        </div>
+        <div id="reg-cli-success" class="form-success"></div>
+        <button class="btn-solid btn-full" onclick="submitCliReg()">Create Client Account →</button>
+      </div>
+
+      <div class="switch-auth">Already have an account? <a onclick="goPage('login')">Sign in</a></div>
+      <div class="security-badges">
+       
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  
+const state = {
+  currentPage: 'home',
+  loginType: 'entrepreneur',
+  regTab: 'entrepreneur',
+  entStep: 1,
+  captchas: {},
+  loginAttempts: 0,
+  lastAttempt: 0,
+  loggedIn: false,
+  userRole: null,
+  userName: ''
+};
+
+/* ═══════════════════════════
+   NAVIGATION
+═══════════════════════════ */
+function goPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  state.currentPage = page;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════
+   CAPTCHA
+═══════════════════════════ */
+function toggleCaptcha(id) {
+  const box = document.getElementById(id);
+  const check = document.getElementById(id + '-check');
+  const checked = !state.captchas[id];
+  state.captchas[id] = checked;
+  if (checked) { box.classList.add('checked'); check.style.display = 'block'; }
+  else { box.classList.remove('checked'); check.style.display = 'none'; }
+}
+
+/* ═══════════════════════════
+   PASSWORD TOGGLE
+═══════════════════════════ */
+function togglePass(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+/* ═══════════════════════════
+   PASSWORD STRENGTH
+═══════════════════════════ */
+function checkStrength(inputId, barId, labelId) {
+  const val = document.getElementById(inputId).value;
+  const bar = document.getElementById(barId);
+  const lbl = document.getElementById(labelId);
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  const levels = [
+    { w: '0%', c: '', t: '' },
+    { w: '25%', c: 'var(--red)', t: '⚠ Weak' },
+    { w: '50%', c: '#f97316', t: '→ Fair' },
+    { w: '75%', c: '#eab308', t: '✓ Good' },
+    { w: '100%', c: 'var(--green)', t: '✅ Strong' }
+  ];
+  const lvl = levels[score] || levels[0];
+  bar.style.width = lvl.w;
+  bar.style.background = lvl.c;
+  lbl.textContent = lvl.t;
+  lbl.style.color = lvl.c;
+}
+
+/* ═══════════════════════════
+   TOAST
+═══════════════════════════ */
+function showToast(msg, icon = '✅') {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.querySelector('.toast-icon').textContent = icon;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+/* ═══════════════════════════
+   LOGIN
+═══════════════════════════ */
+function setLoginTab(el, type) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  state.loginType = type;
+}
+
+function sanitizeInput(str) {
+  return String(str).replace(/[<>'"&]/g, c => ({'<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;','&':'&amp;'}[c]));
+}
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function submitLogin() {
+  // Rate limiting
+  const now = Date.now();
+  if (state.loginAttempts >= 5 && now - state.lastAttempt < 60000) {
+    showToast('Too many attempts. Please wait 60 seconds.', '⏳');
+    return;
+  }
+
+  const email = document.getElementById('l-email').value.trim();
+  const pass = document.getElementById('l-pass').value;
+  let valid = true;
+
+  // Validate
+  if (!validateEmail(email)) {
+    document.getElementById('l-email-err').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('l-email-err').style.display = 'none';
+  }
+  if (pass.length < 8) {
+    document.getElementById('l-pass-err').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('l-pass-err').style.display = 'none';
+  }
+  if (!state.captchas['login-captcha']) {
+    showToast('Please complete the CAPTCHA verification.', '🔐');
+    return;
+  }
+  if (!valid) return;
+
+  state.loginAttempts++;
+  state.lastAttempt = now;
+
+  // Simulate 2FA step
+  document.getElementById('login-step1').style.display = 'none';
+  document.getElementById('login-step2').style.display = 'block';
+}
+
+function verifyOTP() {
+  const otp = document.getElementById('l-otp').value.trim();
+  if (otp !== '123456') {
+    showToast('Invalid OTP code. Please try again.', '❌');
+    return;
+  }
+  state.loggedIn = true;
+  state.userRole = state.loginType;
+  document.getElementById('login-success').style.display = 'block';
+  document.getElementById('login-success').textContent = '✅ Login successful! Redirecting to dashboard…';
+  document.getElementById('login-step2').style.display = 'none';
+  updateNavForLoggedIn();
+  setTimeout(() => { showToast('Welcome back! You\'re now logged in.', '🚀'); goPage('home'); }, 1500);
+}
+
+function resendOTP() {
+  showToast('A new OTP code has been sent to your email.', '📧');
+}
+
+/* ═══════════════════════════
+   REGISTER
+═══════════════════════════ */
+function setRegTab(tab) {
+  state.regTab = tab;
+  document.getElementById('rtab-ent').className = 'reg-tab' + (tab === 'entrepreneur' ? ' active' : '');
+  document.getElementById('rtab-cli').className = 'reg-tab' + (tab === 'client' ? ' active' : '');
+  document.getElementById('reg-entrepreneur').className = 'reg-form' + (tab === 'entrepreneur' ? ' active' : '');
+  document.getElementById('reg-client').className = 'reg-form' + (tab === 'client' ? ' active' : '');
+}
+
+function updateEntSteps(step) {
+  const dots = document.querySelectorAll('#ent-steps .step-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i + 1 < step) d.classList.add('done');
+    if (i + 1 === step) d.classList.add('active');
+  });
+}
+
+function entNext(current) {
+  if (current === 1) {
+    const fname = document.getElementById('e-fname').value.trim();
+    const lname = document.getElementById('e-lname').value.trim();
+    const email = document.getElementById('e-email').value.trim();
+    let ok = true;
+    if (!fname) { document.getElementById('e-fname-err').style.display = 'block'; ok = false; } else { document.getElementById('e-fname-err').style.display = 'none'; }
+    if (!lname) { document.getElementById('e-lname-err').style.display = 'block'; ok = false; } else { document.getElementById('e-lname-err').style.display = 'none'; }
+    if (!validateEmail(email)) { document.getElementById('e-email-err').style.display = 'block'; ok = false; } else { document.getElementById('e-email-err').style.display = 'none'; }
+    if (!ok) return;
+    document.getElementById('ent-step-1').style.display = 'none';
+    document.getElementById('ent-step-2').style.display = 'block';
+    state.entStep = 2;
+    updateEntSteps(2);
+  } else if (current === 2) {
+    document.getElementById('ent-step-2').style.display = 'none';
+    document.getElementById('ent-step-3').style.display = 'block';
+    state.entStep = 3;
+    updateEntSteps(3);
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function entBack(current) {
+  if (current === 2) {
+    document.getElementById('ent-step-2').style.display = 'none';
+    document.getElementById('ent-step-1').style.display = 'block';
+    state.entStep = 1; updateEntSteps(1);
+  } else if (current === 3) {
+    document.getElementById('ent-step-3').style.display = 'none';
+    document.getElementById('ent-step-2').style.display = 'block';
+    state.entStep = 2; updateEntSteps(2);
+  }
+}
+
+function submitEntReg() {
+  const pass = document.getElementById('e-pass').value;
+  const pass2 = document.getElementById('e-pass2').value;
+  const terms = document.getElementById('e-terms').checked;
+  let ok = true;
+
+  if (pass !== pass2) {
+    document.getElementById('e-pass-err').style.display = 'block';
+    ok = false;
+  } else {
+    document.getElementById('e-pass-err').style.display = 'none';
+  }
+  if (!terms) {
+    document.getElementById('e-terms-err').style.display = 'block';
+    ok = false;
+  } else {
+    document.getElementById('e-terms-err').style.display = 'none';
+  }
+  if (!state.captchas['reg-ent-captcha']) {
+    showToast('Please complete the CAPTCHA.', '🔐');
+    return;
+  }
+  if (pass.length < 8) {
+    showToast('Password must be at least 8 characters.', '⚠️');
+    return;
+  }
+  if (!ok) return;
+
+  const succ = document.getElementById('reg-ent-success');
+  succ.style.display = 'block';
+  succ.textContent = '🎉 Entrepreneur account created! Redirecting to login…';
+  state.loggedIn = true; state.userRole = 'entrepreneur';
+  updateNavForLoggedIn();
+  setTimeout(() => { goPage('login'); }, 2000);
+}
+
+function submitCliReg() {
+  const email = document.getElementById('cl-email').value.trim();
+  const pass = document.getElementById('cl-pass').value;
+  const pass2 = document.getElementById('cl-pass2').value;
+  const terms = document.getElementById('cl-terms').checked;
+
+  if (!validateEmail(email)) { showToast('Please enter a valid email.', '⚠️'); return; }
+  if (pass.length < 8) { showToast('Password must be at least 8 characters.', '⚠️'); return; }
+  if (pass !== pass2) { showToast('Passwords do not match.', '⚠️'); return; }
+  if (!terms) { showToast('Please accept the Terms of Service.', '⚠️'); return; }
+  if (!state.captchas['reg-cli-captcha']) { showToast('Please complete the CAPTCHA.', '🔐'); return; }
+
+  const succ = document.getElementById('reg-cli-success');
+  succ.style.display = 'block';
+  succ.textContent = '🎉 Client account created! Redirecting to login…';
+  state.loggedIn = true; state.userRole = 'client';
+  updateNavForLoggedIn();
+  setTimeout(() => { goPage('login'); }, 2000);
+}
+
+/* ═══════════════════════════
+   CONTACT
+═══════════════════════════ */
+function submitContact() {
+  const email = document.getElementById('c-email').value.trim();
+  const msg = document.getElementById('c-msg').value.trim();
+  if (!validateEmail(email)) { showToast('Please enter a valid email.', '⚠️'); return; }
+  if (!msg) { showToast('Please write a message.', '⚠️'); return; }
+  if (!state.captchas['contact-captcha']) { showToast('Please complete the CAPTCHA.', '🔐'); return; }
+  document.getElementById('contact-success').style.display = 'block';
+  showToast('Message sent successfully!', '✅');
+}
+
+/* ═══════════════════════════
+   PROJECT FILTER
+═══════════════════════════ */
+function filterProj(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.proj-card').forEach(c => {
+    if (cat === 'all' || c.dataset.cat === cat) c.style.display = 'block';
+    else c.style.display = 'none';
+  });
+}
+
+/* ═══════════════════════════
+   LOGGED IN NAV
+═══════════════════════════ */
+function updateNavForLoggedIn() {
+  const nav = document.getElementById('nav-actions');
+  nav.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:var(--black)">${state.userRole === 'entrepreneur' ? '🚀' : '👤'}</div>
+      <span style="font-size:0.82rem;color:var(--white)">${state.userRole === 'entrepreneur' ? 'Entrepreneur' : 'Client'}</span>
+      <button class="btn-outline" onclick="logout()">Logout</button>
+    </div>`;
+}
+
+function logout() {
+  state.loggedIn = false; state.userRole = null;
+  document.getElementById('nav-actions').innerHTML = `
+    <button class="btn-outline" onclick="goPage('login')">Login</button>
+    <button class="btn-solid" onclick="goPage('register')">Register</button>`;
+  // Reset login form
+  document.getElementById('login-step1').style.display = 'block';
+  document.getElementById('login-step2').style.display = 'none';
+  document.getElementById('login-success').style.display = 'none';
+  state.loginAttempts = 0;
+  showToast('You have been signed out securely.', '🔐');
+  goPage('home');
+}
+
+/* ═══════════════════════════
+   KEYBOARD TRAP ON FORMS
+═══════════════════════════ */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const p = state.currentPage;
+    if (p === 'login' && document.getElementById('login-step1').style.display !== 'none') submitLogin();
+    if (p === 'login' && document.getElementById('login-step2').style.display !== 'none') verifyOTP();
+    if (p === 'contact') submitContact();
+  }
+});
+
+/* XSS INPUT SANITIZATION — apply to all visible inputs on submit */
+document.querySelectorAll('input[type=text],input[type=email]').forEach(inp => {
+  inp.addEventListener('blur', function() {
+    // Sanitize on blur — strip script tags
+    this.value = this.value.replace(/<script[^>]*>.*?<\/script>/gi, '').replace(/<[^>]*>/g, '');
+  });
+});
+
+
+</script>
+</body>
+</html>

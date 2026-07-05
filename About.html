@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  :root{
+        --gold: #1A8FA8;
+        --gold-lt: #5BC4D8;
+        --dark: #111111; 
+        --charcoal: #2a2a2a;
+        --mid:#555555;
+        --soft:#888888;
+        --cream:#31e0ff; 
+        --white: #deffff;
+        --line: #6eecf5;
+        --gold-dim: rgba(201,168,76,0.15);
+  --white: #dafbff;
+  --muted: #8a8a9a;
+  --accent: #4c6ef5;
+  --accent2: #9b59f5;
+  --green: #22c55e;
+  --red: #ef4444;
+  --r: 8px;
+    }
+   *,*::before, **::after{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+  html{
+        scroll-behavior: smooth;
+    }
+    body{
+        font-family: 'outfit',sans-serif;
+        color: var(--dark);
+        background: var(--white);
+        overflow-x: hidden;
+        -webkit-font-smoothing:antialiased;
+    }
+   
+    /* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 70px;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--white); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 8px 14px; border-radius: 6px;
+  cursor: pointer; transition: all .2s;
+  text-decoration: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--border); }
+.nav-actions { display: flex; gap: 10px; }
+.btn-outline {
+  padding: 8px 20px; border-radius: 6px;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+  cursor: pointer; background: transparent; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-outline:hover { background: var(--gold); color: var(--black); }
+.btn-solid {
+  padding: 8px 20px; border-radius: 6px;
+  background: var(--gold); color: var(--black);
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
+  cursor: pointer; border: none; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-solid:hover { background: var(--gold-light); }
+
+/* ── PAGES ── */
+.page { min-height: 100vh; padding-top: 70px; }
+.page.active { display: block; }
+
+/* ── SECTION COMMONS ── */
+.section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border: #1A8FA8;}
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+ background-color: rgb(49, 172, 202);
+ justify-content: center;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
+  color: var(--white); margin-bottom: 24px;
+}
+.section-title em { color: var(--gold); font-style: normal; }
+.section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+/* ── GOLD LINE ── */
+.gold-line { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); width: 60px; margin-bottom: 24px; }
+
+
+/* ══════════════════════
+   ABOUT PAGE
+══════════════════════ */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.about-visual {
+  position: relative; height: 400px;
+  display: flex; align-items: center; justify-content: center;
+}
+.about-box {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px;
+}
+.about-box-main {
+  width: 280px; z-index: 2; position: relative;
+}
+.about-box-accent {
+  position: absolute; width: 200px; padding: 20px;
+  font-size: 0.85rem;
+}
+.about-box-accent.top { top: 20px; right: 0; }
+.about-box-accent.bot { bottom: 20px; left: 0; }
+.about-list { list-style: none; margin-top: 28px; }
+.about-list li {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.about-list li:last-child { border-bottom: none; }
+.about-icon { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.about-list li div strong { display: block; font-size: 0.92rem; margin-bottom: 4px; }
+.about-list li div span { font-size: 0.82rem; color: var(--muted); }
+.team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-top: 48px; }
+.team-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 24px; text-align: center; transition: all .3s;
+}
+.team-card:hover { border-color: var(--gold); }
+.team-av {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+  background: linear-gradient(135deg, var(--gold-dim), var(--accent));
+  border: 2px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold);
+}
+.team-name { font-weight: 700; font-size: 0.95rem; }
+.team-role { font-size: 0.78rem; color: var(--gold); margin-top: 4px; }
+.values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 40px; }
+.val-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 24px;
+}
+.val-icon { font-size: 2rem; margin-bottom: 12px; }
+.val-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+.val-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+
+footer {
+  background: var(--gray); border-top: 1px solid var(--gray);
+  padding: 60px 48px 32px;
+  background-color: #addae0;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; }
+.footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-top: 12px; max-width: 280px; }
+.footer-col h4 { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; color: var(--gold); }
+.footer-col a { display: block; font-size: 0.84rem; color: var(--muted); cursor: pointer; margin-bottom: 10px; text-decoration: none; transition: color .2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  max-width: 1200px; margin: 48px auto 0; padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+.footer-security { display: flex; gap: 16px; }
+
+/* ══════════════════════
+   RESPONSIVE
+══════════════════════ */
+  @media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .section { padding: 60px 20px; }
+  .how-grid, .ent-grid, .services-grid, .projects-grid, .team-grid, .values-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* Scroll animation */
+@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+.fade-up { animation: fadeUp .6s ease forwards; }
+
+/* Dashboard mock for logged in state */
+.dashboard-banner {
+  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(76,110,245,0.1));
+  border: 1px solid rgba(201,168,76,0.3); border-radius: 12px;
+  padding: 20px 28px; margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.db-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.db-info p { font-size: 0.82rem; color: var(--muted); }
+</style>
+<body>
+        <nav>
+  <div class="nav-logo" onclick="goPage('home')">Elevate<span>Edge</span></div>
+  <div class="nav-links">
+    <a onclick="goPage('home')" id="nav-home" class="active" href="home.html">Home</a>    
+    <a onclick="goPage('about')" id="nav-about" style="color: var(--white); " href="About.html">About</a>
+    <a onclick="goPage('service')" id="nav-service"style="color: var(--white);" href="services.html">Services</a>
+    <a onclick="goPage('blog')" id="nav-blog"style="color: var(--white);" href="blog.html">Blog</a>
+    <a onclick="goPage('contact')" id="nav-contact"style="color: var(--white);" href="contact.html">Contact</a>
+  </div>
+  <div class="nav-actions" id="nav-actions">
+   <a href="login.html"><button class="btn-outline" onclick="goPage('login')" >Login</button></a> 
+   <a href="registration.html"><button class="btn-solid" onclick="goPage('register')">Register</button></a> 
+  </div>
+</nav>
+<div class="page" id="page-about">
+  <div class="section">
+    <center><div class="section-label"> <b>Our Story</b></div></center>
+    <h2 class="section-title">Built for <em>Entrepreneurs</em>,<br>Trusted by Clients</h2>
+    <div class="about-grid" style="margin-top:48px">
+      <div>
+        <div class="gold-line"></div>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:20px;font-size:0.95rem">Elevate Edge Solutions was founded in 2026 with a single vision: create the world's most secure and sophisticated platform where entrepreneurs can showcase their expertise and clients can connect with verified talent.</p>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:32px;font-size:0.95rem">We believe that the right partnerships change everything. Our platform combines enterprise-grade security with an intuitive experience that makes meaningful business relationships effortless.</p>
+        <ul class="about-list">
+          <li><span class="about-icon">🔐</span><div><strong>Bank-Level Security</strong><span>End-to-end encryption, 2FA, every interaction</span></div></li>
+          <li><span class="about-icon">✅</span><div><strong>Verified Entrepreneurs</strong><span>Every entrepreneur is manually vetted with ID verification and skill assessment</span></div></li>
+          <li><span class="about-icon">🤝</span><div><strong>Secure Messaging</strong><span>All communications are encrypted and permanently logged for dispute resolution</span></div></li>
+        </ul>
+      </div>
+     
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--deep);border-top:1px solid var(--border)">
+    <div class="section">
+       <center><div class="section-label">  <b>Our Story</b></div></center>
+      <h2 class="section-title">What We <em>Stand For</em></h2>
+      <div class="values-grid">
+        <div class="val-card"><div class="val-icon">🔐</div><h4>Security First</h4><p>Every feature is built with security as the foundation, not an afterthought. Your data and connections are always protected.</p></div>
+        <div class="val-card"><div class="val-icon">⚡</div><h4>Excellence</h4><p>We curate only the best entrepreneurs and maintain rigorous quality standards so clients always receive exceptional results.</p></div>
+        <div class="val-card"><div class="val-icon">🌍</div><h4>Inclusivity</h4><p>We empower entrepreneurs from all backgrounds and geographies, democratizing access to global business opportunities.</p></div>
+        <div class="val-card"><div class="val-icon">🤝</div><h4>Trust</h4><p>Transparent pricing, honest reviews, and fair dispute resolution create a marketplace where trust is the currency.</p></div>
+        <div class="val-card"><div class="val-icon">📈</div><h4>Growth</h4><p>We provide tools, analytics, and resources to help every entrepreneur and client continuously improve and scale.</p></div>
+        <div class="val-card"><div class="val-icon">💡</div><h4>Innovation</h4><p>We continuously evolve our platform with cutting-edge features to stay ahead of how business gets done.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+  <center><div class="section-label"> <b>The Team</b></div></center>  
+    <h2 class="section-title"> <em>Meet Our Leaders</em></h2>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-av">AJ</div><div class="team-name">Assen Jemima</div><div class="team-role">CEO & Co-Founder</div></div>
+      <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,rgba(76,110,245,0.3),rgba(155,89,245,0.2))">CS</div><div class="team-name">chineache samuel</div><div class="team-role">CTO & Co-Founder</div></div>
+      <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(220,38,38,0.1))">A</div><div class="team-name">Ange</div><div class="team-role">Head of Design</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo">Elevate<span style="color:var(--white)">Edge</span></div><p>The secure marketplace where elite entrepreneurs and ambitious clients build transformative partnerships.</p></div>
+      <div class="footer-col"><h4>Platform</h4><a onclick="goPage('home')">Home</a><a onclick="goPage('service')">Services</a><a onclick="goPage('project')">Projects</a></div>
+      <div class="footer-col"><h4>Company</h4><a onclick="goPage('about')">About</a><a onclick="goPage('contact')">Contact</a><a>Privacy</a></div>
+    </div>
+     <div class="footer-bottom">
+      <span>© 2026 Elevate Edge Solutions. All rights reserved.</span>
+      <div class="footer-security">
+       
+      </div>
+  </div>
+  </footer>
+</div>
+
+</body>
+</html>

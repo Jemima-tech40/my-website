@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  :root{
+        --gold: #1A8FA8;
+        --gold-lt: #5BC4D8;
+        --dark: #111111; 
+        --charcoal: #2a2a2a;
+        --mid:#555555;
+        --soft:#888888;
+        --cream:#31e0ff; 
+        --white: #e2e7e7;
+        --line: #6eecf5;
+        --gold-dim: rgba(201,168,76,0.15);
+  --white: #f5f4ef;
+  --muted: #8a8a9a;
+  --accent: #4c6ef5;
+  --accent2: #9b59f5;
+  --green: #22c55e;
+  --red: #ef4444;
+  --r: 8px;
+    }
+   *,*::before, **::after{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+  html{
+        scroll-behavior: smooth;
+    }
+    body{
+        font-family: 'outfit',sans-serif;
+        color: var(--dark);
+        background: var(--white);
+        overflow-x: hidden;
+        -webkit-font-smoothing:antialiased;
+    }
+   
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 70px;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--white); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 8px 14px; border-radius: 6px;
+  cursor: pointer; transition: all .2s;
+  text-decoration: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--border); }
+.nav-actions { display: flex; gap: 10px; }
+.btn-outline {
+  padding: 8px 20px; border-radius: 6px;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+  cursor: pointer; background: transparent; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-outline:hover { background: var(--gold); color: var(--black); }
+.btn-solid {
+  padding: 8px 20px; border-radius: 6px;
+  background: var(--gold); color: var(--black);
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
+  cursor: pointer; border: none; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-solid:hover { background: var(--gold-light); }
+
+/* ── PAGES ── */
+.page {  min-height: 100vh; padding-top: 70px; }
+.page.active { display: block; }
+
+
+/* ── SECTION COMMONS ── */
+.section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border: #1A8FA8;}
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+ background-color: rgb(49, 172, 202);
+ justify-content: center;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
+  color: var(--white); margin-bottom: 24px;
+}
+.section-title em { color: var(--gold); font-style: normal; }
+.section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+/* ── GOLD LINE ── */
+.gold-line { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); width: 60px; margin-bottom: 24px; }
+
+/* ══════════════════════
+   SERVICE PAGE
+══════════════════════ */
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+.srv-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 32px; transition: all .3s; cursor: pointer; position: relative; overflow: hidden;
+}
+.srv-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  transform: scaleX(0); transition: transform .3s; transform-origin: left;
+}
+.srv-card:hover::after { transform: scaleX(1); }
+.srv-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+.srv-icon { font-size: 2.2rem; margin-bottom: 18px; }
+.srv-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+.srv-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+.srv-price {
+  font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+  color: var(--gold);
+}
+.srv-price span { font-size: 0.78rem; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+.srv-features {  list-style: none; margin-top: 16px; }
+.srv-features li {
+  font-size: 0.82rem; color: var(--muted); padding: 5px 0;
+  display: flex; gap: 8px; align-items: center;
+}
+.srv-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
+.featured-srv { border-color: rgba(201,168,76,0.4); background: linear-gradient(160deg, rgba(201,168,76,0.06), var(--card)); }
+
+
+footer {
+  background: var(--gray); border-top: 1px solid var(--gray);
+  padding: 60px 48px 32px;
+  background-color: #addae0;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; }
+.footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-top: 12px; max-width: 280px; }
+.footer-col h4 { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; color: var(--gold); }
+.footer-col a { display: block; font-size: 0.84rem; color: var(--muted); cursor: pointer; margin-bottom: 10px; text-decoration: none; transition: color .2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  max-width: 1200px; margin: 48px auto 0; padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+.footer-security { display: flex; gap: 16px; }
+
+/* ══════════════════════
+   RESPONSIVE
+══════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .section { padding: 60px 20px; }
+  .how-grid, .ent-grid, .services-grid, .projects-grid, .team-grid, .values-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* Scroll animation */
+@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+.fade-up { animation: fadeUp .6s ease forwards; }
+
+/* Dashboard mock for logged in state */
+.dashboard-banner {
+  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(76,110,245,0.1));
+  border: 1px solid rgba(201,168,76,0.3); border-radius: 12px;
+  padding: 20px 28px; margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.db-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.db-info p { font-size: 0.82rem; color: var(--muted); }
+</style>
+<body>
+           <nav>
+  <div class="nav-logo" onclick="goPage('home')">Elevate<span>Edge</span></div>
+  <div class="nav-links">
+    <a onclick="goPage('home')" id="nav-home" class="active" href="home.html">Home</a>
+    <a onclick="goPage('about')" id="nav-about" style="color: var(--white); " href="About.html">About</a>
+    <a onclick="goPage('service')" id="nav-service"style="color: var(--white);" href="services.html">Services</a>
+    <a onclick="goPage('blog')" id="nav-blog"style="color: var(--white);" href="blog.html">Blog</a>
+    <a onclick="goPage('contact')" id="nav-contact"style="color: var(--white);" href="contact.html">Contact</a>
+  </div>
+  <div class="nav-actions" id="nav-actions">
+   <a href="login.html"><button class="btn-outline" onclick="goPage('login')" >Login</button></a> 
+   <a href="registration.html"><button class="btn-solid" onclick="goPage('register')">Register</button></a> 
+  </div>
+</nav>
+
+<!-- ════════════════════ SERVICE ════════════════════ -->
+<div class="page" id="page-service">
+  <div class="section">
+   <center><div class="section-label">What We Offer</div></center> 
+    <center><h2 class="section-title"> <em>Premium Services</em></h2></center>
+    <p class="section-sub">Every service on Elevate Edge is delivered by verified, top-tier entrepreneurs committed to excellence.</p>
+    <div class="services-grid" style="margin-top:48px">
+      <div class="srv-card">
+        <div class="srv-icon">🎨</div>
+        <h3>Brand Identity & Design</h3>
+        <p>Complete visual identity systems including logos, brand guidelines, and collateral that communicate your unique value proposition.</p>
+        <div class="srv-price">From 5000frs <span>/ project</span></div>
+        <ul class="srv-features">
+          <li>Logo & visual identity</li><li>Brand guidelines doc</li><li>Social media kit</li><li>3 revision rounds</li>
+        </ul>
+      </div>
+      <div class="srv-card featured-srv">
+        <div style="position:absolute;top:16px;right:16px;background:var(--gold);color:var(--black);font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:100px">POPULAR</div>
+        <div class="srv-icon">💻</div>
+        <h3>Web & App Development</h3>
+        <p>Custom web applications, mobile apps, and SaaS platforms built with modern tech stacks and robust security architecture.</p>
+        <div class="srv-price">From 1500frs <span>/ project</span></div>
+        <ul class="srv-features">
+          <li>Full-stack development</li><li>Responsive design</li><li>Security-first codebase</li><li>Deployment & support</li>
+        </ul>
+      </div>
+      <div class="srv-card">
+        <div class="srv-icon">📈</div>
+        <h3>Digital Marketing</h3>
+        <p>Data-driven marketing campaigns across SEO, paid ads, content, and social media that generate real, measurable ROI.</p>
+        <div class="srv-price">From 20000frs <span>/ month</span></div>
+        <ul class="srv-features">
+          <li>SEO optimization</li><li>Paid ads management</li><li>Content strategy</li><li>Monthly reporting</li>
+        </ul>
+      </div>
+      <div class="srv-card">
+        <div class="srv-icon">📊</div>
+        <h3>Business Strategy</h3>
+        <p>Expert business analysis, market research, and strategic planning to position your company for sustainable long-term growth.</p>
+        <div class="srv-price">From 25009frs <span>/ session</span></div>
+        <ul class="srv-features">
+          <li>Market analysis</li><li>Competitive research</li><li>Growth roadmap</li><li>Investor pitch prep</li>
+        </ul>
+      </div>
+      <div class="srv-card">
+        <div class="srv-icon">🔐</div>
+        <h3>Cybersecurity</h3>
+        <p>Penetration testing, security audits, and compliance frameworks to protect your digital assets and customer data.</p>
+        <div class="srv-price">From 30000frs <span>/ audit</span></div>
+        <ul class="srv-features">
+          <li>Vulnerability assessment</li><li>Penetration testing</li><li>GDPR compliance</li><li>Incident response plan</li>
+        </ul>
+      </div>
+      <div class="srv-card">
+        <div class="srv-icon">🤖</div>
+        <h3>AI & Automation</h3>
+        <p>Custom AI solutions, process automation, and ML models that streamline operations and unlock new business capabilities.</p>
+        <div class="srv-price">From 35000frs <span>/ project</span></div>
+        <ul class="srv-features">
+          <li>Custom ML models</li><li>Process automation</li><li>AI integration</li><li>Maintenance & monitoring</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px">
+     <a href="registration.html"><button class="btn-hero btn-hero-gold" onclick="goPage('register')" style="color: black; background-color: #1A8FA8;">Post a Project</button>
+    </div></a> 
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo">Elevate<span style="color:var(--white)">Edge</span></div><p>The secure marketplace for elite entrepreneurs and ambitious clients.</p></div>
+      <div class="footer-col"><h4>Platform</h4><a onclick="goPage('home')">Home</a><a onclick="goPage('service')">Services</a><a onclick="goPage('project')">Projects</a></div>
+      <div class="footer-col"><h4>Company</h4><a onclick="goPage('about')">About</a><a onclick="goPage('contact')">Contact</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Elevate Edge Solutions.</span><div class="footer-security"><span></div></div>
+  </footer>
+</div>
+</body>
+</html>

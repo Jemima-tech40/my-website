@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+     :root{
+        --gold: #1A8FA8;
+        --gold-lt: #5BC4D8;
+        --dark: #111111; 
+        --charcoal: #2a2a2a;
+        --mid:#555555;
+        --soft:#888888;
+        --cream:#31e0ff; 
+        --white: #e2e7e7;
+        --line: #6eecf5;
+        --gold-dim: rgba(201,168,76,0.15);
+  --white: #f5f4ef;
+  --muted: #8a8a9a;
+  --accent: #4c6ef5;
+  --accent2: #9b59f5;
+  --green: #22c55e;
+  --red: #ef4444;
+  --r: 8px;
+    }
+   *,*::before, **::after{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+  html{
+        scroll-behavior: smooth;
+    }
+    body{
+        font-family: 'outfit',sans-serif;
+        color: var(--dark);
+        background: var(--white);
+        overflow-x: hidden;
+        -webkit-font-smoothing:antialiased;
+    }
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 70px;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--white); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 8px 14px; border-radius: 6px;
+  cursor: pointer; transition: all .2s;
+  text-decoration: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--border); }
+.nav-actions { display: flex; gap: 10px; }
+.btn-outline {
+  padding: 8px 20px; border-radius: 6px;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
+  cursor: pointer; background: transparent; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-outline:hover { background: var(--gold); color: var(--black); }
+.btn-solid {
+  padding: 8px 20px; border-radius: 6px;
+  background: var(--gold); color: var(--black);
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
+  cursor: pointer; border: none; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-solid:hover { background: var(--gold-light); }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; padding-top: 70px; }
+.page.active { display: block; }
+
+/* ── SECTION COMMONS ── */
+.section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border: #1A8FA8;}
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+ background-color: rgb(49, 172, 202);
+ justify-content: center;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
+  color: var(--white); margin-bottom: 24px;
+}
+.section-title em { color: var(--gold); font-style: normal; }
+.section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+
+/* ── GOLD LINE ── */
+.gold-line { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); width: 60px; margin-bottom: 24px; }
+
+/* ══════════════════════
+   HOME PAGE
+══════════════════════ */
+
+
+.hero {
+  min-height: calc(100vh - 70px);
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  gap: 60px; padding: 80px 48px;
+  max-width: 1300px; margin: 0 auto;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 0.78rem; font-weight: 600; color: var(--gold);
+  letter-spacing: 0.08em; margin-bottom: 28px;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 900; line-height: 1.08;
+  margin-bottom: 24px;
+}
+.hero-title em { color: var(--gold); font-style: normal; display: block; }
+.hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.75; margin-bottom: 40px; max-width: 480px; }
+.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-hero {
+  padding: 14px 32px; border-radius: 8px;
+  font-size: 0.92rem; font-weight: 700; letter-spacing: 0.04em;
+  cursor: pointer; transition: all .25s; font-family: 'DM Sans', sans-serif;
+}
+.btn-hero-gold { background: var(--gold); color: var(--black); border: none; }
+.btn-hero-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+.btn-hero-ghost { background: transparent; color: var(--white); border: 1px solid var(--border); }
+.btn-hero-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.hero-stats { display: flex; gap: 40px; margin-top: 50px; }
+.stat-item { }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); }
+.stat-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 2px; }
+.hero-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.hero-orb {
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(201,168,76,0.2), rgba(76,110,245,0.1), transparent);
+  border: 1px solid rgba(201,168,76,0.15);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  animation: orbPulse 4s ease-in-out infinite;
+}
+@keyframes orbPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+.hero-card-float {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px;
+  position: absolute;
+}
+.hcf-1 { top: 20px; right: -20px; min-width: 180px; }
+.hcf-2 { bottom: 40px; left: -20px; min-width: 160px; }
+.hcf-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+.hcf-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); }
+.hcf-sub { font-size: 0.75rem; color: var(--green); margin-top: 4px; }
+.orb-inner {
+  width: 220px; height: 220px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(76,110,245,0.2));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--gold);
+  text-align: center; border: 1px solid rgba(201,168,76,0.3);
+}
+
+/* HOME — HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+.how-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 32px; transition: all .3s; position: relative; overflow: hidden;
+}
+.how-card::before {
+  content: attr(data-num);
+  position: absolute; top: -10px; right: 20px;
+  font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900;
+  color: rgba(201,168,76,0.06); line-height: 1;
+}
+.how-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+.how-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 20px;
+}
+.how-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+.how-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+/* HOME — FEATURED ENTREPRENEURS */
+.ent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+.ent-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 28px; cursor: pointer; transition: all .3s;
+  background-color: #90d4fc;
+  border: #2a2a2a;
+}
+.ent-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+.ent-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--black); margin-bottom: 16px;
+}
+.ent-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+.ent-role { font-size: 0.8rem; color: var(--gold); margin-bottom: 12px; }
+.ent-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+.ent-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ent-tag {
+  padding: 3px 10px; border-radius: 100px;
+  background: var(--border); font-size: 0.72rem; color: var(--muted);
+}
+
+footer {
+  background: var(--gray); border-top: 1px solid var(--gray);
+  padding: 60px 48px 32px;
+  background-color: #addae0;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; }
+.footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-top: 12px; max-width: 280px; }
+.footer-col h4 { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; color: var(--gold); }
+.footer-col a { display: block; font-size: 0.84rem; color: var(--muted); cursor: pointer; margin-bottom: 10px; text-decoration: none; transition: color .2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  max-width: 1200px; margin: 48px auto 0; padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.78rem; color: var(--muted);
+}
+.footer-security { display: flex; gap: 16px; }
+
+
+/* ══════════════════════
+   RESPONSIVE
+══════════════════════ */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .section { padding: 60px 20px; }
+  .how-grid, .ent-grid, .services-grid, .projects-grid, .team-grid, .values-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* Scroll animation */
+@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+.fade-up { animation: fadeUp .6s ease forwards; }
+
+/* Dashboard mock for logged in state */
+.dashboard-banner {
+  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(76,110,245,0.1));
+  border: 1px solid rgba(201,168,76,0.3); border-radius: 12px;
+  padding: 20px 28px; margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.db-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.db-info p { font-size: 0.82rem; color: var(--muted); }
+</style>
+<body>
+ <nav>
+  <div class="nav-logo" onclick="goPage('home')">Elevate<span>Edge</span></div>
+  <div class="nav-links">
+    <a onclick="goPage('home')" id="nav-home" class="active" href="home.html">Home</a>
+    <a onclick="goPage('about')" id="nav-about" style="color: var(--white); " href="About.html">About</a>
+    <a onclick="goPage('service')" id="nav-service"style="color: var(--white);" href="services.html">Services</a>
+    <a onclick="goPage('blog')" id="nav-blog"style="color: var(--white);" href="blog.html">Blog</a>
+    <a onclick="goPage('contact')" id="nav-contact"style="color: var(--white);" href="contact.html">Contact</a>
+  </div>
+  <div class="nav-actions" id="nav-actions">
+   <a href="login.html"><button class="btn-outline" onclick="goPage('login')" >Login</button></a> 
+   <a href="registration.html"><button class="btn-solid" onclick="goPage('register')">Register</button></a> 
+  </div>
+</nav>
+  
+
+<!-- ════════════════════ HOME ════════════════════ -->
+<div class="page active" id="page-home">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content fade-up">
+   
+<div class="hero-badge">The Entrepreneur Marketplace</div>
+      <h1 class="hero-title">Where Talent Meets <em>Opportunity</em></h1>
+      <p class="hero-desc">Connect with elite entrepreneurs, discover cutting-edge services, and build partnerships that accelerate your growth. Elevate Edge is the secure platform where business happens.</p>
+      <div class="hero-ctas">
+        <a href="registration.html"><button class="btn-hero btn-hero-gold" onclick="goPage('register')">Join as Entrepreneur</button></a>
+        <a href="services.html"><button class="btn-hero btn-hero-gold" onclick="goPage('service')">Explore Services</button></a>
+      </div>
+    
+    </div>
+    <div class="hero-visual">
+      <div class="hero-orb">
+        <div class="orb-inner">Your Business<br>Elevated</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div style="background: color(srgb rgb(171, 202, 207) rgb(206, 214, 214) rgb(175, 226, 241)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); " >
+    <div class="section">
+     <center><div class="section-label">Simple Process</div></center> 
+      <h2 class="section-title"><em>How It Works</em></h2>
+      <p class="section-sub">Getting started is quick. Whether you're an entrepreneur or a client, the path to success begins here.</p>
+      <div class="how-grid">
+        <div class="how-card" data-num="01">
+          <div class="how-icon">📝</div>
+          <h3>Create Your Profile</h3>
+          <p>Entrepreneurs register and build a compelling profile showcasing their skills, portfolio, and service offerings with our guided setup wizard.</p>
+        </div>
+        <div class="how-card" data-num="02">
+          <div class="how-icon">🔍</div>
+          <h3>Discover & Connect</h3>
+          <p>Clients browse verified entrepreneurs, filter by expertise, and send secure connection requests to initiate partnerships with confidence.</p>
+        </div>
+        <div class="how-card" data-num="03">
+          <div class="how-icon">🚀</div>
+          <h3>Collaborate & Grow</h3>
+          <p>Work together through our encrypted messaging system, manage projects, and build lasting professional relationships on a secure platform.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED ENTREPRENEURS -->
+  <div class="section">
+    <center><div class="section-label">Featured Talent</div></center>
+    <h2 class="section-title">Top <em>Entrepreneurs</em></h2>
+    <p class="section-sub">Connect with our most highly-rated entrepreneurs ready to help your business thrive.</p>
+    <div class="ent-grid">
+      <div class="ent-card" onclick="goPage('register')">
+        <div class="ent-avatar">CS</div>
+        <div class="ent-name">Chineacherem Samuel </div>
+        <div class="ent-role">Spare parts dealer</div>
+        <div class="ent-desc">provide automative spare parts for vehicles such as caes, motorcycles and trucks. specialize in sellimg and distrubuting cehicle spare parts</div>
+
+      </div>
+      <div class="ent-card" onclick="goPage('register')">
+        <div class="ent-avatar" style="background: linear-gradient(135deg, #4c6ef5, #9b59f5)">AJ</div>
+        <div class="ent-name">Assen jemima</div>
+        <div class="ent-role">Graphic Design & Enginee</div>
+        <div class="ent-desc">Full-stack engineer and product architect specializing in web developemnt amd Graphic Design</div>
+    
+      </div>
+      <div class="ent-card" onclick="goPage('register')">
+        <div class="ent-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a)">RC</div>
+        <div class="ent-name">Ange </div>
+        <div class="ent-role">Digital Marketing</div>
+        <div class="ent-desc">Growth hacker and performance marketer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <div style="background: var(--deep); border-top: 1px solid var(--border);">
+    <div class="section" style="text-align: center; padding: 80px 48px;">
+      <div class="section-label">Get Started Today</div>
+      <h2 class="section-title">Ready to <em>Elevate</em> Your Business?</h2>
+      <p class="section-sub" style="margin: 0 auto 40px; text-align: center;">Join thousands of entrepreneurs and clients building the future together on our secure, enterprise-grade platform.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="registration.html"><button class="btn-hero btn-hero-gold" onclick="goPage('register')">Start Free — It's Quick</button></a>
+         <a href="contact.html"><button class="btn-hero btn-hero-ghost" onclick="goPage('contact')">Talk to Sales</button></a>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-grid" >
+      <div class="footer-brand" >
+        <div class="nav-logo" style="font-size:1.3rem">Elevate<span style="color:var(--white)">Edge</span></div>
+        <p>The secure marketplace where elite entrepreneurs and ambitious clients build transformative partnerships.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a onclick="goPage('home')">Home</a>
+        <a onclick="goPage('service')">Services</a>
+        <a onclick="goPage('project')">Projects</a>
+        <a onclick="goPage('blog')">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a onclick="goPage('about')">About Us</a>
+        <a onclick="goPage('contact')">Contact</a>
+        <a>Privacy Policy</a>
+        <a>Terms of Service</a>
+      </div>
+    </div>
+     <div class="footer-bottom">
+      <span>© 2026 Elevate Edge Solutions. All rights reserved.</span>
+      <div class="footer-security">
+       
+      </div>
+  
+
+</body>
+<script>
+    /* ═══════════════════════════
+   STATE
+═══════════════════════════ */
+const state = {
+  currentPage: 'home',
+  loginType: 'entrepreneur',
+  regTab: 'entrepreneur',
+  entStep: 1,
+  captchas: {},
+  loginAttempts: 0,
+  lastAttempt: 0,
+  loggedIn: false,
+  userRole: null,
+  userName: ''
+};
+
+/* ═══════════════════════════
+   NAVIGATION
+═══════════════════════════ */
+function goPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  state.currentPage = page;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+</script>
+</html>
