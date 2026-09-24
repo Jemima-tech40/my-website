@@ -1,459 +1,848 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ElevateEdge — The Global Entrepreneur Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-     :root{
-        --gold: #1A8FA8;
-        --gold-lt: #5BC4D8;
-        --dark: #111111; 
-        --charcoal: #2a2a2a;
-        --mid:#555555;
-        --soft:#888888;
-        --cream:#31e0ff; 
-        --white: #e2e7e7;
-        --line: #6eecf5;
-        --gold-dim: rgba(201,168,76,0.15);
-  --white: #f5f4ef;
-  --muted: #8a8a9a;
-  --accent: #4c6ef5;
-  --accent2: #9b59f5;
-  --green: #22c55e;
-  --red: #ef4444;
-  --r: 8px;
-    }
-   *,*::before, **::after{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-  html{
-        scroll-behavior: smooth;
-    }
-    body{
-        font-family: 'outfit',sans-serif;
-        color: var(--dark);
-        background: var(--white);
-        overflow-x: hidden;
-        -webkit-font-smoothing:antialiased;
-    }
-    a{
-        text-decoration: none;
-        color: inherit;
-    }
+:root{
+  /* Base surfaces — the whole site is dark now, no light sections */
+  --bg:#0B1220; --bg-2:#131F38; --bg-3:#1B2A47;
+  --paper:var(--bg); --paper-2:var(--bg-2);
+  --ink:#FFFFFF; --ink-2:var(--bg-2); --ink-3:var(--bg-3);
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px;
-  height: 70px;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem; font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 0.02em;
-  cursor: pointer;
-}
-.nav-logo span { color: var(--white); }
-.nav-links { display: flex; gap: 2px; }
-.nav-links a {
-  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--muted);
-  padding: 8px 14px; border-radius: 6px;
-  cursor: pointer; transition: all .2s;
-  text-decoration: none;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--border); }
-.nav-actions { display: flex; gap: 10px; }
-.btn-outline {
-  padding: 8px 20px; border-radius: 6px;
-  border: 1px solid var(--gold); color: var(--gold);
-  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
-  cursor: pointer; background: transparent; transition: all .2s;
-  font-family: 'DM Sans', sans-serif;
-}
-.btn-outline:hover { background: var(--gold); color: var(--black); }
-.btn-solid {
-  padding: 8px 20px; border-radius: 6px;
-  background: var(--gold); color: var(--black);
-  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
-  cursor: pointer; border: none; transition: all .2s;
-  font-family: 'DM Sans', sans-serif;
-}
-.btn-solid:hover { background: var(--gold-light); }
+  /* Text */
+  --text:#FFFFFF; --slate:rgba(255,255,255,0.70); --slate-light:rgba(255,255,255,0.50);
 
-/* ── PAGES ── */
-.page { display: none; min-height: 100vh; padding-top: 70px; }
-.page.active { display: block; }
+  /* Accents — blue for labels/icons/links, orange for highlights, matching the reference site */
+  --blue:#2F9BFF; --blue-light:#7EC8FF;
+  --brass:#FFA83D; --brass-light:var(--blue-light); /* kickers/eyebrows are blue, not gold, in the new system */
+  --orange:#FFA83D; --orange-light:#FFC98A;
 
-/* ── SECTION COMMONS ── */
-.section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border: #1A8FA8;}
-.section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 16px;
- background-color: rgb(49, 172, 202);
- justify-content: center;
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
-  color: var(--white); margin-bottom: 24px;
-}
-.section-title em { color: var(--gold); font-style: normal; }
-.section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+  --good:#34D399; --bad:#F87171;
+  --line:rgba(255,255,255,0.12); --line-dark:rgba(255,255,255,0.16);
 
-/* ── GOLD LINE ── */
-.gold-line { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); width: 60px; margin-bottom: 24px; }
+  --serif:'Fredoka', sans-serif; --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--sans);color:var(--text);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 500px at 15% -10%, rgba(47,155,255,0.16), transparent 60%),
+    radial-gradient(700px 500px at 100% 10%, rgba(255,168,61,0.10), transparent 55%);
+  background-repeat:no-repeat;
+}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-0.01em;color:var(--text);}
+button{font-family:var(--sans);cursor:pointer;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+.hidden{display:none !important;}
 
-/* ══════════════════════
-   HOME PAGE
-══════════════════════ */
+/* ---------- Floating pill nav ---------- */
+header{position:sticky;top:14px;z-index:60;padding:0 20px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  max-width:1180px;margin:0 auto;padding:12px 20px;
+  background:rgba(11,18,32,0.72);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:999px;
+}
+.logo{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:9px;}
+.logo .mark{width:9px;height:9px;background:var(--orange);display:inline-block;border-radius:3px;}
+.nav-links{display:flex;gap:4px;list-style:none;flex-wrap:wrap;}
+.nav-links a,.nav-links button{background:none;border:0;color:var(--slate);font-size:0.88rem;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .15s;}
+.nav-links a:hover,.nav-links button:hover{color:var(--text);background:rgba(255,255,255,0.06);}
+.nav-links a.active{color:var(--text);background:var(--bg-3);}
+.nav-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.menu-toggle{display:none;background:rgba(255,255,255,0.06);border:1px solid var(--line-dark);color:var(--text);width:40px;height:40px;border-radius:999px;font-size:1.05rem;align-items:center;justify-content:center;}
+.menu-toggle:hover{background:rgba(255,255,255,0.12);}
 
+/* ---------- Buttons — all pill-shaped ---------- */
+.btn{display:inline-block;padding:12px 24px;font-size:0.88rem;font-weight:600;border:1px solid transparent;transition:all .18s ease;border-radius:999px;}
+.btn-brass{background:var(--blue);color:#062038;}
+.btn-brass:hover{background:var(--blue-light);}
+.btn-outline-dark{border-color:var(--line-dark);color:var(--text);background:rgba(255,255,255,0.04);}
+.btn-outline-dark:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.08);}
+.btn-outline-ink{border-color:var(--line-dark);color:var(--text);background:transparent;}
+.btn-outline-ink:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);}
+.btn-fill-ink{background:var(--bg-3);color:var(--text);border-color:var(--line-dark);}
+.btn-fill-ink:hover{background:#22345A;}
+.btn-small{padding:8px 16px;font-size:0.8rem;}
+.btn-danger{border:1px solid var(--bad);color:var(--bad);background:transparent;}
+.btn-danger:hover{background:var(--bad);color:#1a0505;}
+.user-chip{color:var(--text);font-size:0.85rem;display:flex;align-items:center;gap:10px;}
+.user-chip .who{color:var(--slate);}
+.user-chip strong{color:var(--blue-light);}
 
-.hero {
-  min-height: calc(100vh - 70px);
-  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
-  gap: 60px; padding: 80px 48px;
-  max-width: 1300px; margin: 0 auto;
-  position: relative;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
-  pointer-events: none;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
-  border-radius: 100px; padding: 6px 16px;
-  font-size: 0.78rem; font-weight: 600; color: var(--gold);
-  letter-spacing: 0.08em; margin-bottom: 28px;
-}
-.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 900; line-height: 1.08;
-  margin-bottom: 24px;
-}
-.hero-title em { color: var(--gold); font-style: normal; display: block; }
-.hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.75; margin-bottom: 40px; max-width: 480px; }
-.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-.btn-hero {
-  padding: 14px 32px; border-radius: 8px;
-  font-size: 0.92rem; font-weight: 700; letter-spacing: 0.04em;
-  cursor: pointer; transition: all .25s; font-family: 'DM Sans', sans-serif;
-}
-.btn-hero-gold { background: var(--gold); color: var(--black); border: none; }
-.btn-hero-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
-.btn-hero-ghost { background: transparent; color: var(--white); border: 1px solid var(--border); }
-.btn-hero-ghost:hover { border-color: var(--gold); color: var(--gold); }
-.hero-stats { display: flex; gap: 40px; margin-top: 50px; }
+/* ---------- Sections ---------- */
+section{padding:72px 0;}
+.section-head{max-width:640px;margin-bottom:44px;}
+.section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.15;}
+.section-head p{color:var(--slate);margin-top:12px;font-size:1rem;line-height:1.6;}
+.kicker{font-size:0.8rem;color:var(--blue-light);font-weight:700;margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase;}
 
-.stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); }
-.stat-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 2px; }
-.hero-visual {
-  position: relative; display: flex; align-items: center; justify-content: center;
-}
-.hero-orb {
-  width: 420px; height: 420px; border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, rgba(201,168,76,0.2), rgba(76,110,245,0.1), transparent);
-  border: 1px solid rgba(201,168,76,0.15);
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-  animation: orbPulse 4s ease-in-out infinite;
-}
-@keyframes orbPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
-.hero-card-float {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 20px 24px;
-  position: absolute;
-}
-.hcf-1 { top: 20px; right: -20px; min-width: 180px; }
-.hcf-2 { bottom: 40px; left: -20px; min-width: 160px; }
-.hcf-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
-.hcf-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); }
-.hcf-sub { font-size: 0.75rem; color: var(--green); margin-top: 4px; }
-.orb-inner {
-  width: 220px; height: 220px; border-radius: 50%;
-  background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(76,110,245,0.2));
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem; font-weight: 700; color: var(--gold);
-  text-align: center; border: 1px solid rgba(201,168,76,0.3);
-}
+/* ---------- Forms ---------- */
+input,select,textarea{width:100%;border:1px solid var(--line);background:var(--bg-2);padding:13px 16px;font-family:var(--sans);font-size:0.94rem;color:var(--text);border-radius:14px;}
+input::placeholder,textarea::placeholder{color:var(--slate-light);}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue);}
+label{display:block;font-size:0.82rem;color:var(--slate);margin-bottom:6px;font-weight:500;}
+.field{margin-bottom:18px;}
+.form-msg{font-size:0.85rem;margin-top:14px;}
+.form-msg.error{color:var(--bad);}
+.form-msg.success{color:var(--good);}
 
-/* HOME — HOW IT WORKS */
-.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-.how-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 32px; transition: all .3s; position: relative; overflow: hidden;
-}
-.how-card::before {
-  content: attr(data-num);
-  position: absolute; top: -10px; right: 20px;
-  font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900;
-  color: rgba(201,168,76,0.06); line-height: 1;
-}
-.how-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
-.how-icon {
-  width: 48px; height: 48px; border-radius: 10px;
-  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; margin-bottom: 20px;
-}
-.how-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
-.how-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+/* ---------- Cards / rows ---------- */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.service-card{background:var(--bg-2);padding:26px;cursor:pointer;transition:all .15s;border:1px solid var(--line);border-radius:var(--radius);}
+.service-card:hover{background:var(--bg-3);border-color:var(--line-dark);}
+.service-card .cat-tag{font-size:0.72rem;color:var(--blue-light);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.service-card h3{font-size:1.1rem;margin-bottom:8px;}
+.service-card .by{font-size:0.82rem;color:var(--slate-light);margin-bottom:10px;}
+.service-card p{color:var(--slate);font-size:0.9rem;line-height:1.5;margin-bottom:14px;}
+.service-card .price{font-family:var(--serif);font-weight:600;color:var(--orange-light);font-size:1.05rem;}
+.empty-state{padding:60px 20px;text-align:center;color:var(--slate);border:1px dashed var(--line);border-radius:var(--radius);}
+.loading{padding:60px;text-align:center;color:var(--slate-light);}
 
-/* HOME — FEATURED ENTREPRENEURS */
-.ent-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-.ent-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 28px; cursor: pointer; transition: all .3s;
-  background-color: #90d4fc;
-  border: #2a2a2a;
+footer{background:transparent;border-top:1px solid var(--line);color:var(--slate);padding:64px 0 32px;margin-top:40px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-grid .logo{margin-bottom:16px;}
+.footer-grid > div > p{font-size:0.9rem;line-height:1.6;max-width:34ch;color:var(--slate);}
+.footer-grid h5{font-size:0.78rem;color:var(--text);font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+.footer-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-grid ul a{font-size:0.9rem;color:var(--slate);}
+.footer-grid ul a:hover{color:var(--text);}
+.footer-bottom{border-top:1px solid var(--line);padding-top:24px;font-size:0.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1180px;margin:0 auto;padding-left:32px;padding-right:32px;}
+
+/* CTA band — solid blue pill-cornered panel, matches the reference site's closing CTAs */
+.cta-band{background:linear-gradient(135deg, var(--blue), #1F7FE0);color:#06203A;border-radius:28px;margin:0 20px;}
+.cta-band .wrap{max-width:1140px;}
+.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.cta-inner h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:16ch;color:#06203A;}
+.cta-inner .btns{display:flex;gap:14px;flex-wrap:wrap;}
+.cta-band .btn-outline-ink{border-color:rgba(6,32,58,0.35);color:#06203A;background:transparent;}
+.cta-band .btn-outline-ink:hover{border-color:#06203A;background:rgba(6,32,58,0.08);}
+.cta-band .btn-fill-ink{background:#06203A;color:#fff;border-color:#06203A;}
+.cta-band .btn-fill-ink:hover{background:#0A2C4D;}
+
+/* Process steps — rounded cards with step badge, matches "Four steps" pattern */
+.process{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.process-step{padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);}
+.process-step .num{
+  font-family:var(--serif);font-size:0.78rem;font-weight:700;color:var(--blue-light);letter-spacing:0.08em;
+  display:inline-block;margin-bottom:18px;background:rgba(47,155,255,0.14);padding:6px 12px;border-radius:999px;
 }
-.ent-card:hover { border-color: var(--blue); transform: translateY(-3px); }
-.ent-avatar {
-  width: 56px; height: 56px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--accent));
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
-  color: var(--black); margin-bottom: 16px;
-}
-.ent-name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
-.ent-role { font-size: 0.8rem; color: var(--gold); margin-bottom: 12px; }
-.ent-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
-.ent-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.ent-tag {
-  padding: 3px 10px; border-radius: 100px;
-  background: var(--border); font-size: 0.72rem; color: var(--muted);
+.process-step h3{font-size:1.15rem;margin-bottom:10px;}
+.process-step p{color:var(--slate);font-size:0.93rem;line-height:1.6;}
+
+/* dark-panel is now a no-op visually (everything is already dark) but kept for markup compatibility */
+.dark-panel{background:transparent;color:var(--text);}
+.dark-panel .section-head p{color:var(--slate);}
+.dark-panel .service-list{border-top:1px solid var(--line);}
+.dark-panel .service-row{border-bottom:1px solid var(--line);}
+.dark-panel .service-row .name{color:var(--text);}
+.dark-panel .service-row .desc{color:var(--slate);}
+.dark-panel .service-row .deliverables span{color:var(--slate-light);border-color:var(--line);}
+.dark-panel .service-row .price{color:var(--blue-light);}
+.dark-panel .service-row .price .amount{color:var(--text);}
+.dark-panel .service-row .live-count{color:var(--slate-light);}
+.dark-panel .list-row{border-bottom-color:var(--line);}
+.dark-panel .list-row:first-child{border-top-color:var(--line);}
+.dark-panel .list-row h4{color:var(--text);}
+.dark-panel .list-row p{color:var(--slate);}
+.dark-panel .list-row .meta .amount{color:var(--text);}
+
+/* Split hero — headline + side panel, matches the reference's layered hero style */
+.hero-split{display:grid;grid-template-columns:1.15fr 0.85fr;gap:64px;align-items:end;}
+.hero-panel{background:var(--bg-2);border:1px solid var(--line);padding:32px 28px;border-radius:var(--radius);}
+.hero-panel .label{font-size:0.78rem;color:var(--orange-light);font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+.hero-panel .big{font-family:var(--serif);font-size:1.75rem;line-height:1.3;font-weight:600;color:var(--text);margin-bottom:18px;}
+.hero-panel .sub{font-size:0.85rem;color:var(--slate);border-top:1px solid var(--line);padding-top:16px;line-height:1.5;}
+.hero-panel .sub strong{color:var(--text);display:block;font-size:0.92rem;margin-bottom:4px;}
+
+/* Stat strip — icon-free number blocks, pill-badge style */
+.stat-strip{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+.stat-strip div{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:14px 20px;min-width:120px;}
+.stat-strip strong{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--text);}
+.stat-strip span{font-size:0.76rem;color:var(--slate-light);}
+.stat-strip.light div{background:var(--bg-2);border-color:var(--line);}
+.stat-strip.light strong{color:var(--text);}
+.stat-strip.light span{color:var(--slate-light);}
+
+/* List row — bordered row for listings/requests/profiles */
+.list-row{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:22px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;background:var(--bg-2);}
+.list-row .avatar-sq{width:48px;height:48px;background:var(--bg-3);color:var(--blue-light);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:1rem;flex-shrink:0;border-radius:14px;border:1px solid var(--line);}
+.list-row .cat-tag{font-size:0.72rem;color:var(--orange-light);font-weight:700;margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:0.04em;}
+.list-row h4{font-size:1.02rem;margin-bottom:4px;}
+.list-row p{color:var(--slate);font-size:0.88rem;line-height:1.5;}
+.list-row .meta{text-align:right;white-space:nowrap;}
+.list-row .meta .amount{font-family:var(--serif);font-size:1.05rem;color:var(--text);display:block;margin-bottom:10px;}
+
+/* Numbered option panel */
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.option-panel{background:var(--bg-2);border:1px solid var(--line);padding:30px;border-radius:var(--radius);}
+.option-panel .num{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--blue-light);display:block;margin-bottom:16px;}
+.option-panel h3{font-size:1.2rem;color:var(--text);margin-bottom:10px;}
+.option-panel p{color:var(--slate);font-size:0.92rem;line-height:1.55;margin-bottom:22px;}
+
+/* Category tiles / cat-grid */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.cat-card{border:1px solid var(--line);border-radius:16px;padding:22px 20px;background:var(--bg-2);text-align:left;transition:all .15s;}
+.cat-card:hover{background:var(--bg-3);border-color:var(--line-dark);}
+.cat-card .name{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:6px;display:block;color:var(--text);}
+.cat-card .count{font-size:0.8rem;color:var(--slate-light);}
+
+/* Services list rows (Services page) */
+.service-list{display:flex;flex-direction:column;gap:12px;border-top:none;}
+.service-row{display:grid;grid-template-columns:1.4fr 2fr 1fr;gap:28px;padding:24px;align-items:start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);}
+.service-row .name{font-family:var(--serif);font-size:1.2rem;font-weight:600;}
+.service-row .desc{color:var(--slate);font-size:0.92rem;line-height:1.55;}
+.service-row .deliverables{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.service-row .deliverables span{font-size:0.76rem;color:var(--slate-light);border:1px solid var(--line);padding:5px 12px;border-radius:999px;}
+.service-row .price{text-align:right;font-size:0.9rem;color:var(--blue-light);}
+.service-row .price .amount{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--text);margin-bottom:4px;}
+.service-row .live-count{display:block;margin-top:6px;font-size:0.76rem;color:var(--slate-light);}
+
+.gate{max-width:460px;margin:60px auto;text-align:center;padding:48px 36px;border:1px solid var(--line);background:var(--bg-2);border-radius:28px;}
+.gate h2{font-size:1.5rem;margin-bottom:12px;}
+.gate p{color:var(--slate);margin-bottom:24px;line-height:1.6;}
+.gate .btn{margin:0 6px;}
+
+/* ---------- Modal ---------- */
+.modal-overlay{position:fixed;inset:0;background:rgba(4,8,18,0.78);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:60px 20px;overflow:auto;}
+.modal{background:var(--bg-2);border:1px solid var(--line);max-width:560px;width:100%;padding:40px;position:relative;border-radius:28px;}
+.modal-close{position:absolute;top:18px;right:18px;background:none;border:0;font-size:1.4rem;color:var(--slate);}
+.modal .cat-tag{font-size:0.78rem;color:var(--orange-light);font-weight:700;margin-bottom:12px;text-transform:uppercase;}
+.modal h3{font-size:1.45rem;margin-bottom:10px;}
+.modal .by{color:var(--slate-light);font-size:0.9rem;margin-bottom:20px;}
+.modal p.desc{color:var(--slate);line-height:1.65;margin-bottom:24px;}
+.modal .meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:20px;margin-bottom:20px;}
+.modal .meta .price{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--text);}
+
+@media (max-width:860px){
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .process{grid-template-columns:1fr;}
+  .cat-grid{grid-template-columns:1fr 1fr;}
 }
 
-footer {
-  background: var(--gray); border-top: 1px solid var(--gray);
-  padding: 60px 48px 32px;
-  background-color: #addae0;
-}
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; }
-.footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-top: 12px; max-width: 280px; }
-.footer-col h4 { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; color: var(--gold); }
-.footer-col a { display: block; font-size: 0.84rem; color: var(--muted); cursor: pointer; margin-bottom: 10px; text-decoration: none; transition: color .2s; }
-.footer-col a:hover { color: var(--white); }
-.footer-bottom {
-  max-width: 1200px; margin: 48px auto 0; padding-top: 24px;
-  border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.78rem; color: var(--muted);
-}
-.footer-security { display: flex; gap: 16px; }
-
-
-/* ══════════════════════
-   RESPONSIVE
-══════════════════════ */
-@media (max-width: 900px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-  .hero-visual { display: none; }
-  .section { padding: 60px 20px; }
-  .how-grid, .ent-grid, .services-grid, .projects-grid, .team-grid, .values-grid { grid-template-columns: 1fr; }
-  .blog-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .form-row { grid-template-columns: 1fr; }
+@media (max-width:860px){
+  .nav-links{display:none;}
+  .menu-toggle{display:flex;}
+  .service-grid{grid-template-columns:1fr;}
+  .wrap{padding:0 20px;}
+  .hero-split{grid-template-columns:1fr;}
+  .list-row{grid-template-columns:1fr;}
+  .list-row .meta{text-align:left;}
+  .option-grid{grid-template-columns:1fr;}
+  .service-row{grid-template-columns:1fr;gap:14px;}
+  .service-row .price{text-align:left;}
 }
 
-/* Scroll animation */
-@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
-.fade-up { animation: fadeUp .6s ease forwards; }
-
-/* Dashboard mock for logged in state */
-.dashboard-banner {
-  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(76,110,245,0.1));
-  border: 1px solid rgba(201,168,76,0.3); border-radius: 12px;
-  padding: 20px 28px; margin-bottom: 32px;
-  display: flex; align-items: center; justify-content: space-between;
+/* ---------- Mobile slide-out menu ---------- */
+.mobile-menu{
+  position:fixed;inset:0;background:var(--bg);z-index:200;
+  display:flex;flex-direction:column;padding:20px 24px 28px;
+  transform:translateX(100%);transition:transform .28s ease;overflow-y:auto;
 }
-.db-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-.db-info p { font-size: 0.82rem; color: var(--muted); }
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;padding-top:4px;}
+.mobile-menu-close{background:rgba(255,255,255,0.06);border:1px solid var(--line-dark);color:var(--text);width:38px;height:38px;border-radius:999px;font-size:1.3rem;line-height:1;display:flex;align-items:center;justify-content:center;}
+.mobile-menu-links{display:flex;flex-direction:column;margin-bottom:32px;}
+.mobile-menu-links a{font-size:1.35rem;font-family:var(--serif);font-weight:600;color:var(--text);padding:18px 4px;border-bottom:1px solid var(--line);}
+.mobile-menu-links a.active{color:var(--blue-light);}
+.mobile-menu-user{font-size:0.9rem;color:var(--slate);margin-bottom:18px;padding:0 4px;}
+.mobile-menu-user strong{color:var(--blue-light);}
+.mobile-menu-actions{display:flex;flex-direction:column;gap:12px;margin-top:auto;padding-top:24px;}
+.mobile-menu-actions .btn{width:100%;text-align:center;padding:16px;font-size:1rem;}
+
 </style>
+<style>
+  .hero{padding:88px 0 72px;position:relative;overflow:hidden;}
+  .hero h1{font-size:clamp(2.1rem,4.2vw,3.3rem);line-height:1.1;max-width:16ch;margin-bottom:22px;}
+  .hero-sub{font-size:1.05rem;color:rgba(244,242,237,0.78);max-width:52ch;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+
+  .browse-controls{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;align-items:center;}
+  .browse-controls input[type=text]{flex:1;min-width:220px;}
+  select{width:auto;min-width:200px;}
+  .results-count{color:var(--slate-light);font-size:0.85rem;margin-bottom:20px;}
+
+  .auth-shell{max-width:440px;margin:0 auto;}
+  .auth-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:32px;}
+  .auth-tabs button{flex:1;background:none;border:0;padding:14px;font-size:0.92rem;font-weight:600;color:var(--slate-light);border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .auth-tabs button.active{color:var(--ink);border-bottom-color:var(--brass);}
+  .role-picker{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+  .role-option{border:1px solid var(--line);padding:16px;text-align:left;background:var(--paper-2);border-radius:14px;}
+  .role-option.selected{border-color:var(--brass);background:var(--paper-2);}
+  .role-option strong{display:block;font-family:var(--serif);font-size:1rem;margin-bottom:4px;}
+  .role-option span{font-size:0.8rem;color:var(--slate-light);}
+
+  @media (max-width:860px){ .cat-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
 <body>
- <nav>
-  <div class="nav-logo" onclick="goPage('home')">Elevate<span>Edge</span></div>
-  <div class="nav-links">
-    <a  href="index.html" id="nav-home" class="active">Home</a>
-    <a  href="About.html" id="nav-about" style="color: var(--white); ">About</a>
-    <a href="services.html"id="nav-service"style="color: var(--white);">Services</a>
-    <a href="blog.html" id="nav-blog"style="color: var(--white);">Blog</a>
-    <a href="contact.html"id="nav-contact"style="color: var(--white);">Contact</a>
-  </div>
-  <div class="nav-actions" id="nav-actions">
-   <a href="login.html"><button class="btn-outline" onclick="goPage('login')" >Login</button></a> 
-   <a href="registration.html"><button class="btn-solid" onclick="goPage('register')">Register</button></a> 
-  </div>
-</nav>
-  
 
-<!-- ════════════════════ HOME ════════════════════ -->
-<div class="page active" id="page-home">
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-content fade-up">
-   
-<div class="hero-badge">The Entrepreneur Marketplace</div>
-      <h1 class="hero-title">Where Talent Meets <em>Opportunity</em></h1>
-      <p class="hero-desc">Connect with elite entrepreneurs, discover cutting-edge services, and build partnerships that accelerate your growth. Elevate Edge is the secure platform where business happens.</p>
-      <div class="hero-ctas">
-        <a href="registration.html"><button class="btn-hero btn-hero-gold" onclick="goPage('register')">Join as Entrepreneur</button></a>
-        <a href="services.html"><button class="btn-hero btn-hero-gold" onclick="goPage('service')">Explore Services</button></a>
-      </div>
-    
-    </div>
-    <div class="hero-visual">
-      <div class="hero-orb">
-        <div class="orb-inner">Your Business<br>Elevated</div>
+<header><div id="siteHeader"></div></header>
+
+<main>
+
+  <div id="view-home" class="view">
+    <section class="hero">
+      <div class="wrap hero-split">
+        <div>
+          <h1>The global marketplace for every kind of entrepreneur.</h1>
+          <p class="hero-sub">One place for clients to find verified entrepreneurs across any service — and for entrepreneurs anywhere to register, list what they offer, and get discovered. Not just tech and design: trades, retail, consulting, anything.</p>
+          <div class="hero-ctas">
+            <a href="registration.html" class="btn btn-brass" id="postCta">Register &amp; post your service</a>
+            <button class="btn btn-outline-dark" data-nav="browse">Browse all services</button>
+          </div>
+          <div class="stat-strip" id="heroStats">
+            <div><strong>—</strong><span>Services listed</span></div>
+            <div><strong>—</strong><span>Categories</span></div>
+            <div><strong>—</strong><span>Entrepreneurs</span></div>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="label">Built for both sides</div>
+          <div class="big">One marketplace. Every kind of service, no listing fee.</div>
+          <div class="sub"><strong>Register in under a minute.</strong>Post a service as an entrepreneur, or start browsing as a client — free either way.</div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <div style="background: color(srgb rgb(171, 202, 207) rgb(206, 214, 214) rgb(175, 226, 241)); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); " >
-    <div class="section">
-     <center><div class="section-label">Simple Process</div></center> 
-      <h2 class="section-title"><em>How It Works</em></h2>
-      <p class="section-sub">Getting started is quick. Whether you're an entrepreneur or a client, the path to success begins here.</p>
-      <div class="how-grid">
-        <div class="how-card" data-num="01">
-          <div class="how-icon">📝</div>
-          <h3>Create Your Profile</h3>
-          <p>Entrepreneurs register and build a compelling profile showcasing their skills, portfolio, and service offerings with our guided setup wizard.</p>
+    </section>
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Explore by category</div>
+          <h2>Find the right expertise</h2>
+          <p>Browse the categories entrepreneurs are already listing under, or search across everything.</p>
         </div>
-        <div class="how-card" data-num="02">
-          <div class="how-icon">🔍</div>
-          <h3>Discover & Connect</h3>
-          <p>Clients browse verified entrepreneurs, filter by expertise, and send secure connection requests to initiate partnerships with confidence.</p>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Simple process</div>
+          <h2>How ElevateEdge works</h2>
+          <p>Three steps take you from sign-up to a working partnership — whether you're offering expertise or looking to hire it.</p>
         </div>
-        <div class="how-card" data-num="03">
-          <div class="how-icon">🚀</div>
-          <h3>Collaborate & Grow</h3>
-          <p>Work together through our encrypted messaging system, manage projects, and build lasting professional relationships on a secure platform.</p>
+        <div class="process">
+          <div class="process-step">
+            <span class="num">01</span>
+            <h3>Create your profile</h3>
+            <p>Entrepreneurs register and list what they offer — any category, any trade — in under a minute.</p>
+          </div>
+          <div class="process-step">
+            <span class="num">02</span>
+            <h3>Discover &amp; connect</h3>
+            <p>Clients search and filter by category or keyword, then view full details on any listing.</p>
+          </div>
+          <div class="process-step">
+            <span class="num">03</span>
+            <h3>Collaborate &amp; grow</h3>
+            <p>Clients request the service directly, and reach out to the entrepreneur — no middleman fees.</p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="dark-panel">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Featured</div>
+          <h2>Entrepreneurs on the platform</h2>
+          <p>A sample of who's already listing — real profiles, real services.</p>
+        </div>
+        <div id="featuredList"><div class="loading">Loading…</div></div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="wrap cta-inner">
+        <h2>Ready to elevate your business?</h2>
+        <div class="btns">
+          <a href="registration.html" class="btn btn-fill-ink">Join as an entrepreneur</a>
+          <button class="btn btn-outline-ink" data-nav="browse">Browse services</button>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- FEATURED ENTREPRENEURS -->
-  <div class="section">
-    <center><div class="section-label">Featured Talent</div></center>
-    <h2 class="section-title">Top <em>Entrepreneurs</em></h2>
-    <p class="section-sub">Connect with our most highly-rated entrepreneurs ready to help your business thrive.</p>
-    <div class="ent-grid">
-      <div class="ent-card" onclick="goPage('register')">
-        <div class="ent-avatar">CS</div>
-        <div class="ent-name">Chineacherem Samuel </div>
-        <div class="ent-role">Spare parts dealer</div>
-        <div class="ent-desc">provide automative spare parts for vehicles such as caes, motorcycles and trucks. specialize in sellimg and distrubuting cehicle spare parts</div>
-
+  <div id="view-browse" class="view hidden">
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Browse</div>
+          <h2>Every service, one place</h2>
+          <p>Search by keyword or filter by category to find the right entrepreneur.</p>
+        </div>
+        <div class="browse-controls">
+          <input type="text" id="searchInput" placeholder="Search services, skills, or entrepreneurs…">
+          <select id="categoryFilter"><option value="">All categories</option></select>
+        </div>
+        <div class="results-count" id="resultsCount"></div>
+        <div id="browseResults"><div class="loading">Loading services…</div></div>
       </div>
-      <div class="ent-card" onclick="goPage('register')">
-        <div class="ent-avatar" style="background: linear-gradient(135deg, #4c6ef5, #9b59f5)">AJ</div>
-        <div class="ent-name">Assen jemima</div>
-        <div class="ent-role">Graphic Design & Enginee</div>
-        <div class="ent-desc">Full-stack engineer and product architect specializing in web developemnt amd Graphic Design</div>
-    
-      </div>
-      <div class="ent-card" onclick="goPage('register')">
-        <div class="ent-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a)">RC</div>
-        <div class="ent-name">Ange </div>
-        <div class="ent-role">Digital Marketing</div>
-        <div class="ent-desc">Growth hacker and performance marketer.</div>
-      </div>
-    </div>
+    </section>
   </div>
 
-  <!-- CTA BANNER -->
-  <div style="background: var(--deep); border-top: 1px solid var(--border);">
-    <div class="section" style="text-align: center; padding: 80px 48px;">
-      <div class="section-label">Get Started Today</div>
-      <h2 class="section-title">Ready to <em>Elevate</em> Your Business?</h2>
-      <p class="section-sub" style="margin: 0 auto 40px; text-align: center;">Join thousands of entrepreneurs and clients building the future together on our secure, enterprise-grade platform.</p>
-      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-        <a href="registration.html"><button class="btn-hero btn-hero-gold" onclick="goPage('register')">Start Free — It's Quick</button></a>
-         <a href="contact.html"><button class="btn-hero btn-hero-ghost" onclick="goPage('contact')">Talk to Sales</button></a>
-      </div>
-    </div>
-  </div>
-  <footer>
-    <div class="footer-grid" >
-      <div class="footer-brand" >
-        <div class="nav-logo" style="font-size:1.3rem">Elevate<span style="color:var(--white)">Edge</span></div>
-        <p>The secure marketplace where elite entrepreneurs and ambitious clients build transformative partnerships.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Platform</h4>
-        <a onclick="goPage('home')">Home</a>
-        <a onclick="goPage('service')">Services</a>
-        <a onclick="goPage('project')">Projects</a>
-        <a onclick="goPage('blog')">Blog</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a onclick="goPage('about')">About Us</a>
-        <a onclick="goPage('contact')">Contact</a>
-        <a>Privacy Policy</a>
-        <a>Terms of Service</a>
-      </div>
-    </div>
-     <div class="footer-bottom">
-      <span>© 2026 Elevate Edge Solutions. All rights reserved.</span>
-      <div class="footer-security">
-       
-      </div>
-  
+  <div id="view-auth" class="view hidden">
+    <section>
+      <div class="wrap auth-shell">
+        <div class="auth-tabs">
+          <button id="tabLogin" class="active" data-tab="login">Log in</button>
+          <button id="tabRegister" data-tab="register">Register</button>
+        </div>
 
-</body>
+        <form id="loginForm">
+          <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" required></div>
+          <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" required></div>
+          <button type="submit" class="btn btn-fill-ink" style="width:100%;">Log in</button>
+          <p class="form-msg" id="loginMsg"></p>
+        </form>
+
+        <form id="registerForm" class="hidden">
+          <div class="role-picker">
+            <button type="button" class="role-option selected" data-role="client"><strong>I'm a client</strong><span>Looking to hire an entrepreneur</span></button>
+            <button type="button" class="role-option" data-role="entrepreneur"><strong>I'm an entrepreneur</strong><span>Looking to list my services</span></button>
+          </div>
+          <div class="field"><label for="regName">Full name</label><input id="regName" type="text" required></div>
+          <div class="field"><label for="regEmail">Email</label><input id="regEmail" type="email" required></div>
+          <div class="field"><label for="regPassword">Password</label><input id="regPassword" type="password" required minlength="4"></div>
+          <button type="submit" class="btn btn-fill-ink" style="width:100%;">Create account</button>
+          <p class="form-msg" id="registerMsg"></p>
+        </form>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div id="modalRoot"></div>
+<footer><div id="siteFooter"></div></footer>
+
 <script>
-    /* ═══════════════════════════
-   STATE
-═══════════════════════════ */
-const state = {
-  currentPage: 'home',
-  loginType: 'entrepreneur',
-  regTab: 'entrepreneur',
-  entStep: 1,
-  captchas: {},
-  loginAttempts: 0,
-  lastAttempt: 0,
-  loggedIn: false,
-  userRole: null,
-  userName: ''
-};
+// ElevateEdge — shared data layer, used by every page.
+//
+// This is a multi-page static site (separate .html files), so for data
+// posted on one page (e.g. entrepreneur.html) to show up on another (e.g.
+// client.html or about.html), it has to live somewhere all pages on the same
+// site can read it. That's the browser's local storage — it's scoped to the
+// site's origin, so once this is hosted for real (GitHub Pages, your own
+// domain, etc.) every page shares the same data automatically.
+//
+// It falls back to an in-memory value if local storage is unavailable, so a
+// page never crashes — it just won't remember data after you navigate away.
+window.EE = (function () {
+  const SERVICES_KEY = 'ee_services';
+  const ACCOUNTS_KEY = 'ee_accounts';
+  const SESSION_KEY = 'ee_session';
 
-/* ═══════════════════════════
-   NAVIGATION
-═══════════════════════════ */
-function goPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const el = document.getElementById('page-' + page);
-  if (el) el.classList.add('active');
-  const navEl = document.getElementById('nav-' + page);
-  if (navEl) navEl.classList.add('active');
-  state.currentPage = page;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  const memoryStore = {};
+  function lsGet(key) {
+    try { return window.localStorage.getItem(key); }
+    catch (e) { return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null; }
+  }
+  function lsSet(key, value) {
+    memoryStore[key] = value;
+    try { window.localStorage.setItem(key, value); } catch (e) { /* memory-only this page */ }
+  }
+  function lsRemove(key) {
+    delete memoryStore[key];
+    try { window.localStorage.removeItem(key); } catch (e) { /* nothing to remove */ }
+  }
 
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+
+  function seedServices() {
+    return [
+      { id: uid(), category: 'Trade, Parts & Logistics', title: 'Automotive spare parts sourcing & distribution', description: 'Sourcing and distributing spare parts for cars, motorcycles and trucks — genuine and aftermarket options.', price: 'From 5,000 frs / order', entrepreneurName: 'Chineacherem Samuel', entrepreneurEmail: 'samuel@example.com' },
+      { id: uid(), category: 'Design & Branding', title: 'Brand identity & full-stack web builds', description: 'Full-stack engineering and product architecture, paired with graphic design for a complete brand and product package.', price: 'From 1,500 frs / project', entrepreneurName: 'Assen Jemima', entrepreneurEmail: 'assenjemima@gmail.com' },
+      { id: uid(), category: 'Digital Marketing', title: 'Growth & performance marketing', description: 'Data-driven campaigns across SEO, paid ads, and content, built around measurable ROI.', price: 'From 20,000 frs / month', entrepreneurName: 'Ange', entrepreneurEmail: 'ange@example.com' }
+    ];
+  }
+
+  async function getServices() {
+    let list = null;
+    try { const raw = lsGet(SERVICES_KEY); list = raw ? JSON.parse(raw) : null; } catch (e) { list = null; }
+    if (!list || !list.length) { list = seedServices(); saveServices(list); }
+    return list;
+  }
+  async function saveServices(arr) { lsSet(SERVICES_KEY, JSON.stringify(arr)); }
+
+  async function getAccounts() {
+    try { const raw = lsGet(ACCOUNTS_KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+  }
+  async function saveAccounts(obj) { lsSet(ACCOUNTS_KEY, JSON.stringify(obj)); }
+
+  // Per-client request history, keyed by email.
+  async function getRequests(email) {
+    try { const raw = lsGet('ee_requests_' + email); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+  }
+  async function saveRequests(email, list) { lsSet('ee_requests_' + email, JSON.stringify(list)); }
+
+  // --- Session: who is logged in, on this browser ---
+  function getSession() {
+    try { const raw = lsGet(SESSION_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+  function setSession(user) { lsSet(SESSION_KEY, JSON.stringify(user)); }
+  function clearSession() { lsRemove(SESSION_KEY); }
+
+  const CATEGORIES = ['Design & Branding', 'Web & App Development', 'Digital Marketing', 'Business Strategy & Consulting', 'Cybersecurity', 'AI & Automation', 'Trade, Parts & Logistics', 'Other'];
+
+  // --- Shared header, rendered into <div id="siteHeader"></div> on every page ---
+  function renderHeader(activePage) {
+    const el = document.getElementById('siteHeader');
+    if (!el) return;
+    const session = getSession();
+    const dashHref = session ? (session.role === 'entrepreneur' ? 'entrepreneur.html' : 'client.html') : 'dashboard.html';
+
+    const navItems = [
+      ['marketplace.html', 'Home', 'home'],
+      ['marketplace.html#browse', 'Browse services', 'browse'],
+      ['services.html', 'Services', 'services'],
+      ['about.html', 'About', 'about']
+    ];
+
+    const navHtml = navItems.map(([href, label, key]) =>
+      `<a href="${href}" class="${activePage === key ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    let actionsHtml;
+    if (session) {
+      actionsHtml = `
+        <span class="user-chip">Signed in as <strong>${escapeHtml(session.name)}</strong> <span class="who">(${escapeHtml(session.role)})</span></span>
+        <a href="${dashHref}" class="btn btn-small btn-outline-dark">Dashboard</a>
+        <button class="btn btn-small btn-outline-dark" id="eeLogoutBtn">Log out</button>`;
+    } else {
+      actionsHtml = `
+        <a href="marketplace.html#auth" class="btn btn-small btn-outline-dark">Log in</a>
+        <a href="marketplace.html#auth" class="btn btn-small btn-brass">Join free</a>`;
+    }
+
+    // Mobile slide-out menu: full-screen panel with the same nav items, plus
+    // account actions as large touch targets, since nav-links are hidden below 860px.
+    const mobileNavHtml = navItems.map(([href, label, key]) =>
+      `<a href="${href}" class="${activePage === key ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    let mobileActionsHtml;
+    if (session) {
+      mobileActionsHtml = `
+        <div class="mobile-menu-user">Signed in as <strong>${escapeHtml(session.name)}</strong> (${escapeHtml(session.role)})</div>
+        <a href="${dashHref}" class="btn btn-brass">Go to dashboard</a>
+        <button class="btn btn-outline-dark" id="eeMobileLogoutBtn">Log out</button>`;
+    } else {
+      mobileActionsHtml = `
+        <a href="marketplace.html#auth" class="btn btn-brass">Join free</a>
+        <a href="marketplace.html#auth" class="btn btn-outline-dark">Log in</a>`;
+    }
+
+    el.innerHTML = `
+      <nav>
+        <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+        <ul class="nav-links" style="list-style:none;">${navHtml}</ul>
+        <div class="nav-actions">
+          ${actionsHtml}
+          <button class="menu-toggle" id="eeMenuToggle" aria-label="Open menu">&#9776;</button>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="eeMobileMenu">
+        <div class="mobile-menu-head">
+          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <button class="mobile-menu-close" id="eeMenuClose" aria-label="Close menu">&times;</button>
+        </div>
+        <div class="mobile-menu-links">${mobileNavHtml}</div>
+        <div class="mobile-menu-actions">${mobileActionsHtml}</div>
+      </div>`;
+
+    const logoutBtn = document.getElementById('eeLogoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+    }
+    const mobileLogoutBtn = document.getElementById('eeMobileLogoutBtn');
+    if (mobileLogoutBtn) {
+      mobileLogoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+    }
+
+    const menuToggle = document.getElementById('eeMenuToggle');
+    const mobileMenu = document.getElementById('eeMobileMenu');
+    const menuClose = document.getElementById('eeMenuClose');
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    }
+    if (menuClose && mobileMenu) {
+      menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+      });
+    }
+  }
+
+  function renderFooter() {
+    const el = document.getElementById('siteFooter');
+    if (!el) return;
+    el.innerHTML = `
+      <div class="wrap footer-grid">
+        <div>
+          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <p>The global marketplace where entrepreneurs — in any field — get discovered by the clients who need them.</p>
+        </div>
+        <div>
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="marketplace.html#browse">Browse services</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="entrepreneur.html">Post a service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="marketplace.html#auth">Log in / Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ElevateEdge Solutions. All rights reserved.</span>
+        <span>HISMIL University Institute</span>
+      </div>`;
+  }
+
+  // Gate a page to a required role; shows a friendly prompt instead of the page content if not met.
+  function requireRole(role, rootId) {
+    const session = getSession();
+    const root = document.getElementById(rootId);
+    if (session && session.role === role) return session;
+    if (!root) return null;
+    const roleLabel = role === 'entrepreneur' ? 'an entrepreneur' : 'a client';
+    root.innerHTML = `
+      <div class="gate">
+        <h2>${session ? "This page is for " + roleLabel : "Log in to continue"}</h2>
+        <p>${session
+          ? `You're signed in as ${escapeHtml(session.name)} (${escapeHtml(session.role)}). Log out and sign in as ${roleLabel} to see this page.`
+          : `Log in or register as ${roleLabel} to view your dashboard.`}</p>
+        <a href="marketplace.html#auth" class="btn btn-fill-ink">Log in / Register</a>
+        <a href="marketplace.html" class="btn btn-outline-ink">Back home</a>
+      </div>`;
+    return null;
+  }
+
+  return {
+    getServices, saveServices, getAccounts, saveAccounts,
+    getRequests, saveRequests,
+    getSession, setSession, clearSession,
+    uid, escapeHtml, CATEGORIES,
+    renderHeader, renderFooter, requireRole
+  };
+})();
 
 </script>
+<script>
+(function(){
+  let services = [];
+  let registerRole = 'client';
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  function showView(name){
+    $$('.view').forEach(v=>v.classList.add('hidden'));
+    $('#view-'+name).classList.remove('hidden');
+    window.scrollTo({top:0, behavior:'smooth'});
+    if(name==='browse') renderBrowse();
+    if(name==='home') renderHome();
+    history.replaceState(null, '', name==='home' ? 'marketplace.html' : '#'+name);
+  }
+
+  $$('[data-nav]').forEach(el=>{
+    el.addEventListener('click', ()=> showView(el.getAttribute('data-nav')));
+  });
+
+  function renderHome(){
+    const cats = Array.from(new Set(services.map(s=>s.category)));
+    $('#heroStats').innerHTML = `
+      <div><strong>${services.length}</strong><span>Services listed</span></div>
+      <div><strong>${cats.length}</strong><span>Categories</span></div>
+      <div><strong>${new Set(services.map(s=>s.entrepreneurEmail)).size}</strong><span>Entrepreneurs</span></div>`;
+    $('#catGrid').innerHTML = cats.map(c=>{
+      const count = services.filter(s=>s.category===c).length;
+      return `<button class="cat-card" data-cat="${EE.escapeHtml(c)}"><span class="name">${EE.escapeHtml(c)}</span><span class="count">${count} service${count===1?'':'s'}</span></button>`;
+    }).join('') || '<p style="padding:24px;color:var(--slate);">No categories yet — be the first to post a service.</p>';
+    $$('#catGrid .cat-card').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        showView('browse');
+        $('#categoryFilter').value = btn.getAttribute('data-cat');
+        renderBrowse();
+      });
+    });
+    renderFeatured();
+  }
+
+  function renderFeatured(){
+    const featured = services.slice(0, 4);
+    const root = $('#featuredList');
+    if(!root) return;
+    if(!featured.length){
+      root.innerHTML = '<p style="color:rgba(244,242,237,0.6);">No entrepreneurs listed yet — be the first.</p>';
+      return;
+    }
+    function initials(name){ return (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join(''); }
+    root.innerHTML = featured.map(s => `
+      <div class="list-row">
+        <div class="avatar-sq">${initials(s.entrepreneurName) || '—'}</div>
+        <div>
+          <span class="cat-tag">${EE.escapeHtml(s.category)}</span>
+          <h4>${EE.escapeHtml(s.entrepreneurName)}</h4>
+          <p>${EE.escapeHtml(s.title)}</p>
+        </div>
+        <div class="meta"><span class="amount">${EE.escapeHtml(s.price)}</span></div>
+      </div>`).join('');
+  }
+
+  function populateCategoryFilter(){
+    const sel = $('#categoryFilter');
+    const current = sel.value;
+    const cats = Array.from(new Set(services.map(s=>s.category)));
+    sel.innerHTML = '<option value="">All categories</option>' + cats.map(c=>`<option value="${EE.escapeHtml(c)}">${EE.escapeHtml(c)}</option>`).join('');
+    sel.value = current;
+  }
+
+  function renderBrowse(){
+    populateCategoryFilter();
+    const q = ($('#searchInput').value||'').toLowerCase().trim();
+    const cat = $('#categoryFilter').value;
+    const filtered = services.filter(s=>{
+      const matchesCat = !cat || s.category===cat;
+      const hay = (s.title+' '+s.description+' '+s.entrepreneurName+' '+s.category).toLowerCase();
+      return matchesCat && (!q || hay.includes(q));
+    });
+    $('#resultsCount').textContent = `${filtered.length} service${filtered.length===1?'':'s'} found`;
+    const root = $('#browseResults');
+    if(filtered.length===0){
+      root.innerHTML = '<div class="empty-state">No services match yet. Try a different search, or be the first entrepreneur to post in this category.</div>';
+      return;
+    }
+    root.innerHTML = `<div class="service-grid">${filtered.map(s=>`
+      <div class="service-card" data-id="${s.id}">
+        <div class="cat-tag">${EE.escapeHtml(s.category)}</div>
+        <h3>${EE.escapeHtml(s.title)}</h3>
+        <div class="by">by ${EE.escapeHtml(s.entrepreneurName)}</div>
+        <p>${EE.escapeHtml(s.description)}</p>
+        <div class="price">${EE.escapeHtml(s.price)}</div>
+      </div>`).join('')}</div>`;
+    $$('.service-card').forEach(card=>{
+      card.addEventListener('click', ()=> openServiceModal(card.getAttribute('data-id')));
+    });
+  }
+  $('#searchInput').addEventListener('input', renderBrowse);
+  $('#categoryFilter').addEventListener('change', renderBrowse);
+
+  function openServiceModal(id){
+    const s = services.find(x=>x.id===id);
+    if(!s) return;
+    $('#modalRoot').innerHTML = `
+      <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+          <button class="modal-close" id="modalClose">&times;</button>
+          <div class="cat-tag">${EE.escapeHtml(s.category)}</div>
+          <h3>${EE.escapeHtml(s.title)}</h3>
+          <div class="by">by ${EE.escapeHtml(s.entrepreneurName)} · ${EE.escapeHtml(s.entrepreneurEmail)}</div>
+          <p class="desc">${EE.escapeHtml(s.description)}</p>
+          <div class="meta"><div class="price">${EE.escapeHtml(s.price)}</div></div>
+          <button class="btn btn-fill-ink" id="requestBtn" style="width:100%;">Request this service</button>
+          <p class="form-msg" id="requestMsg"></p>
+        </div>
+      </div>`;
+    $('#modalClose').addEventListener('click', closeModal);
+    $('#modalOverlay').addEventListener('click', (e)=>{ if(e.target.id==='modalOverlay') closeModal(); });
+    $('#requestBtn').addEventListener('click', ()=>{
+      const session = EE.getSession();
+      if(!session || session.role!=='client'){
+        closeModal(); showView('auth'); setAuthTab('register'); setRole('client');
+        return;
+      }
+      window.location.href = 'client.html';
+    });
+  }
+  function closeModal(){ $('#modalRoot').innerHTML=''; }
+
+  function setAuthTab(tab){
+    $('#tabLogin').classList.toggle('active', tab==='login');
+    $('#tabRegister').classList.toggle('active', tab==='register');
+    $('#loginForm').classList.toggle('hidden', tab!=='login');
+    $('#registerForm').classList.toggle('hidden', tab!=='register');
+  }
+  $('#tabLogin').addEventListener('click', ()=>setAuthTab('login'));
+  $('#tabRegister').addEventListener('click', ()=>setAuthTab('register'));
+
+  function setRole(role){
+    registerRole = role;
+    $$('.role-option').forEach(o=>o.classList.toggle('selected', o.getAttribute('data-role')===role));
+  }
+  $$('.role-option').forEach(o=>o.addEventListener('click', ()=>setRole(o.getAttribute('data-role'))));
+
+  $('#loginForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email = $('#loginEmail').value.trim().toLowerCase();
+    const pass = $('#loginPassword').value;
+    const accounts = await EE.getAccounts();
+    const acc = accounts[email];
+    const msg = $('#loginMsg');
+    if(!acc || acc.password !== pass){
+      msg.className='form-msg error'; msg.textContent='No matching account, or incorrect password.';
+      return;
+    }
+    EE.setSession({name:acc.name, email, role:acc.role});
+    msg.className='form-msg success'; msg.textContent='Welcome back! Taking you to your dashboard…';
+    setTimeout(()=> window.location.href = 'dashboard.html', 500);
+  });
+
+  $('#registerForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = $('#regName').value.trim();
+    const email = $('#regEmail').value.trim().toLowerCase();
+    const password = $('#regPassword').value;
+    const msg = $('#registerMsg');
+    const accounts = await EE.getAccounts();
+    if(accounts[email]){
+      msg.className='form-msg error'; msg.textContent='An account with that email already exists — try logging in.';
+      return;
+    }
+    accounts[email] = {name, password, role: registerRole};
+    try{ await EE.saveAccounts(accounts); }
+    catch(err){ msg.className='form-msg error'; msg.textContent='Could not save your account — please try again.'; return; }
+    EE.setSession({name, email, role: registerRole});
+    msg.className='form-msg success'; msg.textContent='Account created! Taking you to your dashboard…';
+    setTimeout(()=> window.location.href = 'dashboard.html', 500);
+  });
+
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace('#','');
+    if (h === 'browse') showView('browse');
+    else if (h === 'auth') showView('auth');
+    else showView('home');
+  });
+
+  async function init(){
+    EE.renderHeader('home');
+    EE.renderFooter();
+    services = await EE.getServices();
+    const hash = window.location.hash.replace('#','');
+    if(hash === 'browse'){ showView('browse'); }
+    else if(hash === 'auth'){ showView('auth'); }
+    else { showView('home'); }
+  }
+  init();
+})();
+</script>
+</body>
 </html>

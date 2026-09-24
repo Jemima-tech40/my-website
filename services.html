@@ -1,287 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — ElevateEdge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-        --gold: #1A8FA8;
-        --gold-lt: #5BC4D8;
-        --dark: #111111; 
-        --charcoal: #2a2a2a;
-        --mid:#555555;
-        --soft:#888888;
-        --cream:#31e0ff; 
-        --white: #e2e7e7;
-        --line: #6eecf5;
-        --gold-dim: rgba(201,168,76,0.15);
-  --white: #f5f4ef;
-  --muted: #8a8a9a;
-  --accent: #4c6ef5;
-  --accent2: #9b59f5;
-  --green: #22c55e;
-  --red: #ef4444;
-  --r: 8px;
-    }
-   *,*::before, **::after{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-  html{
-        scroll-behavior: smooth;
-    }
-    body{
-        font-family: 'outfit',sans-serif;
-        color: var(--dark);
-        background: var(--white);
-        overflow-x: hidden;
-        -webkit-font-smoothing:antialiased;
-    }
-   
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px;
-  height: 70px;
-  background: rgba(10,10,15,0.92);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem; font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 0.02em;
-  cursor: pointer;
-}
-.nav-logo span { color: var(--white); }
-.nav-links { display: flex; gap: 2px; }
-.nav-links a {
-  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--muted);
-  padding: 8px 14px; border-radius: 6px;
-  cursor: pointer; transition: all .2s;
-  text-decoration: none;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--white); background: var(--border); }
-.nav-actions { display: flex; gap: 10px; }
-.btn-outline {
-  padding: 8px 20px; border-radius: 6px;
-  border: 1px solid var(--gold); color: var(--gold);
-  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em;
-  cursor: pointer; background: transparent; transition: all .2s;
-  font-family: 'DM Sans', sans-serif;
-}
-.btn-outline:hover { background: var(--gold); color: var(--black); }
-.btn-solid {
-  padding: 8px 20px; border-radius: 6px;
-  background: var(--gold); color: var(--black);
-  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em;
-  cursor: pointer; border: none; transition: all .2s;
-  font-family: 'DM Sans', sans-serif;
-}
-.btn-solid:hover { background: var(--gold-light); }
+:root{
+  /* Base surfaces — the whole site is dark now, no light sections */
+  --bg:#0B1220; --bg-2:#131F38; --bg-3:#1B2A47;
+  --paper:var(--bg); --paper-2:var(--bg-2);
+  --ink:#FFFFFF; --ink-2:var(--bg-2); --ink-3:var(--bg-3);
 
-/* ── PAGES ── */
-.page {  min-height: 100vh; padding-top: 70px; }
-.page.active { display: block; }
+  /* Text */
+  --text:#FFFFFF; --slate:rgba(255,255,255,0.70); --slate-light:rgba(255,255,255,0.50);
 
+  /* Accents — blue for labels/icons/links, orange for highlights, matching the reference site */
+  --blue:#2F9BFF; --blue-light:#7EC8FF;
+  --brass:#FFA83D; --brass-light:var(--blue-light); /* kickers/eyebrows are blue, not gold, in the new system */
+  --orange:#FFA83D; --orange-light:#FFC98A;
 
-/* ── SECTION COMMONS ── */
-.section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border: #1A8FA8;}
-.section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 16px;
- background-color: rgb(49, 172, 202);
- justify-content: center;
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
-  color: var(--white); margin-bottom: 24px;
-}
-.section-title em { color: var(--gold); font-style: normal; }
-.section-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+  --good:#34D399; --bad:#F87171;
+  --line:rgba(255,255,255,0.12); --line-dark:rgba(255,255,255,0.16);
 
-/* ── GOLD LINE ── */
-.gold-line { height: 2px; background: linear-gradient(90deg, var(--gold), transparent); width: 60px; margin-bottom: 24px; }
+  --serif:'Fredoka', sans-serif; --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--sans);color:var(--text);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 500px at 15% -10%, rgba(47,155,255,0.16), transparent 60%),
+    radial-gradient(700px 500px at 100% 10%, rgba(255,168,61,0.10), transparent 55%);
+  background-repeat:no-repeat;
+}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-0.01em;color:var(--text);}
+button{font-family:var(--sans);cursor:pointer;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+.hidden{display:none !important;}
 
-/* ══════════════════════
-   SERVICE PAGE
-══════════════════════ */
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-.srv-card {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 32px; transition: all .3s; cursor: pointer; position: relative; overflow: hidden;
+/* ---------- Floating pill nav ---------- */
+header{position:sticky;top:14px;z-index:60;padding:0 20px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  max-width:1180px;margin:0 auto;padding:12px 20px;
+  background:rgba(11,18,32,0.72);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:999px;
 }
-.srv-card::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--gold), var(--accent));
-  transform: scaleX(0); transition: transform .3s; transform-origin: left;
-}
-.srv-card:hover::after { transform: scaleX(1); }
-.srv-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
-.srv-icon { font-size: 2.2rem; margin-bottom: 18px; }
-.srv-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
-.srv-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
-.srv-price {
-  font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
-  color: var(--gold);
-}
-.srv-price span { font-size: 0.78rem; color: var(--muted); font-family: 'DM Sans', sans-serif; }
-.srv-features {  list-style: none; margin-top: 16px; }
-.srv-features li {
-  font-size: 0.82rem; color: var(--muted); padding: 5px 0;
-  display: flex; gap: 8px; align-items: center;
-}
-.srv-features li::before { content: '✓'; color: var(--green); font-weight: 700; }
-.featured-srv { border-color: rgba(201,168,76,0.4); background: linear-gradient(160deg, rgba(201,168,76,0.06), var(--card)); }
+.logo{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:9px;}
+.logo .mark{width:9px;height:9px;background:var(--orange);display:inline-block;border-radius:3px;}
+.nav-links{display:flex;gap:4px;list-style:none;flex-wrap:wrap;}
+.nav-links a,.nav-links button{background:none;border:0;color:var(--slate);font-size:0.88rem;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .15s;}
+.nav-links a:hover,.nav-links button:hover{color:var(--text);background:rgba(255,255,255,0.06);}
+.nav-links a.active{color:var(--text);background:var(--bg-3);}
+.nav-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.menu-toggle{display:none;background:rgba(255,255,255,0.06);border:1px solid var(--line-dark);color:var(--text);width:40px;height:40px;border-radius:999px;font-size:1.05rem;align-items:center;justify-content:center;}
+.menu-toggle:hover{background:rgba(255,255,255,0.12);}
 
+/* ---------- Buttons — all pill-shaped ---------- */
+.btn{display:inline-block;padding:12px 24px;font-size:0.88rem;font-weight:600;border:1px solid transparent;transition:all .18s ease;border-radius:999px;}
+.btn-brass{background:var(--blue);color:#062038;}
+.btn-brass:hover{background:var(--blue-light);}
+.btn-outline-dark{border-color:var(--line-dark);color:var(--text);background:rgba(255,255,255,0.04);}
+.btn-outline-dark:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.08);}
+.btn-outline-ink{border-color:var(--line-dark);color:var(--text);background:transparent;}
+.btn-outline-ink:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);}
+.btn-fill-ink{background:var(--bg-3);color:var(--text);border-color:var(--line-dark);}
+.btn-fill-ink:hover{background:#22345A;}
+.btn-small{padding:8px 16px;font-size:0.8rem;}
+.btn-danger{border:1px solid var(--bad);color:var(--bad);background:transparent;}
+.btn-danger:hover{background:var(--bad);color:#1a0505;}
+.user-chip{color:var(--text);font-size:0.85rem;display:flex;align-items:center;gap:10px;}
+.user-chip .who{color:var(--slate);}
+.user-chip strong{color:var(--blue-light);}
 
-footer {
-  background: var(--gray); border-top: 1px solid var(--gray);
-  padding: 60px 48px 32px;
-  background-color: #addae0;
-}
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto; }
-.footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin-top: 12px; max-width: 280px; }
-.footer-col h4 { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; color: var(--gold); }
-.footer-col a { display: block; font-size: 0.84rem; color: var(--muted); cursor: pointer; margin-bottom: 10px; text-decoration: none; transition: color .2s; }
-.footer-col a:hover { color: var(--white); }
-.footer-bottom {
-  max-width: 1200px; margin: 48px auto 0; padding-top: 24px;
-  border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.78rem; color: var(--muted);
-}
-.footer-security { display: flex; gap: 16px; }
+/* ---------- Sections ---------- */
+section{padding:72px 0;}
+.section-head{max-width:640px;margin-bottom:44px;}
+.section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.15;}
+.section-head p{color:var(--slate);margin-top:12px;font-size:1rem;line-height:1.6;}
+.kicker{font-size:0.8rem;color:var(--blue-light);font-weight:700;margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase;}
 
-/* ══════════════════════
-   RESPONSIVE
-══════════════════════ */
-@media (max-width: 900px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  .hero, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-  .hero-visual { display: none; }
-  .section { padding: 60px 20px; }
-  .how-grid, .ent-grid, .services-grid, .projects-grid, .team-grid, .values-grid { grid-template-columns: 1fr; }
-  .blog-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .form-row { grid-template-columns: 1fr; }
+/* ---------- Forms ---------- */
+input,select,textarea{width:100%;border:1px solid var(--line);background:var(--bg-2);padding:13px 16px;font-family:var(--sans);font-size:0.94rem;color:var(--text);border-radius:14px;}
+input::placeholder,textarea::placeholder{color:var(--slate-light);}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue);}
+label{display:block;font-size:0.82rem;color:var(--slate);margin-bottom:6px;font-weight:500;}
+.field{margin-bottom:18px;}
+.form-msg{font-size:0.85rem;margin-top:14px;}
+.form-msg.error{color:var(--bad);}
+.form-msg.success{color:var(--good);}
+
+/* ---------- Cards / rows ---------- */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.service-card{background:var(--bg-2);padding:26px;cursor:pointer;transition:all .15s;border:1px solid var(--line);border-radius:var(--radius);}
+.service-card:hover{background:var(--bg-3);border-color:var(--line-dark);}
+.service-card .cat-tag{font-size:0.72rem;color:var(--blue-light);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.service-card h3{font-size:1.1rem;margin-bottom:8px;}
+.service-card .by{font-size:0.82rem;color:var(--slate-light);margin-bottom:10px;}
+.service-card p{color:var(--slate);font-size:0.9rem;line-height:1.5;margin-bottom:14px;}
+.service-card .price{font-family:var(--serif);font-weight:600;color:var(--orange-light);font-size:1.05rem;}
+.empty-state{padding:60px 20px;text-align:center;color:var(--slate);border:1px dashed var(--line);border-radius:var(--radius);}
+.loading{padding:60px;text-align:center;color:var(--slate-light);}
+
+footer{background:transparent;border-top:1px solid var(--line);color:var(--slate);padding:64px 0 32px;margin-top:40px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-grid .logo{margin-bottom:16px;}
+.footer-grid > div > p{font-size:0.9rem;line-height:1.6;max-width:34ch;color:var(--slate);}
+.footer-grid h5{font-size:0.78rem;color:var(--text);font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+.footer-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-grid ul a{font-size:0.9rem;color:var(--slate);}
+.footer-grid ul a:hover{color:var(--text);}
+.footer-bottom{border-top:1px solid var(--line);padding-top:24px;font-size:0.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1180px;margin:0 auto;padding-left:32px;padding-right:32px;}
+
+/* CTA band — solid blue pill-cornered panel, matches the reference site's closing CTAs */
+.cta-band{background:linear-gradient(135deg, var(--blue), #1F7FE0);color:#06203A;border-radius:28px;margin:0 20px;}
+.cta-band .wrap{max-width:1140px;}
+.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.cta-inner h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:16ch;color:#06203A;}
+.cta-inner .btns{display:flex;gap:14px;flex-wrap:wrap;}
+.cta-band .btn-outline-ink{border-color:rgba(6,32,58,0.35);color:#06203A;background:transparent;}
+.cta-band .btn-outline-ink:hover{border-color:#06203A;background:rgba(6,32,58,0.08);}
+.cta-band .btn-fill-ink{background:#06203A;color:#fff;border-color:#06203A;}
+.cta-band .btn-fill-ink:hover{background:#0A2C4D;}
+
+/* Process steps — rounded cards with step badge, matches "Four steps" pattern */
+.process{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.process-step{padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);}
+.process-step .num{
+  font-family:var(--serif);font-size:0.78rem;font-weight:700;color:var(--blue-light);letter-spacing:0.08em;
+  display:inline-block;margin-bottom:18px;background:rgba(47,155,255,0.14);padding:6px 12px;border-radius:999px;
+}
+.process-step h3{font-size:1.15rem;margin-bottom:10px;}
+.process-step p{color:var(--slate);font-size:0.93rem;line-height:1.6;}
+
+/* dark-panel is now a no-op visually (everything is already dark) but kept for markup compatibility */
+.dark-panel{background:transparent;color:var(--text);}
+.dark-panel .section-head p{color:var(--slate);}
+.dark-panel .service-list{border-top:1px solid var(--line);}
+.dark-panel .service-row{border-bottom:1px solid var(--line);}
+.dark-panel .service-row .name{color:var(--text);}
+.dark-panel .service-row .desc{color:var(--slate);}
+.dark-panel .service-row .deliverables span{color:var(--slate-light);border-color:var(--line);}
+.dark-panel .service-row .price{color:var(--blue-light);}
+.dark-panel .service-row .price .amount{color:var(--text);}
+.dark-panel .service-row .live-count{color:var(--slate-light);}
+.dark-panel .list-row{border-bottom-color:var(--line);}
+.dark-panel .list-row:first-child{border-top-color:var(--line);}
+.dark-panel .list-row h4{color:var(--text);}
+.dark-panel .list-row p{color:var(--slate);}
+.dark-panel .list-row .meta .amount{color:var(--text);}
+
+/* Split hero — headline + side panel, matches the reference's layered hero style */
+.hero-split{display:grid;grid-template-columns:1.15fr 0.85fr;gap:64px;align-items:end;}
+.hero-panel{background:var(--bg-2);border:1px solid var(--line);padding:32px 28px;border-radius:var(--radius);}
+.hero-panel .label{font-size:0.78rem;color:var(--orange-light);font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+.hero-panel .big{font-family:var(--serif);font-size:1.75rem;line-height:1.3;font-weight:600;color:var(--text);margin-bottom:18px;}
+.hero-panel .sub{font-size:0.85rem;color:var(--slate);border-top:1px solid var(--line);padding-top:16px;line-height:1.5;}
+.hero-panel .sub strong{color:var(--text);display:block;font-size:0.92rem;margin-bottom:4px;}
+
+/* Stat strip — icon-free number blocks, pill-badge style */
+.stat-strip{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+.stat-strip div{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:14px 20px;min-width:120px;}
+.stat-strip strong{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--text);}
+.stat-strip span{font-size:0.76rem;color:var(--slate-light);}
+.stat-strip.light div{background:var(--bg-2);border-color:var(--line);}
+.stat-strip.light strong{color:var(--text);}
+.stat-strip.light span{color:var(--slate-light);}
+
+/* List row — bordered row for listings/requests/profiles */
+.list-row{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:22px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;background:var(--bg-2);}
+.list-row .avatar-sq{width:48px;height:48px;background:var(--bg-3);color:var(--blue-light);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:1rem;flex-shrink:0;border-radius:14px;border:1px solid var(--line);}
+.list-row .cat-tag{font-size:0.72rem;color:var(--orange-light);font-weight:700;margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:0.04em;}
+.list-row h4{font-size:1.02rem;margin-bottom:4px;}
+.list-row p{color:var(--slate);font-size:0.88rem;line-height:1.5;}
+.list-row .meta{text-align:right;white-space:nowrap;}
+.list-row .meta .amount{font-family:var(--serif);font-size:1.05rem;color:var(--text);display:block;margin-bottom:10px;}
+
+/* Numbered option panel */
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.option-panel{background:var(--bg-2);border:1px solid var(--line);padding:30px;border-radius:var(--radius);}
+.option-panel .num{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--blue-light);display:block;margin-bottom:16px;}
+.option-panel h3{font-size:1.2rem;color:var(--text);margin-bottom:10px;}
+.option-panel p{color:var(--slate);font-size:0.92rem;line-height:1.55;margin-bottom:22px;}
+
+/* Category tiles / cat-grid */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.cat-card{border:1px solid var(--line);border-radius:16px;padding:22px 20px;background:var(--bg-2);text-align:left;transition:all .15s;}
+.cat-card:hover{background:var(--bg-3);border-color:var(--line-dark);}
+.cat-card .name{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:6px;display:block;color:var(--text);}
+.cat-card .count{font-size:0.8rem;color:var(--slate-light);}
+
+/* Services list rows (Services page) */
+.service-list{display:flex;flex-direction:column;gap:12px;border-top:none;}
+.service-row{display:grid;grid-template-columns:1.4fr 2fr 1fr;gap:28px;padding:24px;align-items:start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);}
+.service-row .name{font-family:var(--serif);font-size:1.2rem;font-weight:600;}
+.service-row .desc{color:var(--slate);font-size:0.92rem;line-height:1.55;}
+.service-row .deliverables{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.service-row .deliverables span{font-size:0.76rem;color:var(--slate-light);border:1px solid var(--line);padding:5px 12px;border-radius:999px;}
+.service-row .price{text-align:right;font-size:0.9rem;color:var(--blue-light);}
+.service-row .price .amount{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--text);margin-bottom:4px;}
+.service-row .live-count{display:block;margin-top:6px;font-size:0.76rem;color:var(--slate-light);}
+
+.gate{max-width:460px;margin:60px auto;text-align:center;padding:48px 36px;border:1px solid var(--line);background:var(--bg-2);border-radius:28px;}
+.gate h2{font-size:1.5rem;margin-bottom:12px;}
+.gate p{color:var(--slate);margin-bottom:24px;line-height:1.6;}
+.gate .btn{margin:0 6px;}
+
+/* ---------- Modal ---------- */
+.modal-overlay{position:fixed;inset:0;background:rgba(4,8,18,0.78);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:60px 20px;overflow:auto;}
+.modal{background:var(--bg-2);border:1px solid var(--line);max-width:560px;width:100%;padding:40px;position:relative;border-radius:28px;}
+.modal-close{position:absolute;top:18px;right:18px;background:none;border:0;font-size:1.4rem;color:var(--slate);}
+.modal .cat-tag{font-size:0.78rem;color:var(--orange-light);font-weight:700;margin-bottom:12px;text-transform:uppercase;}
+.modal h3{font-size:1.45rem;margin-bottom:10px;}
+.modal .by{color:var(--slate-light);font-size:0.9rem;margin-bottom:20px;}
+.modal p.desc{color:var(--slate);line-height:1.65;margin-bottom:24px;}
+.modal .meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:20px;margin-bottom:20px;}
+.modal .meta .price{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--text);}
+
+@media (max-width:860px){
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .process{grid-template-columns:1fr;}
+  .cat-grid{grid-template-columns:1fr 1fr;}
 }
 
-/* Scroll animation */
-@keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
-.fade-up { animation: fadeUp .6s ease forwards; }
-
-/* Dashboard mock for logged in state */
-.dashboard-banner {
-  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(76,110,245,0.1));
-  border: 1px solid rgba(201,168,76,0.3); border-radius: 12px;
-  padding: 20px 28px; margin-bottom: 32px;
-  display: flex; align-items: center; justify-content: space-between;
+@media (max-width:860px){
+  .nav-links{display:none;}
+  .menu-toggle{display:flex;}
+  .service-grid{grid-template-columns:1fr;}
+  .wrap{padding:0 20px;}
+  .hero-split{grid-template-columns:1fr;}
+  .list-row{grid-template-columns:1fr;}
+  .list-row .meta{text-align:left;}
+  .option-grid{grid-template-columns:1fr;}
+  .service-row{grid-template-columns:1fr;gap:14px;}
+  .service-row .price{text-align:left;}
 }
-.db-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-.db-info p { font-size: 0.82rem; color: var(--muted); }
+
+/* ---------- Mobile slide-out menu ---------- */
+.mobile-menu{
+  position:fixed;inset:0;background:var(--bg);z-index:200;
+  display:flex;flex-direction:column;padding:20px 24px 28px;
+  transform:translateX(100%);transition:transform .28s ease;overflow-y:auto;
+}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;padding-top:4px;}
+.mobile-menu-close{background:rgba(255,255,255,0.06);border:1px solid var(--line-dark);color:var(--text);width:38px;height:38px;border-radius:999px;font-size:1.3rem;line-height:1;display:flex;align-items:center;justify-content:center;}
+.mobile-menu-links{display:flex;flex-direction:column;margin-bottom:32px;}
+.mobile-menu-links a{font-size:1.35rem;font-family:var(--serif);font-weight:600;color:var(--text);padding:18px 4px;border-bottom:1px solid var(--line);}
+.mobile-menu-links a.active{color:var(--blue-light);}
+.mobile-menu-user{font-size:0.9rem;color:var(--slate);margin-bottom:18px;padding:0 4px;}
+.mobile-menu-user strong{color:var(--blue-light);}
+.mobile-menu-actions{display:flex;flex-direction:column;gap:12px;margin-top:auto;padding-top:24px;}
+.mobile-menu-actions .btn{width:100%;text-align:center;padding:16px;font-size:1rem;}
+
 </style>
+<style>
+  .services-hero{padding:88px 0 72px;}
+  .services-hero h1{font-size:clamp(2rem,4vw,2.9rem);line-height:1.1;max-width:15ch;margin-bottom:18px;}
+  .services-hero p{font-size:1.02rem;color:rgba(244,242,237,0.78);max-width:48ch;}
+
+  .other-cat{background:var(--paper-2);border:1px dashed var(--line);padding:36px;text-align:center;margin-top:40px;border-radius:var(--radius);}
+  .other-cat h3{font-size:1.2rem;margin-bottom:10px;}
+  .other-cat p{color:var(--slate);max-width:56ch;margin:0 auto 20px;line-height:1.6;}
+</style>
+</head>
 <body>
-           <nav>
-  <div class="nav-logo" onclick="goPage('home')">Elevate<span>Edge</span></div>
-  <div class="nav-links">
-    <a onclick="goPage('home')" id="nav-home" class="active" href="home.html">Home</a>
-    <a onclick="goPage('about')" id="nav-about" style="color: var(--white); " href="About.html">About</a>
-    <a onclick="goPage('service')" id="nav-service"style="color: var(--white);" href="services.html">Services</a>
-    <a onclick="goPage('blog')" id="nav-blog"style="color: var(--white);" href="blog.html">Blog</a>
-    <a onclick="goPage('contact')" id="nav-contact"style="color: var(--white);" href="contact.html">Contact</a>
-  </div>
-  <div class="nav-actions" id="nav-actions">
-   <a href="login.html"><button class="btn-outline" onclick="goPage('login')" >Login</button></a> 
-   <a href="registration.html"><button class="btn-solid" onclick="goPage('register')">Register</button></a> 
-  </div>
-</nav>
 
-<!-- ════════════════════ SERVICE ════════════════════ -->
-<div class="page" id="page-service">
-  <div class="section">
-   <center><div class="section-label">What We Offer</div></center> 
-    <center><h2 class="section-title"> <em>Premium Services</em></h2></center>
-    <p class="section-sub">Every service on Elevate Edge is delivered by verified, top-tier entrepreneurs committed to excellence.</p>
-    <div class="services-grid" style="margin-top:48px">
-      <div class="srv-card">
-        <div class="srv-icon">🎨</div>
-        <h3>Brand Identity & Design</h3>
-        <p>Complete visual identity systems including logos, brand guidelines, and collateral that communicate your unique value proposition.</p>
-        <div class="srv-price">From 5000frs <span>/ project</span></div>
-        <ul class="srv-features">
-          <li>Logo & visual identity</li><li>Brand guidelines doc</li><li>Social media kit</li><li>3 revision rounds</li>
-        </ul>
+<header><div id="siteHeader"></div></header>
+
+<main>
+  <section class="services-hero">
+    <div class="wrap hero-split">
+      <div>
+        <div class="kicker" style="color:var(--brass-light);">What's on ElevateEdge</div>
+        <h1>Popular categories — and room for every other one.</h1>
+        <p>These are the categories entrepreneurs list under most. If what you offer isn't here, you can still list it — clients search by keyword too.</p>
+        <div class="stat-strip" id="servicesStats">
+          <div><strong>—</strong><span>Live listings</span></div>
+          <div><strong>—</strong><span>Categories in use</span></div>
+        </div>
       </div>
-      <div class="srv-card featured-srv">
-        <div style="position:absolute;top:16px;right:16px;background:var(--gold);color:var(--black);font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:100px">POPULAR</div>
-        <div class="srv-icon">💻</div>
-        <h3>Web & App Development</h3>
-        <p>Custom web applications, mobile apps, and SaaS platforms built with modern tech stacks and robust security architecture.</p>
-        <div class="srv-price">From 1500frs <span>/ project</span></div>
-        <ul class="srv-features">
-          <li>Full-stack development</li><li>Responsive design</li><li>Security-first codebase</li><li>Deployment & support</li>
-        </ul>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon">📈</div>
-        <h3>Digital Marketing</h3>
-        <p>Data-driven marketing campaigns across SEO, paid ads, content, and social media that generate real, measurable ROI.</p>
-        <div class="srv-price">From 20000frs <span>/ month</span></div>
-        <ul class="srv-features">
-          <li>SEO optimization</li><li>Paid ads management</li><li>Content strategy</li><li>Monthly reporting</li>
-        </ul>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon">📊</div>
-        <h3>Business Strategy</h3>
-        <p>Expert business analysis, market research, and strategic planning to position your company for sustainable long-term growth.</p>
-        <div class="srv-price">From 25009frs <span>/ session</span></div>
-        <ul class="srv-features">
-          <li>Market analysis</li><li>Competitive research</li><li>Growth roadmap</li><li>Investor pitch prep</li>
-        </ul>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon">🔐</div>
-        <h3>Cybersecurity</h3>
-        <p>Penetration testing, security audits, and compliance frameworks to protect your digital assets and customer data.</p>
-        <div class="srv-price">From 30000frs <span>/ audit</span></div>
-        <ul class="srv-features">
-          <li>Vulnerability assessment</li><li>Penetration testing</li><li>GDPR compliance</li><li>Incident response plan</li>
-        </ul>
-      </div>
-      <div class="srv-card">
-        <div class="srv-icon">🤖</div>
-        <h3>AI & Automation</h3>
-        <p>Custom AI solutions, process automation, and ML models that streamline operations and unlock new business capabilities.</p>
-        <div class="srv-price">From 35000frs <span>/ project</span></div>
-        <ul class="srv-features">
-          <li>Custom ML models</li><li>Process automation</li><li>AI integration</li><li>Maintenance & monitoring</li>
-        </ul>
+      <div class="hero-panel">
+        <div class="label">No listing fee</div>
+        <div class="big">Entrepreneurs keep 100% of what they earn.</div>
+        <div class="sub"><strong>Clients pay entrepreneurs directly.</strong>ElevateEdge never sits between you and your money.</div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:48px">
-     <a href="registration.html"><button class="btn-hero btn-hero-gold" onclick="goPage('register')" style="color: black; background-color: #1A8FA8;">Post a Project</button>
-    </div></a> 
-  </div>
+  </section>
 
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-brand"><div class="nav-logo">Elevate<span style="color:var(--white)">Edge</span></div><p>The secure marketplace for elite entrepreneurs and ambitious clients.</p></div>
-      <div class="footer-col"><h4>Platform</h4><a onclick="goPage('home')">Home</a><a onclick="goPage('service')">Services</a><a onclick="goPage('project')">Projects</a></div>
-      <div class="footer-col"><h4>Company</h4><a onclick="goPage('about')">About</a><a onclick="goPage('contact')">Contact</a></div>
+  <section class="dark-panel">
+    <div class="wrap">
+      <div class="service-list" id="serviceList">
+        <div class="loading">Loading live categories…</div>
+      </div>
     </div>
-    <div class="footer-bottom"><span>© 2026 Elevate Edge Solutions.</span><div class="footer-security"><span></div></div>
-  </footer>
-</div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="other-cat">
+        <h3>Offer something else?</h3>
+        <p>ElevateEdge isn't limited to these categories. Trades, retail, events, tutoring, logistics — if it's a real service, you can list it under "Other" with your own category name.</p>
+        <a href="registration.html" class="btn btn-fill-ink">Register &amp; post your service</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div id="siteFooter"></div></footer>
+
+<script>
+// ElevateEdge — shared data layer, used by every page.
+//
+// This is a multi-page static site (separate .html files), so for data
+// posted on one page (e.g. entrepreneur.html) to show up on another (e.g.
+// client.html or about.html), it has to live somewhere all pages on the same
+// site can read it. That's the browser's local storage — it's scoped to the
+// site's origin, so once this is hosted for real (GitHub Pages, your own
+// domain, etc.) every page shares the same data automatically.
+//
+// It falls back to an in-memory value if local storage is unavailable, so a
+// page never crashes — it just won't remember data after you navigate away.
+window.EE = (function () {
+  const SERVICES_KEY = 'ee_services';
+  const ACCOUNTS_KEY = 'ee_accounts';
+  const SESSION_KEY = 'ee_session';
+
+  const memoryStore = {};
+  function lsGet(key) {
+    try { return window.localStorage.getItem(key); }
+    catch (e) { return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null; }
+  }
+  function lsSet(key, value) {
+    memoryStore[key] = value;
+    try { window.localStorage.setItem(key, value); } catch (e) { /* memory-only this page */ }
+  }
+  function lsRemove(key) {
+    delete memoryStore[key];
+    try { window.localStorage.removeItem(key); } catch (e) { /* nothing to remove */ }
+  }
+
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
+
+  function seedServices() {
+    return [
+      { id: uid(), category: 'Trade, Parts & Logistics', title: 'Automotive spare parts sourcing & distribution', description: 'Sourcing and distributing spare parts for cars, motorcycles and trucks — genuine and aftermarket options.', price: 'From 5,000 frs / order', entrepreneurName: 'Chineacherem Samuel', entrepreneurEmail: 'samuel@example.com' },
+      { id: uid(), category: 'Design & Branding', title: 'Brand identity & full-stack web builds', description: 'Full-stack engineering and product architecture, paired with graphic design for a complete brand and product package.', price: 'From 1,500 frs / project', entrepreneurName: 'Assen Jemima', entrepreneurEmail: 'assenjemima@gmail.com' },
+      { id: uid(), category: 'Digital Marketing', title: 'Growth & performance marketing', description: 'Data-driven campaigns across SEO, paid ads, and content, built around measurable ROI.', price: 'From 20,000 frs / month', entrepreneurName: 'Ange', entrepreneurEmail: 'ange@example.com' }
+    ];
+  }
+
+  async function getServices() {
+    let list = null;
+    try { const raw = lsGet(SERVICES_KEY); list = raw ? JSON.parse(raw) : null; } catch (e) { list = null; }
+    if (!list || !list.length) { list = seedServices(); saveServices(list); }
+    return list;
+  }
+  async function saveServices(arr) { lsSet(SERVICES_KEY, JSON.stringify(arr)); }
+
+  async function getAccounts() {
+    try { const raw = lsGet(ACCOUNTS_KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+  }
+  async function saveAccounts(obj) { lsSet(ACCOUNTS_KEY, JSON.stringify(obj)); }
+
+  // Per-client request history, keyed by email.
+  async function getRequests(email) {
+    try { const raw = lsGet('ee_requests_' + email); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+  }
+  async function saveRequests(email, list) { lsSet('ee_requests_' + email, JSON.stringify(list)); }
+
+  // --- Session: who is logged in, on this browser ---
+  function getSession() {
+    try { const raw = lsGet(SESSION_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+  function setSession(user) { lsSet(SESSION_KEY, JSON.stringify(user)); }
+  function clearSession() { lsRemove(SESSION_KEY); }
+
+  const CATEGORIES = ['Design & Branding', 'Web & App Development', 'Digital Marketing', 'Business Strategy & Consulting', 'Cybersecurity', 'AI & Automation', 'Trade, Parts & Logistics', 'Other'];
+
+  // --- Shared header, rendered into <div id="siteHeader"></div> on every page ---
+  function renderHeader(activePage) {
+    const el = document.getElementById('siteHeader');
+    if (!el) return;
+    const session = getSession();
+    const dashHref = session ? (session.role === 'entrepreneur' ? 'entrepreneur.html' : 'client.html') : 'dashboard.html';
+
+    const navItems = [
+      ['marketplace.html', 'Home', 'home'],
+      ['marketplace.html#browse', 'Browse services', 'browse'],
+      ['services.html', 'Services', 'services'],
+      ['about.html', 'About', 'about']
+    ];
+
+    const navHtml = navItems.map(([href, label, key]) =>
+      `<a href="${href}" class="${activePage === key ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    let actionsHtml;
+    if (session) {
+      actionsHtml = `
+        <span class="user-chip">Signed in as <strong>${escapeHtml(session.name)}</strong> <span class="who">(${escapeHtml(session.role)})</span></span>
+        <a href="${dashHref}" class="btn btn-small btn-outline-dark">Dashboard</a>
+        <button class="btn btn-small btn-outline-dark" id="eeLogoutBtn">Log out</button>`;
+    } else {
+      actionsHtml = `
+        <a href="marketplace.html#auth" class="btn btn-small btn-outline-dark">Log in</a>
+        <a href="marketplace.html#auth" class="btn btn-small btn-brass">Join free</a>`;
+    }
+
+    // Mobile slide-out menu: full-screen panel with the same nav items, plus
+    // account actions as large touch targets, since nav-links are hidden below 860px.
+    const mobileNavHtml = navItems.map(([href, label, key]) =>
+      `<a href="${href}" class="${activePage === key ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    let mobileActionsHtml;
+    if (session) {
+      mobileActionsHtml = `
+        <div class="mobile-menu-user">Signed in as <strong>${escapeHtml(session.name)}</strong> (${escapeHtml(session.role)})</div>
+        <a href="${dashHref}" class="btn btn-brass">Go to dashboard</a>
+        <button class="btn btn-outline-dark" id="eeMobileLogoutBtn">Log out</button>`;
+    } else {
+      mobileActionsHtml = `
+        <a href="marketplace.html#auth" class="btn btn-brass">Join free</a>
+        <a href="marketplace.html#auth" class="btn btn-outline-dark">Log in</a>`;
+    }
+
+    el.innerHTML = `
+      <nav>
+        <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+        <ul class="nav-links" style="list-style:none;">${navHtml}</ul>
+        <div class="nav-actions">
+          ${actionsHtml}
+          <button class="menu-toggle" id="eeMenuToggle" aria-label="Open menu">&#9776;</button>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="eeMobileMenu">
+        <div class="mobile-menu-head">
+          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <button class="mobile-menu-close" id="eeMenuClose" aria-label="Close menu">&times;</button>
+        </div>
+        <div class="mobile-menu-links">${mobileNavHtml}</div>
+        <div class="mobile-menu-actions">${mobileActionsHtml}</div>
+      </div>`;
+
+    const logoutBtn = document.getElementById('eeLogoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+    }
+    const mobileLogoutBtn = document.getElementById('eeMobileLogoutBtn');
+    if (mobileLogoutBtn) {
+      mobileLogoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+    }
+
+    const menuToggle = document.getElementById('eeMenuToggle');
+    const mobileMenu = document.getElementById('eeMobileMenu');
+    const menuClose = document.getElementById('eeMenuClose');
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    }
+    if (menuClose && mobileMenu) {
+      menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+      });
+    }
+  }
+
+  function renderFooter() {
+    const el = document.getElementById('siteFooter');
+    if (!el) return;
+    el.innerHTML = `
+      <div class="wrap footer-grid">
+        <div>
+          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <p>The global marketplace where entrepreneurs — in any field — get discovered by the clients who need them.</p>
+        </div>
+        <div>
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="marketplace.html#browse">Browse services</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="entrepreneur.html">Post a service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="marketplace.html#auth">Log in / Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ElevateEdge Solutions. All rights reserved.</span>
+        <span>HISMIL University Institute</span>
+      </div>`;
+  }
+
+  // Gate a page to a required role; shows a friendly prompt instead of the page content if not met.
+  function requireRole(role, rootId) {
+    const session = getSession();
+    const root = document.getElementById(rootId);
+    if (session && session.role === role) return session;
+    if (!root) return null;
+    const roleLabel = role === 'entrepreneur' ? 'an entrepreneur' : 'a client';
+    root.innerHTML = `
+      <div class="gate">
+        <h2>${session ? "This page is for " + roleLabel : "Log in to continue"}</h2>
+        <p>${session
+          ? `You're signed in as ${escapeHtml(session.name)} (${escapeHtml(session.role)}). Log out and sign in as ${roleLabel} to see this page.`
+          : `Log in or register as ${roleLabel} to view your dashboard.`}</p>
+        <a href="marketplace.html#auth" class="btn btn-fill-ink">Log in / Register</a>
+        <a href="marketplace.html" class="btn btn-outline-ink">Back home</a>
+      </div>`;
+    return null;
+  }
+
+  return {
+    getServices, saveServices, getAccounts, saveAccounts,
+    getRequests, saveRequests,
+    getSession, setSession, clearSession,
+    uid, escapeHtml, CATEGORIES,
+    renderHeader, renderFooter, requireRole
+  };
+})();
+
+</script>
+<script>
+  EE.renderHeader('services');
+  EE.renderFooter();
+
+  const CATALOG = [
+    { category: 'Design & Branding', desc: 'Logos, brand guidelines, and visual identity systems that communicate what you stand for.', deliverables: ['Logo & visual identity', 'Brand guidelines', 'Social media kit'], price: 'From 5,000 frs / project' },
+    { category: 'Web & App Development', desc: 'Custom websites, mobile apps, and platforms built with modern, security-first architecture.', deliverables: ['Full-stack development', 'Responsive design', 'Deployment & support'], price: 'From 1,500 frs / project' },
+    { category: 'Digital Marketing', desc: 'SEO, paid ads, content, and social campaigns built around measurable results.', deliverables: ['SEO optimization', 'Paid ads management', 'Monthly reporting'], price: 'From 20,000 frs / month' },
+    { category: 'Business Strategy & Consulting', desc: 'Market research and strategic planning to position your business for growth.', deliverables: ['Market analysis', 'Growth roadmap', 'Investor pitch prep'], price: 'From 25,000 frs / session' },
+    { category: 'Cybersecurity', desc: 'Security audits and compliance support to protect digital assets.', deliverables: ['Vulnerability assessment', 'Penetration testing', 'Incident response plan'], price: 'From 30,000 frs / audit' },
+    { category: 'AI & Automation', desc: 'Custom AI tools and process automation that streamline day-to-day operations.', deliverables: ['Custom ML models', 'Process automation', 'Maintenance & monitoring'], price: 'From 35,000 frs / project' },
+    { category: 'Trade, Parts & Logistics', desc: 'Sourcing, distribution, and logistics for physical goods and parts.', deliverables: ['Sourcing', 'Distribution', 'Order fulfilment'], price: 'From 5,000 frs / order' }
+  ];
+
+  (async function () {
+    const services = await EE.getServices();
+    const counts = {};
+    services.forEach(s => { counts[s.category] = (counts[s.category] || 0) + 1; });
+
+    document.getElementById('servicesStats').innerHTML = `
+      <div><strong>${services.length}</strong><span>Live listings</span></div>
+      <div><strong>${new Set(services.map(s=>s.category)).size}</strong><span>Categories in use</span></div>`;
+
+    const root = document.getElementById('serviceList');
+    root.innerHTML = CATALOG.map(c => `
+      <div class="service-row">
+        <div class="name">${EE.escapeHtml(c.category)}</div>
+        <div>
+          <div class="desc">${EE.escapeHtml(c.desc)}</div>
+          <div class="deliverables">${c.deliverables.map(d => `<span>${EE.escapeHtml(d)}</span>`).join('')}</div>
+        </div>
+        <div class="price">
+          Typical pricing<span class="amount">${EE.escapeHtml(c.price)}</span>
+          <span class="live-count">${counts[c.category] || 0} live listing${(counts[c.category]||0)===1?'':'s'}</span>
+        </div>
+      </div>`).join('');
+  })();
+</script>
 </body>
 </html>

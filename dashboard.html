@@ -1,835 +1,556 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Client Dashboard — Elevate Edge Solution</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Dashboard — ElevateEdge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --blue:#1A8FA8;--blue-dk:#0d6e82;--blue-lt:#5BC4D8;
-  --blue-dim:rgba(26,143,168,0.10);
-  --dark:#111;--mid:#555;--soft:#888;
-  --cream:#F4F8FA;--white:#fff;--line:#DCE8EC;
-  --green:#10b981;--sidebar-w:260px;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;display:flex;}
+  /* Base surfaces — the whole site is dark now, no light sections */
+  --bg:#0B1220; --bg-2:#131F38; --bg-3:#1B2A47;
+  --paper:var(--bg); --paper-2:var(--bg-2);
+  --ink:#FFFFFF; --ink-2:var(--bg-2); --ink-3:var(--bg-3);
 
-/* ══ SIDEBAR ══ */
-.sidebar{
-width:var(–sidebar-w);flex-shrink:0;background:var(–dark);
-height:100vh;position:sticky;top:0;
-display:flex;flex-direction:column;overflow-y:auto;
-}
-.sb-top{padding:28px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);}
-.sb-brand{display:flex;align-items:center;gap:9px;font-family:‘Cormorant Garamond’,serif;font-size:1.2rem;font-weight:700;color:white;margin-bottom:28px;}
-.sb-bars{display:flex;align-items:flex-end;gap:3px;height:18px;}
-.sb-bars b{display:block;width:4px;border-radius:2px;background:var(–blue);}
-.sb-bars b:nth-child(1){height:6px;}.sb-bars b:nth-child(2){height:11px;}.sb-bars b:nth-child(3){height:16px;}.sb-bars b:nth-child(4){height:9px;}
-.sb-user{display:flex;align-items:center;gap:12px;}
-.sb-avi{width:44px;height:44px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(–blue),var(–blue-lt));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:white;}
-.sb-name{font-weight:700;color:white;font-size:0.9rem;}
-.sb-role{font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:1px;}
-.sb-badge{display:inline-block;margin-top:6px;padding:2px 9px;border-radius:50px;font-size:0.65rem;font-weight:700;background:rgba(26,143,168,0.2);color:var(–blue-lt);border:1px solid rgba(91,196,216,0.3);}
-.sb-nav{flex:1;padding:16px 0;}
-.sb-section{padding:6px 20px 4px;font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:12px;}
-.sb-link{display:flex;align-items:center;gap:12px;padding:11px 20px;font-size:0.86rem;font-weight:500;color:rgba(255,255,255,0.5);cursor:pointer;transition:all .2s;border-left:3px solid transparent;}
-.sb-link:hover{color:white;background:rgba(255,255,255,0.05);}
-.sb-link.on{color:white;background:rgba(26,143,168,0.15);border-left-color:var(–blue);}
-.sb-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0;}
-.sb-bottom{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.07);}
-.sb-logout{display:flex;align-items:center;gap:12px;padding:10px 0;font-size:0.86rem;color:rgba(255,255,255,0.4);cursor:pointer;transition:color .2s;}
-.sb-logout:hover{color:#ef4444;}
+  /* Text */
+  --text:#FFFFFF; --slate:rgba(255,255,255,0.70); --slate-light:rgba(255,255,255,0.50);
 
-/* ══ MAIN ══ */
-.main{flex:1;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden;}
-.topbar{height:64px;background:var(–white);border-bottom:1px solid var(–line);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.04);}
-.topbar-title{font-family:‘Cormorant Garamond’,serif;font-size:1.2rem;font-weight:700;}
-.topbar-title em{color:var(–blue);font-style:italic;}
-.tb-right{display:flex;align-items:center;gap:10px;}
-.tb-avi{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(–blue),var(–blue-lt));display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:700;color:white;cursor:pointer;}
-.content{flex:1;padding:28px 32px;}
-.tab-page{display:none;}.tab-page.on{display:block;}
+  /* Accents — blue for labels/icons/links, orange for highlights, matching the reference site */
+  --blue:#2F9BFF; --blue-light:#7EC8FF;
+  --brass:#FFA83D; --brass-light:var(--blue-light); /* kickers/eyebrows are blue, not gold, in the new system */
+  --orange:#FFA83D; --orange-light:#FFC98A;
 
-/* ══ AI CHAT TAB ══ */
-.chat-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;height:calc(100vh - 160px);}
+  --good:#34D399; --bad:#F87171;
+  --line:rgba(255,255,255,0.12); --line-dark:rgba(255,255,255,0.16);
 
-/* Chat window */
-.chat-window{
-background:var(–white);border-radius:16px;border:1px solid var(–line);
-display:flex;flex-direction:column;overflow:hidden;
-box-shadow:0 4px 24px rgba(0,0,0,0.06);
+  --serif:'Fredoka', sans-serif; --sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius:20px;
 }
-.chat-header{
-padding:18px 24px;border-bottom:1px solid var(–line);
-display:flex;align-items:center;gap:14px;
-background:linear-gradient(135deg,var(–dark),#1a2a35);
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:var(--sans);color:var(--text);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 500px at 15% -10%, rgba(47,155,255,0.16), transparent 60%),
+    radial-gradient(700px 500px at 100% 10%, rgba(255,168,61,0.10), transparent 55%);
+  background-repeat:no-repeat;
 }
-.ai-avi{
-width:44px;height:44px;border-radius:50%;
-background:linear-gradient(135deg,var(–blue),var(–blue-lt));
-display:flex;align-items:center;justify-content:center;font-size:1.3rem;
-flex-shrink:0;
-box-shadow:0 0 0 3px rgba(91,196,216,0.3);
-}
-.ai-info strong{display:block;color:white;font-size:0.95rem;font-weight:700;}
-.ai-info span{font-size:0.75rem;color:rgba(255,255,255,0.5);}
-.ai-online{display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(–blue-lt);margin-top:2px;}
-.ai-dot{width:6px;height:6px;border-radius:50%;background:var(–green);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-0.01em;color:var(--text);}
+button{font-family:var(--sans);cursor:pointer;}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+.hidden{display:none !important;}
 
-.chat-messages{
-flex:1;overflow-y:auto;padding:20px;
-display:flex;flex-direction:column;gap:14px;
-background:#FAFEFF;
+/* ---------- Floating pill nav ---------- */
+header{position:sticky;top:14px;z-index:60;padding:0 20px;}
+nav{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  max-width:1180px;margin:0 auto;padding:12px 20px;
+  background:rgba(11,18,32,0.72);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:999px;
 }
-.chat-messages::-webkit-scrollbar{width:4px;}
-.chat-messages::-webkit-scrollbar-thumb{background:var(–line);border-radius:2px;}
+.logo{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:9px;}
+.logo .mark{width:9px;height:9px;background:var(--orange);display:inline-block;border-radius:3px;}
+.nav-links{display:flex;gap:4px;list-style:none;flex-wrap:wrap;}
+.nav-links a,.nav-links button{background:none;border:0;color:var(--slate);font-size:0.88rem;font-weight:500;padding:8px 14px;border-radius:999px;transition:all .15s;}
+.nav-links a:hover,.nav-links button:hover{color:var(--text);background:rgba(255,255,255,0.06);}
+.nav-links a.active{color:var(--text);background:var(--bg-3);}
+.nav-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.menu-toggle{display:none;background:rgba(255,255,255,0.06);border:1px solid var(--line-dark);color:var(--text);width:40px;height:40px;border-radius:999px;font-size:1.05rem;align-items:center;justify-content:center;}
+.menu-toggle:hover{background:rgba(255,255,255,0.12);}
 
-/* Message bubbles */
-.msg{display:flex;gap:10px;align-items:flex-end;max-width:85%;}
-.msg.ai{align-self:flex-start;}
-.msg.user{align-self:flex-end;flex-direction:row-reverse;}
-.msg-avi{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;}
-.ai .msg-avi{background:linear-gradient(135deg,var(–blue),var(–blue-lt));color:white;font-size:1rem;}
-.user .msg-avi{background:linear-gradient(135deg,#6366f1,#818cf8);color:white;}
-.msg-bubble{
-padding:12px 16px;border-radius:16px;font-size:0.88rem;line-height:1.6;
-}
-.ai .msg-bubble{
-background:var(–white);color:var(–dark);
-border:1px solid var(–line);border-bottom-left-radius:4px;
-box-shadow:0 2px 8px rgba(0,0,0,0.05);
-}
-.user .msg-bubble{
-background:var(–blue);color:white;
-border-bottom-right-radius:4px;
-}
-.msg-time{font-size:0.66rem;color:var(–soft);padding:0 4px;flex-shrink:0;}
+/* ---------- Buttons — all pill-shaped ---------- */
+.btn{display:inline-block;padding:12px 24px;font-size:0.88rem;font-weight:600;border:1px solid transparent;transition:all .18s ease;border-radius:999px;}
+.btn-brass{background:var(--blue);color:#062038;}
+.btn-brass:hover{background:var(--blue-light);}
+.btn-outline-dark{border-color:var(--line-dark);color:var(--text);background:rgba(255,255,255,0.04);}
+.btn-outline-dark:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.08);}
+.btn-outline-ink{border-color:var(--line-dark);color:var(--text);background:transparent;}
+.btn-outline-ink:hover{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);}
+.btn-fill-ink{background:var(--bg-3);color:var(--text);border-color:var(--line-dark);}
+.btn-fill-ink:hover{background:#22345A;}
+.btn-small{padding:8px 16px;font-size:0.8rem;}
+.btn-danger{border:1px solid var(--bad);color:var(--bad);background:transparent;}
+.btn-danger:hover{background:var(--bad);color:#1a0505;}
+.user-chip{color:var(--text);font-size:0.85rem;display:flex;align-items:center;gap:10px;}
+.user-chip .who{color:var(--slate);}
+.user-chip strong{color:var(--blue-light);}
 
-/* Quick reply chips */
-.quick-replies{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 12px;}
-.qr-chip{
-padding:7px 14px;border-radius:50px;font-size:0.8rem;font-weight:600;
-border:2px solid var(–blue);color:var(–blue);background:white;
-cursor:pointer;transition:all .2s;
-}
-.qr-chip:hover{background:var(–blue);color:white;}
+/* ---------- Sections ---------- */
+section{padding:72px 0;}
+.section-head{max-width:640px;margin-bottom:44px;}
+.section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);line-height:1.15;}
+.section-head p{color:var(--slate);margin-top:12px;font-size:1rem;line-height:1.6;}
+.kicker{font-size:0.8rem;color:var(--blue-light);font-weight:700;margin-bottom:8px;letter-spacing:0.06em;text-transform:uppercase;}
 
-/* Typing indicator */
-.typing{display:flex;gap:4px;align-items:center;padding:12px 16px;background:white;border:1px solid var(–line);border-radius:16px;border-bottom-left-radius:4px;width:fit-content;}
-.typing span{width:7px;height:7px;border-radius:50%;background:var(–blue);animation:bounce .8s infinite;}
-.typing span:nth-child(2){animation-delay:.15s;}
-.typing span:nth-child(3){animation-delay:.3s;}
-@keyframes bounce{0%,80%,100%{transform:scale(0.8);opacity:.5;}40%{transform:scale(1.2);opacity:1;}}
+/* ---------- Forms ---------- */
+input,select,textarea{width:100%;border:1px solid var(--line);background:var(--bg-2);padding:13px 16px;font-family:var(--sans);font-size:0.94rem;color:var(--text);border-radius:14px;}
+input::placeholder,textarea::placeholder{color:var(--slate-light);}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue);}
+label{display:block;font-size:0.82rem;color:var(--slate);margin-bottom:6px;font-weight:500;}
+.field{margin-bottom:18px;}
+.form-msg{font-size:0.85rem;margin-top:14px;}
+.form-msg.error{color:var(--bad);}
+.form-msg.success{color:var(--good);}
 
-/* Chat input */
-.chat-input-wrap{
-padding:16px 20px;border-top:1px solid var(–line);background:white;
-}
-.chat-input-row{display:flex;gap:10px;align-items:flex-end;}
-.chat-input{
-flex:1;padding:12px 16px;
-border:2px solid var(–line);border-radius:10px;
-font-family:‘Outfit’,sans-serif;font-size:0.9rem;
-color:var(–dark);resize:none;outline:none;
-transition:border-color .2s;line-height:1.5;min-height:44px;max-height:120px;
-}
-.chat-input:focus{border-color:var(–blue);}
-.send-btn{
-width:44px;height:44px;border-radius:10px;border:none;
-background:var(–blue);color:white;cursor:pointer;
-font-size:1.1rem;transition:all .2s;flex-shrink:0;
-display:flex;align-items:center;justify-content:center;
-}
-.send-btn:hover{background:var(–blue-dk);transform:scale(1.05);}
+/* ---------- Cards / rows ---------- */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.service-card{background:var(--bg-2);padding:26px;cursor:pointer;transition:all .15s;border:1px solid var(--line);border-radius:var(--radius);}
+.service-card:hover{background:var(--bg-3);border-color:var(--line-dark);}
+.service-card .cat-tag{font-size:0.72rem;color:var(--blue-light);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.service-card h3{font-size:1.1rem;margin-bottom:8px;}
+.service-card .by{font-size:0.82rem;color:var(--slate-light);margin-bottom:10px;}
+.service-card p{color:var(--slate);font-size:0.9rem;line-height:1.5;margin-bottom:14px;}
+.service-card .price{font-family:var(--serif);font-weight:600;color:var(--orange-light);font-size:1.05rem;}
+.empty-state{padding:60px 20px;text-align:center;color:var(--slate);border:1px dashed var(--line);border-radius:var(--radius);}
+.loading{padding:60px;text-align:center;color:var(--slate-light);}
 
-/* ── RIGHT PANEL — Matched Entrepreneurs ── */
-.match-panel{
-display:flex;flex-direction:column;gap:16px;
-overflow-y:auto;
-padding-right:4px;
-}
-.match-panel::-webkit-scrollbar{width:4px;}
-.match-panel::-webkit-scrollbar-thumb{background:var(–line);border-radius:2px;}
+footer{background:transparent;border-top:1px solid var(--line);color:var(--slate);padding:64px 0 32px;margin-top:40px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-grid .logo{margin-bottom:16px;}
+.footer-grid > div > p{font-size:0.9rem;line-height:1.6;max-width:34ch;color:var(--slate);}
+.footer-grid h5{font-size:0.78rem;color:var(--text);font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+.footer-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.footer-grid ul a{font-size:0.9rem;color:var(--slate);}
+.footer-grid ul a:hover{color:var(--text);}
+.footer-bottom{border-top:1px solid var(--line);padding-top:24px;font-size:0.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1180px;margin:0 auto;padding-left:32px;padding-right:32px;}
 
-.match-header{
-background:var(–white);border-radius:12px;
-border:1px solid var(–line);padding:18px 20px;
-}
-.match-header h3{font-family:‘Cormorant Garamond’,serif;font-size:1.1rem;font-weight:700;margin-bottom:4px;}
-.match-header h3 em{color:var(–blue);font-style:italic;}
-.match-header p{font-size:0.78rem;color:var(–soft);}
+/* CTA band — solid blue pill-cornered panel, matches the reference site's closing CTAs */
+.cta-band{background:linear-gradient(135deg, var(--blue), #1F7FE0);color:#06203A;border-radius:28px;margin:0 20px;}
+.cta-band .wrap{max-width:1140px;}
+.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.cta-inner h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:16ch;color:#06203A;}
+.cta-inner .btns{display:flex;gap:14px;flex-wrap:wrap;}
+.cta-band .btn-outline-ink{border-color:rgba(6,32,58,0.35);color:#06203A;background:transparent;}
+.cta-band .btn-outline-ink:hover{border-color:#06203A;background:rgba(6,32,58,0.08);}
+.cta-band .btn-fill-ink{background:#06203A;color:#fff;border-color:#06203A;}
+.cta-band .btn-fill-ink:hover{background:#0A2C4D;}
 
-.entr-card{
-background:var(–white);border-radius:12px;
-border:1px solid var(–line);padding:18px;
-transition:box-shadow .2s,border-color .2s;
+/* Process steps — rounded cards with step badge, matches "Four steps" pattern */
+.process{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.process-step{padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2);}
+.process-step .num{
+  font-family:var(--serif);font-size:0.78rem;font-weight:700;color:var(--blue-light);letter-spacing:0.08em;
+  display:inline-block;margin-bottom:18px;background:rgba(47,155,255,0.14);padding:6px 12px;border-radius:999px;
 }
-.entr-card:hover{box-shadow:0 4px 20px rgba(26,143,168,0.12);border-color:var(–blue);}
-.entr-card.top-match{border-color:var(–blue);box-shadow:0 4px 20px rgba(26,143,168,0.15);}
-.top-badge{
-display:inline-block;font-size:0.65rem;font-weight:700;
-letter-spacing:0.1em;text-transform:uppercase;
-background:var(–blue);color:white;
-padding:3px 9px;border-radius:50px;margin-bottom:10px;
-}
-.entr-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
-.entr-avi{
-width:48px;height:48px;border-radius:50%;flex-shrink:0;
-display:flex;align-items:center;justify-content:center;
-font-size:1.1rem;font-weight:700;color:white;
-background:linear-gradient(135deg,var(–blue),var(–blue-lt));
-}
-.entr-name{font-weight:700;font-size:0.92rem;margin-bottom:2px;}
-.entr-biz{font-size:0.78rem;color:var(–soft);}
-.entr-cat{
-display:inline-block;font-size:0.68rem;font-weight:700;
-color:var(–blue);background:var(–blue-dim);
-padding:2px 8px;border-radius:50px;margin-top:4px;
-}
-.entr-rating{display:flex;align-items:center;gap:4px;font-size:0.78rem;color:var(–mid);margin-bottom:8px;}
-.stars{color:#f59e0b;}
-.entr-desc{font-size:0.78rem;color:var(–soft);line-height:1.6;margin-bottom:12px;}
-.entr-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
-.etag{background:var(–cream);border:1px solid var(–line);color:var(–mid);font-size:0.68rem;font-weight:600;padding:3px 8px;border-radius:4px;}
-.wa-btn{
-width:100%;padding:10px;border:none;cursor:pointer;
-font-family:‘Outfit’,sans-serif;font-size:0.84rem;font-weight:700;
-border-radius:8px;
-background:linear-gradient(135deg,#25D366,#128C7E);
-color:white;display:flex;align-items:center;justify-content:center;gap:8px;
-transition:all .2s;
-}
-.wa-btn:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,211,102,0.4);}
-.wa-icon{font-size:1rem;}
-.no-match{
-background:var(–white);border-radius:12px;border:1px solid var(–line);
-padding:32px 20px;text-align:center;color:var(–soft);
-}
-.no-match .nm-icon{font-size:2.5rem;margin-bottom:10px;display:block;opacity:0.4;}
-.no-match p{font-size:0.84rem;line-height:1.7;}
+.process-step h3{font-size:1.15rem;margin-bottom:10px;}
+.process-step p{color:var(--slate);font-size:0.93rem;line-height:1.6;}
 
-/* ══ FIND SERVICES TAB ══ */
-.services-browse{max-width:1000px;}
-.filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;}
-.filter-btn{
-padding:8px 18px;border-radius:50px;font-size:0.8rem;font-weight:600;
-border:2px solid var(–line);background:white;color:var(–mid);
-cursor:pointer;transition:all .2s;
-}
-.filter-btn.on,.filter-btn:hover{background:var(–blue);color:white;border-color:var(–blue);}
-.svc-browse-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.sb-card{
-background:white;border-radius:12px;border:1px solid var(–line);
-overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer;
-}
-.sb-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.09);}
-.sb-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;}
-.sbt1{background:linear-gradient(135deg,#e0f2fe,#7dd3fc);}
-.sbt2{background:linear-gradient(135deg,#dcfce7,#86efac);}
-.sbt3{background:linear-gradient(135deg,#fef9c3,#fde047);}
-.sbt4{background:linear-gradient(135deg,#fce7f3,#f9a8d4);}
-.sbt5{background:linear-gradient(135deg,#ede9fe,#c4b5fd);}
-.sbt6{background:linear-gradient(135deg,#ffedd5,#fdba74);}
-.sb-body{padding:16px;}
-.sb-cat{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(–blue);margin-bottom:4px;}
-.sb-body h3{font-size:0.9rem;font-weight:700;margin-bottom:4px;}
-.sb-body p{font-size:0.78rem;color:var(–soft);line-height:1.5;margin-bottom:10px;}
-.sb-footer{display:flex;justify-content:space-between;align-items:center;}
-.sb-price{font-size:0.88rem;font-weight:700;color:var(–blue);}
-.sb-entr{font-size:0.72rem;color:var(–soft);}
-.contact-quick{
-margin-top:10px;width:100%;padding:8px;border:none;cursor:pointer;
-font-family:‘Outfit’,sans-serif;font-size:0.78rem;font-weight:700;
-border-radius:6px;background:linear-gradient(135deg,#25D366,#128C7E);
-color:white;display:flex;align-items:center;justify-content:center;gap:6px;
-transition:all .2s;
-}
-.contact-quick:hover{opacity:0.9;}
+/* dark-panel is now a no-op visually (everything is already dark) but kept for markup compatibility */
+.dark-panel{background:transparent;color:var(--text);}
+.dark-panel .section-head p{color:var(--slate);}
+.dark-panel .service-list{border-top:1px solid var(--line);}
+.dark-panel .service-row{border-bottom:1px solid var(--line);}
+.dark-panel .service-row .name{color:var(--text);}
+.dark-panel .service-row .desc{color:var(--slate);}
+.dark-panel .service-row .deliverables span{color:var(--slate-light);border-color:var(--line);}
+.dark-panel .service-row .price{color:var(--blue-light);}
+.dark-panel .service-row .price .amount{color:var(--text);}
+.dark-panel .service-row .live-count{color:var(--slate-light);}
+.dark-panel .list-row{border-bottom-color:var(--line);}
+.dark-panel .list-row:first-child{border-top-color:var(--line);}
+.dark-panel .list-row h4{color:var(--text);}
+.dark-panel .list-row p{color:var(--slate);}
+.dark-panel .list-row .meta .amount{color:var(--text);}
 
-/* ══ MY BOOKINGS TAB ══ */
-.bookings-list{display:flex;flex-direction:column;gap:14px;max-width:800px;}
-.booking-card{
-background:white;border-radius:12px;border:1px solid var(–line);
-padding:20px 22px;display:flex;gap:18px;align-items:center;
-transition:box-shadow .2s;
+/* Split hero — headline + side panel, matches the reference's layered hero style */
+.hero-split{display:grid;grid-template-columns:1.15fr 0.85fr;gap:64px;align-items:end;}
+.hero-panel{background:var(--bg-2);border:1px solid var(--line);padding:32px 28px;border-radius:var(--radius);}
+.hero-panel .label{font-size:0.78rem;color:var(--orange-light);font-weight:700;margin-bottom:16px;text-transform:uppercase;letter-spacing:0.05em;}
+.hero-panel .big{font-family:var(--serif);font-size:1.75rem;line-height:1.3;font-weight:600;color:var(--text);margin-bottom:18px;}
+.hero-panel .sub{font-size:0.85rem;color:var(--slate);border-top:1px solid var(--line);padding-top:16px;line-height:1.5;}
+.hero-panel .sub strong{color:var(--text);display:block;font-size:0.92rem;margin-bottom:4px;}
+
+/* Stat strip — icon-free number blocks, pill-badge style */
+.stat-strip{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+.stat-strip div{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:14px 20px;min-width:120px;}
+.stat-strip strong{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--text);}
+.stat-strip span{font-size:0.76rem;color:var(--slate-light);}
+.stat-strip.light div{background:var(--bg-2);border-color:var(--line);}
+.stat-strip.light strong{color:var(--text);}
+.stat-strip.light span{color:var(--slate-light);}
+
+/* List row — bordered row for listings/requests/profiles */
+.list-row{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:22px;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;background:var(--bg-2);}
+.list-row .avatar-sq{width:48px;height:48px;background:var(--bg-3);color:var(--blue-light);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:1rem;flex-shrink:0;border-radius:14px;border:1px solid var(--line);}
+.list-row .cat-tag{font-size:0.72rem;color:var(--orange-light);font-weight:700;margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:0.04em;}
+.list-row h4{font-size:1.02rem;margin-bottom:4px;}
+.list-row p{color:var(--slate);font-size:0.88rem;line-height:1.5;}
+.list-row .meta{text-align:right;white-space:nowrap;}
+.list-row .meta .amount{font-family:var(--serif);font-size:1.05rem;color:var(--text);display:block;margin-bottom:10px;}
+
+/* Numbered option panel */
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.option-panel{background:var(--bg-2);border:1px solid var(--line);padding:30px;border-radius:var(--radius);}
+.option-panel .num{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--blue-light);display:block;margin-bottom:16px;}
+.option-panel h3{font-size:1.2rem;color:var(--text);margin-bottom:10px;}
+.option-panel p{color:var(--slate);font-size:0.92rem;line-height:1.55;margin-bottom:22px;}
+
+/* Category tiles / cat-grid */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.cat-card{border:1px solid var(--line);border-radius:16px;padding:22px 20px;background:var(--bg-2);text-align:left;transition:all .15s;}
+.cat-card:hover{background:var(--bg-3);border-color:var(--line-dark);}
+.cat-card .name{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:6px;display:block;color:var(--text);}
+.cat-card .count{font-size:0.8rem;color:var(--slate-light);}
+
+/* Services list rows (Services page) */
+.service-list{display:flex;flex-direction:column;gap:12px;border-top:none;}
+.service-row{display:grid;grid-template-columns:1.4fr 2fr 1fr;gap:28px;padding:24px;align-items:start;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);}
+.service-row .name{font-family:var(--serif);font-size:1.2rem;font-weight:600;}
+.service-row .desc{color:var(--slate);font-size:0.92rem;line-height:1.55;}
+.service-row .deliverables{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;}
+.service-row .deliverables span{font-size:0.76rem;color:var(--slate-light);border:1px solid var(--line);padding:5px 12px;border-radius:999px;}
+.service-row .price{text-align:right;font-size:0.9rem;color:var(--blue-light);}
+.service-row .price .amount{display:block;font-family:var(--serif);font-size:1.3rem;color:var(--text);margin-bottom:4px;}
+.service-row .live-count{display:block;margin-top:6px;font-size:0.76rem;color:var(--slate-light);}
+
+.gate{max-width:460px;margin:60px auto;text-align:center;padding:48px 36px;border:1px solid var(--line);background:var(--bg-2);border-radius:28px;}
+.gate h2{font-size:1.5rem;margin-bottom:12px;}
+.gate p{color:var(--slate);margin-bottom:24px;line-height:1.6;}
+.gate .btn{margin:0 6px;}
+
+/* ---------- Modal ---------- */
+.modal-overlay{position:fixed;inset:0;background:rgba(4,8,18,0.78);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:60px 20px;overflow:auto;}
+.modal{background:var(--bg-2);border:1px solid var(--line);max-width:560px;width:100%;padding:40px;position:relative;border-radius:28px;}
+.modal-close{position:absolute;top:18px;right:18px;background:none;border:0;font-size:1.4rem;color:var(--slate);}
+.modal .cat-tag{font-size:0.78rem;color:var(--orange-light);font-weight:700;margin-bottom:12px;text-transform:uppercase;}
+.modal h3{font-size:1.45rem;margin-bottom:10px;}
+.modal .by{color:var(--slate-light);font-size:0.9rem;margin-bottom:20px;}
+.modal p.desc{color:var(--slate);line-height:1.65;margin-bottom:24px;}
+.modal .meta{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:20px;margin-bottom:20px;}
+.modal .meta .price{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--text);}
+
+@media (max-width:860px){
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .process{grid-template-columns:1fr;}
+  .cat-grid{grid-template-columns:1fr 1fr;}
 }
-.booking-card:hover{box-shadow:0 4px 18px rgba(0,0,0,0.07);}
-.bk-avi{width:50px;height:50px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(–blue),var(–blue-lt));display:flex;align-items:center;justify-content:center;font-weight:700;color:white;}
-.bk-info{flex:1;}
-.bk-service{font-weight:700;font-size:0.92rem;margin-bottom:3px;}
-.bk-entr{font-size:0.8rem;color:var(–soft);}
-.bk-date{font-size:0.76rem;color:var(–soft);margin-top:4px;}
-.bk-status{padding:4px 12px;border-radius:50px;font-size:0.7rem;font-weight:700;}
-.bks-active{background:rgba(16,185,129,0.1);color:var(–green);}
-.bks-pending{background:rgba(245,158,11,0.1);color:#d97706;}
-.bks-complete{background:rgba(26,143,168,0.1);color:var(–blue);}
-.bk-wa{padding:8px 16px;border:none;cursor:pointer;font-family:‘Outfit’,sans-serif;font-size:0.78rem;font-weight:700;border-radius:6px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;display:flex;align-items:center;gap:5px;transition:all .2s;}
-.bk-wa:hover{opacity:0.9;}
 
-/* Toast */
-.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(–dark);color:white;padding:12px 18px;border-radius:10px;font-size:0.85rem;font-weight:500;box-shadow:0 6px 28px rgba(0,0,0,0.2);transform:translateY(50px);opacity:0;pointer-events:none;transition:all .3s;display:flex;align-items:center;gap:8px;}
-.toast.show{transform:translateY(0);opacity:1;}
+@media (max-width:860px){
+  .nav-links{display:none;}
+  .menu-toggle{display:flex;}
+  .service-grid{grid-template-columns:1fr;}
+  .wrap{padding:0 20px;}
+  .hero-split{grid-template-columns:1fr;}
+  .list-row{grid-template-columns:1fr;}
+  .list-row .meta{text-align:left;}
+  .option-grid{grid-template-columns:1fr;}
+  .service-row{grid-template-columns:1fr;gap:14px;}
+  .service-row .price{text-align:left;}
+}
 
-@media(max-width:1000px){.chat-layout{grid-template-columns:1fr;}.match-panel{display:none;}.svc-browse-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:640px){.sidebar{display:none;}.content{padding:16px;}.svc-browse-grid{grid-template-columns:1fr;}}
+/* ---------- Mobile slide-out menu ---------- */
+.mobile-menu{
+  position:fixed;inset:0;background:var(--bg);z-index:200;
+  display:flex;flex-direction:column;padding:20px 24px 28px;
+  transform:translateX(100%);transition:transform .28s ease;overflow-y:auto;
+}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;padding-top:4px;}
+.mobile-menu-close{background:rgba(255,255,255,0.06);border:1px solid var(--line-dark);color:var(--text);width:38px;height:38px;border-radius:999px;font-size:1.3rem;line-height:1;display:flex;align-items:center;justify-content:center;}
+.mobile-menu-links{display:flex;flex-direction:column;margin-bottom:32px;}
+.mobile-menu-links a{font-size:1.35rem;font-family:var(--serif);font-weight:600;color:var(--text);padding:18px 4px;border-bottom:1px solid var(--line);}
+.mobile-menu-links a.active{color:var(--blue-light);}
+.mobile-menu-user{font-size:0.9rem;color:var(--slate);margin-bottom:18px;padding:0 4px;}
+.mobile-menu-user strong{color:var(--blue-light);}
+.mobile-menu-actions{display:flex;flex-direction:column;gap:12px;margin-top:auto;padding-top:24px;}
+.mobile-menu-actions .btn{width:100%;text-align:center;padding:16px;font-size:1rem;}
+
 </style>
-
+<style>
+  .dash-hero{padding:88px 0 72px;}
+  .dash-hero h1{font-size:clamp(2rem,4vw,2.9rem);line-height:1.12;max-width:16ch;margin-bottom:18px;}
+  .dash-hero p{color:rgba(244,242,237,0.75);font-size:1.02rem;max-width:46ch;}
+  .gate-dark{max-width:460px;background:var(--ink-2);border:1px solid var(--line-dark);padding:44px 36px;text-align:left;}
+  .gate-dark h2{font-size:1.4rem;color:var(--text);margin-bottom:12px;}
+  .gate-dark p{color:rgba(244,242,237,0.68);margin-bottom:24px;line-height:1.6;}
+</style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
+<header><div id="siteHeader"></div></header>
 
-<div class="sidebar">
-  <div class="sb-top">
-    <div class="sb-brand">
-      <div class="sb-bars"><b></b><b></b><b></b><b></b></div>
-      Elevate Edge
+<main>
+  <section class="dash-hero">
+    <div class="wrap" id="dashRoot">
+      <div class="loading" style="color:rgba(244,242,237,0.5);">Loading your dashboard…</div>
     </div>
-    <div class="sb-user">
-      <div class="sb-avi">AJ</div>
-      <div>
-        <div class="sb-name">Ange Jemima</div>
-        <div class="sb-role">Client Account</div>
-        <span class="sb-badge">✓ Verified Client</span>
-      </div>
-    </div>
-  </div>
-  <nav class="sb-nav">
-    <div class="sb-section">Client Portal</div>
-    <div class="sb-link on" onclick="showTab('ai',this)"><span class="sb-icon">🤖</span> AI Assistant</div>
-    <div class="sb-link" onclick="showTab('browse',this)"><span class="sb-icon">🔍</span> Browse Services</div>
-    <div class="sb-link" onclick="showTab('bookings',this)"><span class="sb-icon">📋</span> My Connections</div>
-    <div class="sb-section">Account</div>
-    <div class="sb-link" onclick="showToast('⚙️ Settings coming soon!')"><span class="sb-icon">⚙️</span> Settings</div>
-    <div class="sb-link" href="index.html"><span class="sb-icon">🌐</span> Main Website</div>
-  </nav>
-  <div class="sb-bottom">
-    <div class="sb-logout" onclick="window.location.href='login.html'"><span class="sb-icon">🚪</span> Logout</div>
-  </div>
-</div>
+  </section>
+</main>
 
-<!-- MAIN -->
-
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-title" id="topbar-title">AI <em>Assistant</em></div>
-    <div class="tb-right">
-      <div style="font-size:0.82rem;color:var(--soft);">Welcome back, <strong style="color:var(--dark);">Ange</strong></div>
-      <div class="tb-avi">AJ</div>
-    </div>
-  </div>
-
-  <div class="content">
-
-```
-<!-- ══ AI CHAT TAB ══ -->
-<div class="tab-page on" id="tab-ai">
-  <div class="chat-layout">
-
-    <!-- Chat Window -->
-    <div class="chat-window">
-      <div class="chat-header">
-        <div class="ai-avi">🤖</div>
-        <div class="ai-info">
-          <strong>Elevate AI Assistant</strong>
-          <div class="ai-online"><span class="ai-dot"></span> Online — Ready to help you find the perfect service</div>
-        </div>
-      </div>
-
-      <div class="chat-messages" id="chat-messages">
-        <!-- Initial AI message -->
-        <div class="msg ai">
-          <div class="msg-avi">🤖</div>
-          <div>
-            <div class="msg-bubble">
-              👋 Hello! I'm your Elevate Edge AI Assistant.<br><br>
-              I'm here to help you find the <strong>perfect entrepreneur</strong> for your business needs. I'll ask you a few questions and then connect you directly with the best match via WhatsApp.<br><br>
-              To start — <strong>what kind of service are you looking for today?</strong>
-            </div>
-            <div class="msg-time">Just now</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick replies -->
-      <div class="quick-replies" id="quick-replies">
-        <div class="qr-chip" onclick="sendQuick('I need a website designed')">🖥️ Website Design</div>
-        <div class="qr-chip" onclick="sendQuick('I need digital marketing help')">📣 Digital Marketing</div>
-        <div class="qr-chip" onclick="sendQuick('I need a logo and branding')">🎨 Logo & Branding</div>
-        <div class="qr-chip" onclick="sendQuick('I need photography services')">📷 Photography</div>
-        <div class="qr-chip" onclick="sendQuick('I need business consulting')">💼 Consulting</div>
-        <div class="qr-chip" onclick="sendQuick('I need IT support')">🔧 IT Support</div>
-      </div>
-
-      <!-- Input -->
-      <div class="chat-input-wrap">
-        <div class="chat-input-row">
-          <textarea class="chat-input" id="chat-input" placeholder="Type your message here..." rows="1"
-            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
-          <button class="send-btn" onclick="sendMessage()">➤</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Matched Entrepreneurs -->
-    <div class="match-panel" id="match-panel">
-      <div class="match-header">
-        <h3>Best <em>Matches</em></h3>
-        <p id="match-desc">Chat with the AI to get personalised entrepreneur matches</p>
-      </div>
-      <div id="match-list">
-        <div class="no-match">
-          <span class="nm-icon">🔍</span>
-          <p>Your matched entrepreneurs will appear here once you tell the AI what you need.</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ BROWSE SERVICES TAB ══ -->
-<div class="tab-page" id="tab-browse">
-  <div style="margin-bottom:24px;">
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;">Browse <em style="color:var(--blue);font-style:italic;">Services</em></h1>
-    <p style="font-size:0.86rem;color:var(--soft);margin-top:4px;">Explore all available services and connect directly with entrepreneurs</p>
-  </div>
-  <div class="filter-row">
-    <div class="filter-btn on" onclick="filterSvc(this,'all')">All Services</div>
-    <div class="filter-btn" onclick="filterSvc(this,'web')">Web Design</div>
-    <div class="filter-btn" onclick="filterSvc(this,'brand')">Branding</div>
-    <div class="filter-btn" onclick="filterSvc(this,'marketing')">Marketing</div>
-    <div class="filter-btn" onclick="filterSvc(this,'photo')">Photography</div>
-    <div class="filter-btn" onclick="filterSvc(this,'it')">IT Support</div>
-  </div>
-  <div class="svc-browse-grid">
-    <div class="sb-card" data-cat="web">
-      <div class="sb-thumb sbt1">🖥️</div>
-      <div class="sb-body">
-        <div class="sb-cat">Web Design</div>
-        <h3>Professional Business Website</h3>
-        <p>Complete website design and development for businesses of any size.</p>
-        <div class="sb-footer"><span class="sb-price">From 50000</span><span class="sb-entr">Jemima Studio</span></div>
-        <button class="contact-quick" onclick="openWA('237600000001','Hi! I saw your Professional Business Website service on Elevate Edge Solution. I\'m interested. Can we discuss?')">
-          <span>💬</span> Contact on WhatsApp
-        </button>
-      </div>
-    </div>
-    <div class="sb-card" data-cat="brand">
-      <div class="sb-thumb sbt2">🎨</div>
-      <div class="sb-body">
-        <div class="sb-cat">Branding</div>
-        <h3>Full Brand Identity Package</h3>
-        <p>Logo, color palette, typography and complete brand guidelines.</p>
-        <div class="sb-footer"><span class="sb-price">From 30000frs</span><span class="sb-entr">Chineache Designs</span></div>
-        <button class="contact-quick" onclick="openWA('237600000002','Hi! I saw your Brand Identity Package on Elevate Edge Solution. I\'m interested. Can we discuss?')"><a href="https://wa.me/+234 707 533 3826">+234 7075333826</a>
-          <span>💬</span> Contact on WhatsApp
-        </button>
-      </div>
-    </div>
-    <div class="sb-card" data-cat="marketing">
-      <div class="sb-thumb sbt3">📣</div>
-      <div class="sb-body">
-        <div class="sb-cat">Digital Marketing</div>
-        <h3>Social Media Management</h3>
-        <p>Monthly content creation for Instagram, Facebook & LinkedIn.</p>
-        <div class="sb-footer"><span class="sb-price">From 150000frs/mo</span><span class="sb-entr">Digital Boost CM</span></div>
-        <button class="contact-quick" onclick="openWA('237600000003','Hi! I saw your Social Media Management service on Elevate Edge Solution. I\'m interested. Can we discuss?')">
-          <span>💬</span> Contact on WhatsApp
-        </button>
-      </div>
-    </div>
-    <div class="sb-card" data-cat="photo">
-      <div class="sb-thumb sbt4">📷</div>
-      <div class="sb-body">
-        <div class="sb-cat">Photography</div>
-        <h3>Professional Business Photography</h3>
-        <p>Product, portrait, and event photography for your business needs.</p>
-        <div class="sb-footer"><span class="sb-price">From 20000frs</span><span class="sb-entr">LensArt Studio</span></div>
-        <button class="contact-quick" onclick="openWA('237600000004','Hi! I saw your Business Photography service on Elevate Edge Solution. I\'m interested. Can we discuss?')">
-          <span>💬</span> Contact on WhatsApp
-        </button>
-      </div>
-    </div>
-    <div class="sb-card" data-cat="it">
-      <div class="sb-thumb sbt5">🔧</div>
-      <div class="sb-body">
-        <div class="sb-cat">IT Support</div>
-        <h3>Business IT Support & Setup</h3>
-        <p>Computer setup, network configuration, and ongoing tech support.</p>
-        <div class="sb-footer"><span class="sb-price">From 100000frs</span><span class="sb-entr">TechFix Cameroon</span></div>
-        <button class="contact-quick" onclick="openWA('237600000005','Hi! I saw your IT Support service on Elevate Edge Solution. I\'m interested. Can we discuss?')">
-          <span>💬</span> Contact on WhatsApp
-        </button>
-      </div>
-    </div>
-    <div class="sb-card" data-cat="brand">
-      <div class="sb-thumb sbt6">💼</div>
-      <div class="sb-body">
-        <div class="sb-cat">Consulting</div>
-        <h3>Business Strategy Consulting</h3>
-        <p>Growth strategy, market analysis and business planning sessions.</p>
-        <div class="sb-footer"><span class="sb-price">From 250000frs</span><span class="sb-entr">BizGrow Partners</span></div>
-        <button class="contact-quick" onclick="openWA('237600000006','Hi! I saw your Business Strategy service on Elevate Edge Solution. I\'m interested. Can we discuss?')">
-          <span>💬</span> Contact on WhatsApp
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ MY CONNECTIONS TAB ══ -->
-<div class="tab-page" id="tab-bookings">
-  <div style="margin-bottom:24px;">
-    <h1 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;">My <em style="color:var(--blue);font-style:italic;">Connections</em></h1>
-    <p style="font-size:0.86rem;color:var(--soft);margin-top:4px;">Entrepreneurs you've been connected with</p>
-  </div>
-  <div class="bookings-list">
-    <div class="booking-card">
-      <div class="bk-avi">AJ</div>
-      <div class="bk-info">
-        <div class="bk-service">Professional Business Website</div>
-        <div class="bk-entr">Ange Jemima — Jemima Creative Studio</div>
-        <div class="bk-date">Connected via AI · April 5, 2025</div>
-      </div>
-      <span class="bk-status bks-active">● Active</span>
-      <button class="bk-wa" onclick="openWA('237600000001','Hi Ange! Following up on our website project discussion.')">
-        <span>💬</span> WhatsApp
-      </button>
-    </div>
-    <div class="booking-card">
-      <div class="bk-avi">CS</div>
-      <div class="bk-info">
-        <div class="bk-service">Brand Identity Package</div>
-        <div class="bk-entr">Chineache Samuel — Chineache Designs</div>
-        <div class="bk-date">Connected via Browse · March 28, 2025</div>
-      </div>
-      <span class="bk-status bks-pending">● Pending</span>
-      <button class="bk-wa" onclick="openWA('237600000002','Hi Chineache! I wanted to follow up about the branding project.')">
-        <span>💬</span> WhatsApp
-      </button>
-    </div>
-  </div>
-</div>
-```
-
-  </div>
-</div>
-
-<!-- Toast -->
-
-<div class="toast" id="toast"><span id="toast-msg"></span></div>
+<footer><div id="siteFooter"></div></footer>
 
 <script>
-/* ══ ENTREPRENEUR DATABASE ══ */
-const ENTREPRENEURS = [
-  {
-    id:1, initials:'AJ', name:'Ange Jemima', biz:'Jemima Creative Studio',
-    cat:'Web Design', rating:4.9, reviews:23,
-    desc:'Specialist in modern, responsive business websites. Fast delivery and clean code.',
-    tags:['Website','Landing Page','E-Commerce','UI/UX'],
-    phone:'237600000001', topMatch:true,
-    keywords:['website','web','design','landing','ecommerce','online store','responsive']
-  },
-  {
-    id:2, initials:'CS', name:'Chineache Samuel', biz:'Chineache Designs',
-    cat:'Branding', rating:4.7, reviews:18,
-    desc:'Creative brand identity expert. Logo design, color systems and full brand packages.',
-    tags:['Logo','Branding','Identity','Print'],
-    phone:'237600000002', topMatch:false,
-    keywords:['logo','brand','identity','branding','design','color','visual']
-  },
-  {
-    id:3, initials:'DB', name:'David Biya', biz:'Digital Boost CM',
-    cat:'Digital Marketing', rating:4.8, reviews:31,
-    desc:'SEO, social media management and digital campaigns that grow your audience.',
-    tags:['SEO','Social Media','Ads','Content'],
-    phone:'237600000003', topMatch:false,
-    keywords:['marketing','social media','seo','ads','facebook','instagram','campaign','promotion']
-  },
-  {
-    id:4, initials:'LA', name:'Laure Awah', biz:'LensArt Studio',
-    cat:'Photography', rating:4.9, reviews:15,
-    desc:'Professional photography for products, portraits, events and corporate use.',
-    tags:['Product Photo','Portrait','Events','Corporate'],
-    phone:'237600000004', topMatch:false,
-    keywords:['photo','photography','picture','shoot','portrait','product photo','event photo']
-  },
-  {
-    id:5, initials:'TF', name:'Théodore Fotso', biz:'TechFix Cameroon',
-    cat:'IT Support', rating:4.6, reviews:42,
-    desc:'Computer setup, network configuration, software installation and tech support.',
-    tags:['IT Support','Networks','Setup','Maintenance'],
-    phone:'237600000005', topMatch:false,
-    keywords:['it','computer','tech','support','network','software','hardware','setup','repair']
-  },
-  {
-    id:6, initials:'BG', name:'Brigitte Gomez', biz:'BizGrow Partners',
-    cat:'Business Consulting', rating:4.8, reviews:27,
-    desc:'Strategic business planning, market analysis and growth consulting for SMEs.',
-    tags:['Strategy','Planning','Analysis','Growth'],
-    phone:'237600000006', topMatch:false,
-    keywords:['consulting','strategy','business plan','advice','growth','management']
+// ElevateEdge — shared data layer, used by every page.
+//
+// This is a multi-page static site (separate .html files), so for data
+// posted on one page (e.g. entrepreneur.html) to show up on another (e.g.
+// client.html or about.html), it has to live somewhere all pages on the same
+// site can read it. That's the browser's local storage — it's scoped to the
+// site's origin, so once this is hosted for real (GitHub Pages, your own
+// domain, etc.) every page shares the same data automatically.
+//
+// It falls back to an in-memory value if local storage is unavailable, so a
+// page never crashes — it just won't remember data after you navigate away.
+window.EE = (function () {
+  const SERVICES_KEY = 'ee_services';
+  const ACCOUNTS_KEY = 'ee_accounts';
+  const SESSION_KEY = 'ee_session';
+
+  const memoryStore = {};
+  function lsGet(key) {
+    try { return window.localStorage.getItem(key); }
+    catch (e) { return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null; }
   }
-];
-
-/* ══ AI CONVERSATION STATE ══ */
-let convState = {
-  step: 0,
-  service: '',
-  budget: '',
-  timeline: '',
-  details: '',
-  matched: []
-};
-
-const FLOW = [
-  null, // step 0 handled by initial message
-  // step 1: after service type
-  (svc) => ({
-    msg: `Great choice! 💡 You're looking for <strong>${svc}</strong>.<br><br>What's your approximate <strong>budget</strong> for this project?`,
-    chips: ['Under $200','$200 – $500','$500 – $2,000','$2,000+','Not sure yet']
-  }),
-  // step 2: after budget
-  (budget) => ({
-    msg: `Perfect. Budget noted: <strong>${budget}</strong>.<br><br>How soon do you need this completed?`,
-    chips: ['As soon as possible','Within 1–2 weeks','Within a month','No rush, flexible']
-  }),
-  // step 3: after timeline — ask for details
-  (timeline) => ({
-    msg: `Got it — <strong>${timeline}</strong>.<br><br>Finally, could you describe your project in a little more detail? For example: What is your business? Any specific requirements or style preferences?`,
-    chips: null
-  }),
-  // step 4: final matching
-  null
-];
-
-let typingTimeout;
-
-function getTime(){
-  return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-}
-
-function addMsg(text, sender){
-  const msgs = document.getElementById('chat-messages');
-  const div = document.createElement('div');
-  div.className = 'msg ' + sender;
-  const avi = sender==='ai' ? '🤖' : 'KM';
-  div.innerHTML = `
-    <div class="msg-avi">${avi}</div>
-    <div>
-      <div class="msg-bubble">${text}</div>
-      <div class="msg-time">${getTime()}</div>
-    </div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function showTyping(){
-  const msgs = document.getElementById('chat-messages');
-  const div = document.createElement('div');
-  div.className = 'msg ai'; div.id = 'typing-ind';
-  div.innerHTML = `<div class="msg-avi">🤖</div><div class="typing"><span></span><span></span><span></span></div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function removeTyping(){
-  const t = document.getElementById('typing-ind');
-  if(t) t.remove();
-}
-
-function setChips(chips){
-  const qr = document.getElementById('quick-replies');
-  qr.innerHTML = '';
-  if(!chips) return;
-  chips.forEach(c => {
-    const btn = document.createElement('div');
-    btn.className = 'qr-chip';
-    btn.textContent = c;
-    btn.onclick = () => sendQuick(c);
-    qr.appendChild(btn);
-  });
-}
-
-function sendQuick(text){
-  document.getElementById('chat-input').value = text;
-  sendMessage();
-}
-
-function sendMessage(){
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if(!text) return;
-  input.value = '';
-  addMsg(text, 'user');
-  setChips(null);
-  processInput(text);
-}
-
-function processInput(text){
-  const lower = text.toLowerCase();
-  showTyping();
-
-  if(convState.step === 0){
-    convState.service = text;
-    convState.step = 1;
-    setTimeout(()=>{
-      removeTyping();
-      const flow = FLOW[1](text);
-      addMsg(flow.msg, 'ai');
-      setChips(flow.chips);
-    }, 1200);
-
-  } else if(convState.step === 1){
-    convState.budget = text;
-    convState.step = 2;
-    setTimeout(()=>{
-      removeTyping();
-      const flow = FLOW[2](text);
-      addMsg(flow.msg, 'ai');
-      setChips(flow.chips);
-    }, 1000);
-
-  } else if(convState.step === 2){
-    convState.timeline = text;
-    convState.step = 3;
-    setTimeout(()=>{
-      removeTyping();
-      const flow = FLOW[3](text);
-      addMsg(flow.msg, 'ai');
-      setChips(flow.chips);
-    }, 1000);
-
-  } else if(convState.step === 3){
-    convState.details = text;
-    convState.step = 4;
-    setTimeout(()=>{
-      removeTyping();
-      addMsg(`Thank you! Let me analyse your requirements and find the <strong>best entrepreneurs</strong> for you... 🔍`, 'ai');
-      setTimeout(()=>{
-        matchAndShow();
-      }, 1500);
-    }, 1200);
-
-  } else {
-    // follow-up conversation
-    setTimeout(()=>{
-      removeTyping();
-      const responses = [
-        'Great question! I\'d recommend discussing that directly with the entrepreneur via WhatsApp — they\'ll give you the most accurate answer for your project.',
-        'That\'s a good point to clarify with the entrepreneur. Click the WhatsApp button to reach them directly and discuss these details.',
-        'I\'ve already matched you with the best entrepreneurs for your needs. Feel free to reach out to any of them on WhatsApp to get started!',
-        'For specific project details and pricing, it\'s best to connect with the entrepreneur on WhatsApp. They\'re ready to help you!'
-      ];
-      addMsg(responses[Math.floor(Math.random()*responses.length)], 'ai');
-    }, 1000);
+  function lsSet(key, value) {
+    memoryStore[key] = value;
+    try { window.localStorage.setItem(key, value); } catch (e) { /* memory-only this page */ }
   }
-}
-
-function matchAndShow(){
-  // Find matching entrepreneurs based on service keywords
-  const svcLower = convState.service.toLowerCase();
-  let matches = ENTREPRENEURS.filter(e =>
-    e.keywords.some(k => svcLower.includes(k))
-  );
-
-  // If no keyword match, show top 3 by rating
-  if(matches.length === 0){
-    matches = [...ENTREPRENEURS].sort((a,b) => b.rating - a.rating).slice(0,3);
+  function lsRemove(key) {
+    delete memoryStore[key];
+    try { window.localStorage.removeItem(key); } catch (e) { /* nothing to remove */ }
   }
 
-  // Sort: topMatch first, then by rating
-  matches.sort((a,b) => (b.topMatch ? 1 : 0) - (a.topMatch ? 1 : 0) || b.rating - a.rating);
-  matches = matches.slice(0,3);
-  convState.matched = matches;
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function escapeHtml(str) { const d = document.createElement('div'); d.textContent = str || ''; return d.innerHTML; }
 
-  // Build WhatsApp message
-  const waMsg = encodeURIComponent(
-    `Hi! I found you on Elevate Edge Solution.\n\nI'm looking for: ${convState.service}\nBudget: ${convState.budget}\nTimeline: ${convState.timeline}\n\nProject details: ${convState.details}\n\nCan we discuss?`
-  );
+  function seedServices() {
+    return [
+      { id: uid(), category: 'Trade, Parts & Logistics', title: 'Automotive spare parts sourcing & distribution', description: 'Sourcing and distributing spare parts for cars, motorcycles and trucks — genuine and aftermarket options.', price: 'From 5,000 frs / order', entrepreneurName: 'Chineacherem Samuel', entrepreneurEmail: 'samuel@example.com' },
+      { id: uid(), category: 'Design & Branding', title: 'Brand identity & full-stack web builds', description: 'Full-stack engineering and product architecture, paired with graphic design for a complete brand and product package.', price: 'From 1,500 frs / project', entrepreneurName: 'Assen Jemima', entrepreneurEmail: 'assenjemima@gmail.com' },
+      { id: uid(), category: 'Digital Marketing', title: 'Growth & performance marketing', description: 'Data-driven campaigns across SEO, paid ads, and content, built around measurable ROI.', price: 'From 20,000 frs / month', entrepreneurName: 'Ange', entrepreneurEmail: 'ange@example.com' }
+    ];
+  }
 
-  // Show match count in chat
-  addMsg(`✅ I found <strong>${matches.length} great matches</strong> for your needs! Check the panel on the right and connect with them directly on WhatsApp to discuss your project and finalise the deal. 🎉`, 'ai');
+  async function getServices() {
+    let list = null;
+    try { const raw = lsGet(SERVICES_KEY); list = raw ? JSON.parse(raw) : null; } catch (e) { list = null; }
+    if (!list || !list.length) { list = seedServices(); saveServices(list); }
+    return list;
+  }
+  async function saveServices(arr) { lsSet(SERVICES_KEY, JSON.stringify(arr)); }
 
-  setChips(['Tell me more about them','Can I get a cheaper option?','What if I need something else?']);
+  async function getAccounts() {
+    try { const raw = lsGet(ACCOUNTS_KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+  }
+  async function saveAccounts(obj) { lsSet(ACCOUNTS_KEY, JSON.stringify(obj)); }
 
-  // Render match cards
-  const matchList = document.getElementById('match-list');
-  const matchDesc = document.getElementById('match-desc');
-  matchDesc.textContent = `${matches.length} entrepreneurs matched for "${convState.service}"`;
+  // Per-client request history, keyed by email.
+  async function getRequests(email) {
+    try { const raw = lsGet('ee_requests_' + email); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+  }
+  async function saveRequests(email, list) { lsSet('ee_requests_' + email, JSON.stringify(list)); }
 
-  matchList.innerHTML = matches.map((e, i) => `
-    <div class="entr-card ${i===0?'top-match':''}">
-      ${i===0 ? '<div class="top-badge">⭐ Best Match</div>' : ''}
-      <div class="entr-top">
-        <div class="entr-avi">${e.initials}</div>
+  // --- Session: who is logged in, on this browser ---
+  function getSession() {
+    try { const raw = lsGet(SESSION_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+  function setSession(user) { lsSet(SESSION_KEY, JSON.stringify(user)); }
+  function clearSession() { lsRemove(SESSION_KEY); }
+
+  const CATEGORIES = ['Design & Branding', 'Web & App Development', 'Digital Marketing', 'Business Strategy & Consulting', 'Cybersecurity', 'AI & Automation', 'Trade, Parts & Logistics', 'Other'];
+
+  // --- Shared header, rendered into <div id="siteHeader"></div> on every page ---
+  function renderHeader(activePage) {
+    const el = document.getElementById('siteHeader');
+    if (!el) return;
+    const session = getSession();
+    const dashHref = session ? (session.role === 'entrepreneur' ? 'entrepreneur.html' : 'client.html') : 'dashboard.html';
+
+    const navItems = [
+      ['marketplace.html', 'Home', 'home'],
+      ['marketplace.html#browse', 'Browse services', 'browse'],
+      ['services.html', 'Services', 'services'],
+      ['about.html', 'About', 'about']
+    ];
+
+    const navHtml = navItems.map(([href, label, key]) =>
+      `<a href="${href}" class="${activePage === key ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    let actionsHtml;
+    if (session) {
+      actionsHtml = `
+        <span class="user-chip">Signed in as <strong>${escapeHtml(session.name)}</strong> <span class="who">(${escapeHtml(session.role)})</span></span>
+        <a href="${dashHref}" class="btn btn-small btn-outline-dark">Dashboard</a>
+        <button class="btn btn-small btn-outline-dark" id="eeLogoutBtn">Log out</button>`;
+    } else {
+      actionsHtml = `
+        <a href="registration.html" class="btn btn-small btn-outline-dark">Log in</a>
+        <a href="index.html" class="btn btn-small btn-brass">Join free</a>`;
+    }
+
+    // Mobile slide-out menu: full-screen panel with the same nav items, plus
+    // account actions as large touch targets, since nav-links are hidden below 860px.
+    const mobileNavHtml = navItems.map(([href, label, key]) =>
+      `<a href="${href}" class="${activePage === key ? 'active' : ''}">${label}</a>`
+    ).join('');
+
+    let mobileActionsHtml;
+    if (session) {
+      mobileActionsHtml = `
+        <div class="mobile-menu-user">Signed in as <strong>${escapeHtml(session.name)}</strong> (${escapeHtml(session.role)})</div>
+        <a href="${dashHref}" class="btn btn-brass">Go to dashboard</a>
+        <button class="btn btn-outline-dark" id="eeMobileLogoutBtn">Log out</button>`;
+    } else {
+      mobileActionsHtml = `
+        <a href="marketplace.html#auth" class="btn btn-brass">Join free</a>
+        <a href="marketplace.html#auth" class="btn btn-outline-dark">Log in</a>`;
+    }
+
+    el.innerHTML = `
+      <nav>
+        <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+        <ul class="nav-links" style="list-style:none;">${navHtml}</ul>
+        <div class="nav-actions">
+          ${actionsHtml}
+          <button class="menu-toggle" id="eeMenuToggle" aria-label="Open menu">&#9776;</button>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="eeMobileMenu">
+        <div class="mobile-menu-head">
+          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <button class="mobile-menu-close" id="eeMenuClose" aria-label="Close menu">&times;</button>
+        </div>
+        <div class="mobile-menu-links">${mobileNavHtml}</div>
+        <div class="mobile-menu-actions">${mobileActionsHtml}</div>
+      </div>`;
+
+    const logoutBtn = document.getElementById('eeLogoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+    }
+    const mobileLogoutBtn = document.getElementById('eeMobileLogoutBtn');
+    if (mobileLogoutBtn) {
+      mobileLogoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+    }
+
+    const menuToggle = document.getElementById('eeMenuToggle');
+    const mobileMenu = document.getElementById('eeMobileMenu');
+    const menuClose = document.getElementById('eeMenuClose');
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden'; });
+    }
+    if (menuClose && mobileMenu) {
+      menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+    }
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => { mobileMenu.classList.remove('open'); document.body.style.overflow = ''; });
+      });
+    }
+  }
+
+  function renderFooter() {
+    const el = document.getElementById('siteFooter');
+    if (!el) return;
+    el.innerHTML = `
+      <div class="wrap footer-grid">
         <div>
-          <div class="entr-name">${e.name}</div>
-          <div class="entr-biz">${e.biz}</div>
-          <span class="entr-cat">${e.cat}</span>
+          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <p>The global marketplace where entrepreneurs — in any field — get discovered by the clients who need them.</p>
+        </div>
+        <div>
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="marketplace.html#browse">Browse services</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="entrepreneur.html">Post a service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Company</h5>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="marketplace.html#auth">Log in / Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
         </div>
       </div>
-      <div class="entr-rating">
-        <span class="stars">${'★'.repeat(Math.round(e.rating))}</span>
-        ${e.rating} (${e.reviews} reviews)
-      </div>
-      <div class="entr-desc">${e.desc}</div>
-      <div class="entr-tags">
-        ${e.tags.map(t=>`<span class="etag">${t}</span>`).join('')}
-      </div>
-      <button class="wa-btn" onclick="openWA('${e.phone}', decodeURIComponent('${waMsg}'))">
-        <span class="wa-icon">💬</span> Connect on WhatsApp
-      </button>
-    </div>
-  `).join('');
-}
+      <div class="footer-bottom">
+        <span>© 2026 ElevateEdge Solutions. All rights reserved.</span>
+        <span>HISMIL University Institute</span>
+      </div>`;
+  }
 
-function openWA(phone, msg){
-  const url = `https://wa.me/${phone}?text=${typeof msg === 'string' ? encodeURIComponent(msg) : msg}`;
-  window.open(url, '_blank');
-  showToast('💬 Opening WhatsApp...');
-}
+  // Gate a page to a required role; shows a friendly prompt instead of the page content if not met.
+  function requireRole(role, rootId) {
+    const session = getSession();
+    const root = document.getElementById(rootId);
+    if (session && session.role === role) return session;
+    if (!root) return null;
+    const roleLabel = role === 'entrepreneur' ? 'an entrepreneur' : 'a client';
+    root.innerHTML = `
+      <div class="gate">
+        <h2>${session ? "This page is for " + roleLabel : "Log in to continue"}</h2>
+        <p>${session
+          ? `You're signed in as ${escapeHtml(session.name)} (${escapeHtml(session.role)}). Log out and sign in as ${roleLabel} to see this page.`
+          : `Log in or register as ${roleLabel} to view your dashboard.`}</p>
+        <a href="marketplace.html#auth" class="btn btn-fill-ink">Log in / Register</a>
+        <a href="marketplace.html" class="btn btn-outline-ink">Back home</a>
+      </div>`;
+    return null;
+  }
 
-/* Tab navigation */
-function showTab(name, el){
-  document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('tab-'+name).classList.add('on');
-  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('on'));
-  if(el) el.classList.add('on');
-  const titles={ai:'AI <em>Assistant</em>',browse:'Browse <em>Services</em>',bookings:'My <em>Connections</em>'};
-  document.getElementById('topbar-title').innerHTML = titles[name]||name;
-}
+  return {
+    getServices, saveServices, getAccounts, saveAccounts,
+    getRequests, saveRequests,
+    getSession, setSession, clearSession,
+    uid, escapeHtml, CATEGORIES,
+    renderHeader, renderFooter, requireRole
+  };
+})();
 
-/* Filter browse services */
-function filterSvc(btn, cat){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.sb-card').forEach(c=>{
-    c.style.display = (cat==='all' || c.dataset.cat===cat) ? '' : 'none';
-  });
-}
-
-/* Toast */
-let toastT;
-function showToast(msg){
-  const el=document.getElementById('toast');
-  document.getElementById('toast-msg').textContent=msg;
-  el.classList.add('show');
-  clearTimeout(toastT);
-  toastT=setTimeout(()=>el.classList.remove('show'),3500);
-}
-
-/* Auto-resize textarea */
-document.getElementById('chat-input').addEventListener('input',function(){
-  this.style.height='auto';
-  this.style.height=Math.min(this.scrollHeight,120)+'px';
-});
 </script>
+<script>
+  EE.renderHeader('dashboard');
+  EE.renderFooter();
 
+  const session = EE.getSession();
+  const root = document.getElementById('dashRoot');
+
+  if (!session) {
+    root.innerHTML = `
+      <div class="kicker" style="color:var(--brass-light);">Dashboard</div>
+      <div class="hero-split">
+        <div>
+          <h1>You're not signed in yet.</h1>
+          <p>Log in or create a free account to see your dashboard — whether you're browsing as a client or posting services as an entrepreneur.</p>
+          <div style="margin-top:32px;">
+            <a href="marketplace.html#auth" class="btn btn-brass">Log in / Register</a>
+          </div>
+        </div>
+        <div class="gate-dark">
+          <h2>New here?</h2>
+          <p>It takes under a minute to register as a client looking to hire, or an entrepreneur ready to list what you offer.</p>
+          <a href="marketplace.html#auth" class="btn btn-outline-dark">Create a free account</a>
+        </div>
+      </div>`;
+  } else {
+    root.innerHTML = `
+      <div class="kicker" style="color:var(--brass-light);">Welcome back</div>
+      <h1>${EE.escapeHtml(session.name)}</h1>
+      <p>Signed in as ${EE.escapeHtml(session.role)} · ${EE.escapeHtml(session.email)}. Choose where you'd like to go.</p>
+      <div class="option-grid" style="margin-top:40px;max-width:900px;">
+        <div class="option-panel">
+          <span class="num">01</span>
+          <h3>Client dashboard</h3>
+          <p>Browse services, search by category, and track what you've requested.</p>
+          <a href="client.html" class="btn btn-outline-dark btn-small">Open client dashboard</a>
+        </div>
+        <div class="option-panel">
+          <span class="num">02</span>
+          <h3>Entrepreneur dashboard</h3>
+          <p>Post a service, manage your listings, and get discovered by clients.</p>
+          <a href="entrepreneur.html" class="btn btn-outline-dark btn-small">Open entrepreneur dashboard</a>
+        </div>
+      </div>`;
+    setTimeout(() => {
+      window.location.href = session.role === 'entrepreneur' ? 'entrepreneur.html' : 'client.html';
+    }, 1100);
+  }
+</script>
 </body>
 </html>
