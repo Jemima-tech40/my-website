@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ElevateEdge — The Global Entrepreneur Marketplace</title>
+<title>Entrepreneur dashboard — ElevateEdge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -260,27 +260,15 @@ footer{background:transparent;border-top:1px solid var(--line);color:var(--slate
 
 </style>
 <style>
-  .hero{padding:88px 0 72px;position:relative;overflow:hidden;}
-  .hero h1{font-size:clamp(2.1rem,4.2vw,3.3rem);line-height:1.1;max-width:16ch;margin-bottom:22px;}
-  .hero-sub{font-size:1.05rem;color:rgba(244,242,237,0.78);max-width:52ch;margin-bottom:32px;}
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+  .dash-hero{padding:80px 0 64px;}
+  .dash-hero h1{font-size:clamp(1.9rem,3.6vw,2.6rem);line-height:1.15;max-width:16ch;margin-bottom:14px;}
+  .dash-hero p{color:rgba(244,242,237,0.72);font-size:1rem;max-width:44ch;}
 
-  .browse-controls{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;align-items:center;}
-  .browse-controls input[type=text]{flex:1;min-width:220px;}
-  select{width:auto;min-width:200px;}
-  .results-count{color:var(--slate-light);font-size:0.85rem;margin-bottom:20px;}
+  .dash-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start;}
+  .listings-wrap{border-top:none;}
+  .note-box{background:var(--paper-2);border:1px solid var(--line);padding:20px 22px;margin-top:24px;font-size:0.88rem;color:var(--slate);line-height:1.55;}
 
-  .auth-shell{max-width:440px;margin:0 auto;}
-  .auth-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:32px;}
-  .auth-tabs button{flex:1;background:none;border:0;padding:14px;font-size:0.92rem;font-weight:600;color:var(--slate-light);border-bottom:2px solid transparent;margin-bottom:-1px;}
-  .auth-tabs button.active{color:var(--ink);border-bottom-color:var(--brass);}
-  .role-picker{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
-  .role-option{border:1px solid var(--line);padding:16px;text-align:left;background:var(--paper-2);border-radius:14px;}
-  .role-option.selected{border-color:var(--brass);background:var(--paper-2);}
-  .role-option strong{display:block;font-family:var(--serif);font-size:1rem;margin-bottom:4px;}
-  .role-option span{font-size:0.8rem;color:var(--slate-light);}
-
-  @media (max-width:860px){ .cat-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:860px){ .dash-grid{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
@@ -288,139 +276,17 @@ footer{background:transparent;border-top:1px solid var(--line);color:var(--slate
 <header><div id="siteHeader"></div></header>
 
 <main>
+  <section class="dash-hero">
+    <div class="wrap hero-split" id="heroSplit">
+      <div class="loading" style="color:rgba(244,242,237,0.5);">Loading…</div>
+    </div>
+  </section>
 
-  <div id="view-home" class="view">
-    <section class="hero">
-      <div class="wrap hero-split">
-        <div>
-          <h1>The global marketplace for every kind of entrepreneur.</h1>
-          <p class="hero-sub">One place for clients to find verified entrepreneurs across any service — and for entrepreneurs anywhere to register, list what they offer, and get discovered. Not just tech and design: trades, retail, consulting, anything.</p>
-          <div class="hero-ctas">
-            <a href="registration.html" class="btn btn-brass" id="postCta">Register &amp; post your service</a>
-            <button class="btn btn-outline-dark" data-nav="browse"> <a href="services.html">Browse all services</a></button>
-          </div>
-          <div class="stat-strip" id="heroStats">
-            <div><strong>—</strong><span>Services listed</span></div>
-            <div><strong>—</strong><span>Categories</span></div>
-            <div><strong>—</strong><span>Entrepreneurs</span></div>
-          </div>
-        </div>
-        <div class="hero-panel">
-          <div class="label">Built for both sides</div>
-          <div class="big">One marketplace. Every kind of service, no listing fee.</div>
-          <div class="sub"><strong>Register in under a minute.</strong>Post a service as an entrepreneur, or start browsing as a client — free either way.</div>
-        </div>
-      </div>
-    </section>
-    <section>
-      <div class="wrap">
-        <div class="section-head">
-          <div class="kicker">Explore by category</div>
-          <h2>Find the right expertise</h2>
-          <p>Browse the categories entrepreneurs are already listing under, or search across everything.</p>
-        </div>
-        <div class="cat-grid" id="catGrid"></div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <div class="section-head">
-          <div class="kicker">Simple process</div>
-          <h2>How ElevateEdge works</h2>
-          <p>Three steps take you from sign-up to a working partnership — whether you're offering expertise or looking to hire it.</p>
-        </div>
-        <div class="process">
-          <div class="process-step">
-            <span class="num">01</span>
-            <h3>Create your profile</h3>
-            <p>Entrepreneurs register and list what they offer — any category, any trade — in under a minute.</p>
-          </div>
-          <div class="process-step">
-            <span class="num">02</span>
-            <h3>Discover &amp; connect</h3>
-            <p>Clients search and filter by category or keyword, then view full details on any listing.</p>
-          </div>
-          <div class="process-step">
-            <span class="num">03</span>
-            <h3>Collaborate &amp; grow</h3>
-            <p>Clients request the service directly, and reach out to the entrepreneur — no middleman fees.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="dark-panel">
-      <div class="wrap">
-        <div class="section-head">
-          <div class="kicker">Featured</div>
-          <h2>Entrepreneurs on the platform</h2>
-          <p>A sample of who's already listing — real profiles, real services.</p>
-        </div>
-        <div id="featuredList"><div class="loading">Loading…</div></div>
-      </div>
-    </section>
-
-    <section class="cta-band">
-      <div class="wrap cta-inner">
-        <h2>Ready to elevate your business?</h2>
-        <div class="btns">
-          <a href="registration.html" class="btn btn-fill-ink">Join as an entrepreneur</a>
-          <button class="btn btn-outline-ink" data-nav="browse"> <a href="services.html">Browse services</a>/button>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div id="view-browse" class="view hidden">
-    <section>
-      <div class="wrap">
-        <div class="section-head">
-          <div class="kicker">Browse</div>
-          <h2>Every service, one place</h2>
-          <p>Search by keyword or filter by category to find the right entrepreneur.</p>
-        </div>
-        <div class="browse-controls">
-          <input type="text" id="searchInput" placeholder="Search services, skills, or entrepreneurs…">
-          <select id="categoryFilter"><option value="">All categories</option></select>
-        </div>
-        <div class="results-count" id="resultsCount"></div>
-        <div id="browseResults"><div class="loading">Loading services…</div></div>
-      </div>
-    </section>
-  </div>
-
-  <div id="view-auth" class="view hidden">
-    <section>
-      <div class="wrap auth-shell">
-        <div class="auth-tabs">
-          <button id="tabLogin" class="active" data-tab="login">Log in</button>
-          <button id="tabRegister" data-tab="register">Register</button>
-        </div>
-
-        <form id="loginForm">
-          <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" required></div>
-          <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" required></div>
-          <button type="submit" class="btn btn-fill-ink" style="width:100%;">Log in</button>
-          <p class="form-msg" id="loginMsg"></p>
-        </form>
-
-        <form id="registerForm" class="hidden">
-          <div class="role-picker">
-            <button type="button" class="role-option selected" data-role="client"><strong>I'm a client</strong><span>Looking to hire an entrepreneur</span></button>
-            <button type="button" class="role-option" data-role="entrepreneur"><strong>I'm an entrepreneur</strong><span>Looking to list my services</span></button>
-          </div> gEmail" type="email" required></div>
-          <div class="field"><label for="regPassword">Password</label><input id="regPassword" type="password" required minlength="4"></div>
-          <button type="submit" class="btn btn-fill-ink" style="width:100%;"> <a href="client.html">Create account</a></button>
-          <p class="form-msg" id="registerMsg"></p>
-        </form>
-      </div>
-    </section>
-  </div>
-
+  <section>
+    <div class="wrap" id="pageRoot"></div>
+  </section>
 </main>
 
-<div id="modalRoot"></div>
 <footer><div id="siteFooter"></div></footer>
 
 <script>
@@ -646,201 +512,136 @@ window.EE = (function () {
 
 </script>
 <script>
-(function(){
-  let services = [];
-  let registerRole = 'client';
-  const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => document.querySelectorAll(sel);
+  EE.renderHeader('dashboard');
+  EE.renderFooter();
 
-  function showView(name){
-    $$('.view').forEach(v=>v.classList.add('hidden'));
-    $('#view-'+name).classList.remove('hidden');
-    window.scrollTo({top:0, behavior:'smooth'});
-    if(name==='browse') renderBrowse();
-    if(name==='home') renderHome();
-    history.replaceState(null, '', name==='home' ? 'marketplace.html' : '#'+name);
-  }
+  const session = EE.requireRole('entrepreneur', 'pageRoot');
 
-  $$('[data-nav]').forEach(el=>{
-    el.addEventListener('click', ()=> showView(el.getAttribute('data-nav')));
-  });
-
-  function renderHome(){
-    const cats = Array.from(new Set(services.map(s=>s.category)));
-    $('#heroStats').innerHTML = `
-      <div><strong>${services.length}</strong><span>Services listed</span></div>
-      <div><strong>${cats.length}</strong><span>Categories</span></div>
-      <div><strong>${new Set(services.map(s=>s.entrepreneurEmail)).size}</strong><span>Entrepreneurs</span></div>`;
-    $('#catGrid').innerHTML = cats.map(c=>{
-      const count = services.filter(s=>s.category===c).length;
-      return `<button class="cat-card" data-cat="${EE.escapeHtml(c)}"><span class="name">${EE.escapeHtml(c)}</span><span class="count">${count} service${count===1?'':'s'}</span></button>`;
-    }).join('') || '<p style="padding:24px;color:var(--slate);">No categories yet — be the first to post a service.</p>';
-    $$('#catGrid .cat-card').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        showView('browse');
-        $('#categoryFilter').value = btn.getAttribute('data-cat');
-        renderBrowse();
-      });
-    });
-    renderFeatured();
-  }
-
-  function renderFeatured(){
-    const featured = services.slice(0, 4);
-    const root = $('#featuredList');
-    if(!root) return;
-    if(!featured.length){
-      root.innerHTML = '<p style="color:rgba(244,242,237,0.6);">No entrepreneurs listed yet — be the first.</p>';
-      return;
-    }
-    function initials(name){ return (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join(''); }
-    root.innerHTML = featured.map(s => `
-      <div class="list-row">
-        <div class="avatar-sq">${initials(s.entrepreneurName) || '—'}</div>
+  if (session) {
+    document.getElementById('pageRoot').innerHTML = `
+      <div class="dash-grid">
         <div>
-          <span class="cat-tag">${EE.escapeHtml(s.category)}</span>
-          <h4>${EE.escapeHtml(s.entrepreneurName)}</h4>
-          <p>${EE.escapeHtml(s.title)}</p>
+          <div class="section-head" style="margin-bottom:28px;">
+            <div class="kicker">List a service</div>
+            <h2 style="font-size:1.8rem;">Post what you offer</h2>
+            <p>Any category, any trade. Clients searching that category will find you.</p>
+          </div>
+          <form id="postForm">
+            <div class="field">
+              <label for="postCategory">Category</label>
+              <select id="postCategory">${EE.CATEGORIES.map(c => `<option>${EE.escapeHtml(c)}</option>`).join('')}</select>
+            </div>
+            <div class="field hidden" id="customCatField">
+              <label for="postCategoryCustom">Describe the category</label>
+              <input id="postCategoryCustom" type="text" placeholder="e.g. Event catering, Tailoring, Legal services">
+            </div>
+            <div class="field"><label for="postTitle">Service title</label><input id="postTitle" type="text" required placeholder="e.g. Custom logo and brand identity"></div>
+            <div class="field"><label for="postDesc">Description</label><textarea id="postDesc" rows="4" required placeholder="What do you deliver, and what makes you the right choice?"></textarea></div>
+            <div class="field"><label for="postPrice">Starting price</label><input id="postPrice" type="text" required placeholder="e.g. 15,000 frs / project"></div>
+            <button type="submit" class="btn btn-fill-ink">Post service</button>
+            <p class="form-msg" id="postMsg"></p>
+          </form>
         </div>
-        <div class="meta"><span class="amount">${EE.escapeHtml(s.price)}</span></div>
-      </div>`).join('');
-  }
-
-  function populateCategoryFilter(){
-    const sel = $('#categoryFilter');
-    const current = sel.value;
-    const cats = Array.from(new Set(services.map(s=>s.category)));
-    sel.innerHTML = '<option value="">All categories</option>' + cats.map(c=>`<option value="${EE.escapeHtml(c)}">${EE.escapeHtml(c)}</option>`).join('');
-    sel.value = current;
-  }
-
-  function renderBrowse(){
-    populateCategoryFilter();
-    const q = ($('#searchInput').value||'').toLowerCase().trim();
-    const cat = $('#categoryFilter').value;
-    const filtered = services.filter(s=>{
-      const matchesCat = !cat || s.category===cat;
-      const hay = (s.title+' '+s.description+' '+s.entrepreneurName+' '+s.category).toLowerCase();
-      return matchesCat && (!q || hay.includes(q));
-    });
-    $('#resultsCount').textContent = `${filtered.length} service${filtered.length===1?'':'s'} found`;
-    const root = $('#browseResults');
-    if(filtered.length===0){
-      root.innerHTML = '<div class="empty-state">No services match yet. Try a different search, or be the first entrepreneur to post in this category.</div>';
-      return;
-    }
-    root.innerHTML = `<div class="service-grid">${filtered.map(s=>`
-      <div class="service-card" data-id="${s.id}">
-        <div class="cat-tag">${EE.escapeHtml(s.category)}</div>
-        <h3>${EE.escapeHtml(s.title)}</h3>
-        <div class="by">by ${EE.escapeHtml(s.entrepreneurName)}</div>
-        <p>${EE.escapeHtml(s.description)}</p>
-        <div class="price">${EE.escapeHtml(s.price)}</div>
-      </div>`).join('')}</div>`;
-    $$('.service-card').forEach(card=>{
-      card.addEventListener('click', ()=> openServiceModal(card.getAttribute('data-id')));
-    });
-  }
-  $('#searchInput').addEventListener('input', renderBrowse);
-  $('#categoryFilter').addEventListener('change', renderBrowse);
-
-  function openServiceModal(id){
-    const s = services.find(x=>x.id===id);
-    if(!s) return;
-    $('#modalRoot').innerHTML = `
-      <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-          <button class="modal-close" id="modalClose">&times;</button>
-          <div class="cat-tag">${EE.escapeHtml(s.category)}</div>
-          <h3>${EE.escapeHtml(s.title)}</h3>
-          <div class="by">by ${EE.escapeHtml(s.entrepreneurName)} · ${EE.escapeHtml(s.entrepreneurEmail)}</div>
-          <p class="desc">${EE.escapeHtml(s.description)}</p>
-          <div class="meta"><div class="price">${EE.escapeHtml(s.price)}</div></div>
-          <button class="btn btn-fill-ink" id="requestBtn" style="width:100%;">Request this service</button>
-          <p class="form-msg" id="requestMsg"></p>
+        <div>
+          <div class="section-head" style="margin-bottom:28px;">
+            <div class="kicker">Your listings</div>
+            <h2 style="font-size:1.8rem;">My services</h2>
+          </div>
+          <div class="listings-wrap" id="myListings"><div class="loading">Loading…</div></div>
+          <div class="note-box">Client requests will appear here once direct messaging is connected. For now, interested clients reach out at the email on your account — make sure it's one you check.</div>
         </div>
       </div>`;
-    $('#modalClose').addEventListener('click', closeModal);
-    $('#modalOverlay').addEventListener('click', (e)=>{ if(e.target.id==='modalOverlay') closeModal(); });
-    $('#requestBtn').addEventListener('click', ()=>{
-      const session = EE.getSession();
-      if(!session || session.role!=='client'){
-        closeModal(); showView('auth'); setAuthTab('register'); setRole('client');
-        return;
-      }
-      window.location.href = 'client.html';
+
+    initEntrepreneurDashboard(session);
+  }
+
+  async function initEntrepreneurDashboard(session) {
+    let services = await EE.getServices();
+
+    function mine() { return services.filter(s => s.entrepreneurEmail === session.email); }
+    function initials(name){ return (name||'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join(''); }
+
+    function renderHero() {
+      const my = mine();
+      const cats = new Set(my.map(s => s.category)).size;
+      document.getElementById('heroSplit').innerHTML = `
+        <div>
+          <div class="kicker" style="color:var(--brass-light);">Entrepreneur dashboard</div>
+          <h1>Welcome back, ${EE.escapeHtml(session.name)}</h1>
+          <p>Manage what you offer and see how it looks to clients.</p>
+          <div class="stat-strip">
+            <div><strong>${my.length}</strong><span>Active listings</span></div>
+            <div><strong>${cats}</strong><span>Categories</span></div>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="label">Tip</div>
+          <div class="big">Specific titles get more attention than generic ones.</div>
+          <div class="sub"><strong>"Custom AI chatbot for small business"</strong>outperforms "AI services" — clients search by what they need, not by category alone.</div>
+        </div>`;
+    }
+
+    function renderListings() {
+      const my = mine();
+      const root = document.getElementById('myListings');
+      root.innerHTML = my.length ? my.map(s => `
+        <div class="list-row" data-id="${s.id}">
+          <div class="avatar-sq">${initials(session.name) || 'ME'}</div>
+          <div>
+            <span class="cat-tag">${EE.escapeHtml(s.category)}</span>
+            <h4>${EE.escapeHtml(s.title)}</h4>
+            <p>${EE.escapeHtml(s.description)}</p>
+          </div>
+          <div class="meta">
+            <span class="amount">${EE.escapeHtml(s.price)}</span>
+            <button class="btn btn-small btn-danger" data-delete="${s.id}">Remove</button>
+          </div>
+        </div>`).join('') : '<p style="color:var(--slate);padding:24px 0;border-top:1px solid var(--line);">You haven\'t posted a service yet — use the form to add your first one.</p>';
+      document.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-delete');
+          services = services.filter(s => s.id !== id);
+          try { await EE.saveServices(services); renderListings(); renderHero(); } catch (e) { /* leave as-is on failure */ }
+        });
+      });
+    }
+
+    document.getElementById('postCategory').addEventListener('change', () => {
+      document.getElementById('customCatField').classList.toggle('hidden', document.getElementById('postCategory').value !== 'Other');
     });
+
+    document.getElementById('postForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const catSelect = document.getElementById('postCategory').value;
+      const category = catSelect === 'Other' ? (document.getElementById('postCategoryCustom').value.trim() || 'Other') : catSelect;
+      const newService = {
+        id: EE.uid(), category,
+        title: document.getElementById('postTitle').value.trim(),
+        description: document.getElementById('postDesc').value.trim(),
+        price: document.getElementById('postPrice').value.trim(),
+        entrepreneurName: session.name,
+        entrepreneurEmail: session.email
+      };
+      services.unshift(newService);
+      const msg = document.getElementById('postMsg');
+      try {
+        await EE.saveServices(services);
+        msg.className = 'form-msg success';
+        msg.textContent = "Service posted — it's now live for clients to find.";
+        document.getElementById('postForm').reset();
+        document.getElementById('customCatField').classList.add('hidden');
+        renderListings();
+        renderHero();
+      } catch (err) {
+        services.shift();
+        msg.className = 'form-msg error';
+        msg.textContent = 'Could not post your service — please try again.';
+      }
+    });
+
+    renderHero();
+    renderListings();
   }
-  function closeModal(){ $('#modalRoot').innerHTML=''; }
-
-  function setAuthTab(tab){
-    $('#tabLogin').classList.toggle('active', tab==='login');
-    $('#tabRegister').classList.toggle('active', tab==='register');
-    $('#loginForm').classList.toggle('hidden', tab!=='login');
-    $('#registerForm').classList.toggle('hidden', tab!=='register');
-  }
-  $('#tabLogin').addEventListener('click', ()=>setAuthTab('login'));
-  $('#tabRegister').addEventListener('click', ()=>setAuthTab('register'));
-
-  function setRole(role){
-    registerRole = role;
-    $$('.role-option').forEach(o=>o.classList.toggle('selected', o.getAttribute('data-role')===role));
-  }
-  $$('.role-option').forEach(o=>o.addEventListener('click', ()=>setRole(o.getAttribute('data-role'))));
-
-  $('#loginForm').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const email = $('#loginEmail').value.trim().toLowerCase();
-    const pass = $('#loginPassword').value;
-    const accounts = await EE.getAccounts();
-    const acc = accounts[email];
-    const msg = $('#loginMsg');
-    if(!acc || acc.password !== pass){
-      msg.className='form-msg error'; msg.textContent='No matching account, or incorrect password.';
-      return;
-    }
-    EE.setSession({name:acc.name, email, role:acc.role});
-    msg.className='form-msg success'; msg.textContent='Welcome back! Taking you to your dashboard…';
-    setTimeout(()=> window.location.href = 'dashboard.html', 500);
-  });
-
-  $('#registerForm').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name = $('#regName').value.trim();
-    const email = $('#regEmail').value.trim().toLowerCase();
-    const password = $('#regPassword').value;
-    const msg = $('#registerMsg');
-    const accounts = await EE.getAccounts();
-    if(accounts[email]){
-      msg.className='form-msg error'; msg.textContent='An account with that email already exists — try logging in.';
-      return;
-    }
-    accounts[email] = {name, password, role: registerRole};
-    try{ await EE.saveAccounts(accounts); }
-    catch(err){ msg.className='form-msg error'; msg.textContent='Could not save your account — please try again.'; return; }
-    EE.setSession({name, email, role: registerRole});
-    msg.className='form-msg success'; msg.textContent='Account created! Taking you to your dashboard…';
-    setTimeout(()=> window.location.href = 'dashboard.html', 500);
-  });
-
-  window.addEventListener('hashchange', () => {
-    const h = window.location.hash.replace('#','');
-    if (h === 'browse') showView('browse');
-    else if (h === 'auth') showView('auth');
-    else showView('home');
-  });
-
-  async function init(){
-    EE.renderHeader('home');
-    EE.renderFooter();
-    services = await EE.getServices();
-    const hash = window.location.hash.replace('#','');
-    if(hash === 'browse'){ showView('browse'); }
-    else if(hash === 'auth'){ showView('auth'); }
-    else { showView('home'); }
-  }
-  init();
-})();
 </script>
 </body>
 </html>
