@@ -366,7 +366,7 @@ footer{background:transparent;border-top:1px solid var(--line);color:var(--slate
         <h2>Ready to elevate your business?</h2>
         <div class="btns">
           <a href="registration.html" class="btn btn-fill-ink">Join as an entrepreneur</a>
-          <button class="btn btn-outline-ink" data-nav="browse"> <a href="services.html">Browse services</a>/button>
+          <button class="btn btn-outline-ink" data-nav="browse"> <a href="services.html">Browse services</a> </button>
         </div>
       </div>
     </section>
@@ -394,14 +394,14 @@ footer{background:transparent;border-top:1px solid var(--line);color:var(--slate
     <section>
       <div class="wrap auth-shell">
         <div class="auth-tabs">
-          <button id="tabLogin" class="active" data-tab="login">Log in</button>
-          <button id="tabRegister" data-tab="register">Register</button>
+          <button id="tabLogin" class="active" data-tab="login"> <a href="login.html">Log in</a></button>
+          <button id="tabRegister" data-tab="register"> <a href="registration.html">Register</a></button>
         </div>
 
         <form id="loginForm">
           <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" required></div>
           <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" required></div>
-          <button type="submit" class="btn btn-fill-ink" style="width:100%;">Log in</button>
+          <button type="submit" class="btn btn-fill-ink" style="width:100%;"> <a href="login.html">Log in</a></button>
           <p class="form-msg" id="loginMsg"></p>
         </form>
 
@@ -501,8 +501,8 @@ window.EE = (function () {
     const dashHref = session ? (session.role === 'entrepreneur' ? 'entrepreneur.html' : 'client.html') : 'dashboard.html';
 
     const navItems = [
-      ['marketplace.html', 'Home', 'home'],
-      ['marketplace.html#browse', 'Browse services', 'browse'],
+      ['index.html', 'Home', 'home'],
+      ['services.html', 'Browse services', 'browse'],
       ['services.html', 'Services', 'services'],
       ['about.html', 'About', 'about']
     ];
@@ -519,8 +519,8 @@ window.EE = (function () {
         <button class="btn btn-small btn-outline-dark" id="eeLogoutBtn">Log out</button>`;
     } else {
       actionsHtml = `
-        <a href="marketplace.html#auth" class="btn btn-small btn-outline-dark">Log in</a>
-        <a href="marketplace.html#auth" class="btn btn-small btn-brass">Join free</a>`;
+        <a href="login.html" class="btn btn-small btn-outline-dark">Log in</a>
+        <a href="registration.html" class="btn btn-small btn-brass">Join free</a>`;
     }
 
     // Mobile slide-out menu: full-screen panel with the same nav items, plus
@@ -537,13 +537,13 @@ window.EE = (function () {
         <button class="btn btn-outline-dark" id="eeMobileLogoutBtn">Log out</button>`;
     } else {
       mobileActionsHtml = `
-        <a href="marketplace.html#auth" class="btn btn-brass">Join free</a>
-        <a href="marketplace.html#auth" class="btn btn-outline-dark">Log in</a>`;
+        <a href="regitration.html" class="btn btn-brass">Join free</a>
+        <a href="logim.html" class="btn btn-outline-dark">Log in</a>`;
     }
 
     el.innerHTML = `
       <nav>
-        <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+        <a href="index.html" class="logo"><span class="mark"></span>ElevateEdge</a>
         <ul class="nav-links" style="list-style:none;">${navHtml}</ul>
         <div class="nav-actions">
           ${actionsHtml}
@@ -552,7 +552,7 @@ window.EE = (function () {
       </nav>
       <div class="mobile-menu" id="eeMobileMenu">
         <div class="mobile-menu-head">
-          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <a href="index.html" class="logo"><span class="mark"></span>ElevateEdge</a>
           <button class="mobile-menu-close" id="eeMenuClose" aria-label="Close menu">&times;</button>
         </div>
         <div class="mobile-menu-links">${mobileNavHtml}</div>
@@ -561,11 +561,11 @@ window.EE = (function () {
 
     const logoutBtn = document.getElementById('eeLogoutBtn');
     if (logoutBtn) {
-      logoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+      logoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'index.html'; });
     }
     const mobileLogoutBtn = document.getElementById('eeMobileLogoutBtn');
     if (mobileLogoutBtn) {
-      mobileLogoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'marketplace.html'; });
+      mobileLogoutBtn.addEventListener('click', () => { clearSession(); window.location.href = 'index.html'; });
     }
 
     const menuToggle = document.getElementById('eeMenuToggle');
@@ -590,13 +590,13 @@ window.EE = (function () {
     el.innerHTML = `
       <div class="wrap footer-grid">
         <div>
-          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <a href="index.html" class="logo"><span class="mark"></span>ElevateEdge</a>
           <p>The global marketplace where entrepreneurs — in any field — get discovered by the clients who need them.</p>
         </div>
         <div>
           <h5>Platform</h5>
           <ul>
-            <li><a href="marketplace.html#browse">Browse services</a></li>
+            <li><a href="services.html">Browse services</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="entrepreneur.html">Post a service</a></li>
           </ul>
@@ -605,7 +605,7 @@ window.EE = (function () {
           <h5>Company</h5>
           <ul>
             <li><a href="about.html">About</a></li>
-            <li><a href="marketplace.html#auth">Log in / Register</a></li>
+            <li><a href="registration.html">Log in / Register</a></li>
             <li><a href="dashboard.html">Dashboard</a></li>
           </ul>
         </div>
@@ -629,8 +629,8 @@ window.EE = (function () {
         <p>${session
           ? `You're signed in as ${escapeHtml(session.name)} (${escapeHtml(session.role)}). Log out and sign in as ${roleLabel} to see this page.`
           : `Log in or register as ${roleLabel} to view your dashboard.`}</p>
-        <a href="marketplace.html#auth" class="btn btn-fill-ink">Log in / Register</a>
-        <a href="marketplace.html" class="btn btn-outline-ink">Back home</a>
+        <a href="index.html" class="btn btn-fill-ink">Log in / Register</a>
+        <a href="index.html" class="btn btn-outline-ink">Back home</a>
       </div>`;
     return null;
   }
@@ -658,7 +658,7 @@ window.EE = (function () {
     window.scrollTo({top:0, behavior:'smooth'});
     if(name==='browse') renderBrowse();
     if(name==='home') renderHome();
-    history.replaceState(null, '', name==='home' ? 'marketplace.html' : '#'+name);
+    history.replaceState(null, '', name==='home' ? 'index.html' : '#'+name);
   }
 
   $$('[data-nav]').forEach(el=>{

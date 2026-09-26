@@ -360,8 +360,8 @@ window.EE = (function () {
     const dashHref = session ? (session.role === 'entrepreneur' ? 'entrepreneur.html' : 'client.html') : 'dashboard.html';
 
     const navItems = [
-      ['marketplace.html', 'Home', 'home'],
-      ['marketplace.html#browse', 'Browse services', 'browse'],
+      ['index.html', 'Home', 'home'],
+      ['services.html', 'Browse services', 'browse'],
       ['services.html', 'Services', 'services'],
       ['about.html', 'About', 'about']
     ];
@@ -396,13 +396,13 @@ window.EE = (function () {
         <button class="btn btn-outline-dark" id="eeMobileLogoutBtn">Log out</button>`;
     } else {
       mobileActionsHtml = `
-        <a href="marketplace.html#auth" class="btn btn-brass">Join free</a>
-        <a href="marketplace.html#auth" class="btn btn-outline-dark">Log in</a>`;
+        <a href="registration.html#auth" class="btn btn-brass">Join free</a>
+        <a href="login.html#auth" class="btn btn-outline-dark">Log in</a>`;
     }
 
     el.innerHTML = `
       <nav>
-        <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+        <a href="index.html" class="logo"><span class="mark"></span>ElevateEdge</a>
         <ul class="nav-links" style="list-style:none;">${navHtml}</ul>
         <div class="nav-actions">
           ${actionsHtml}
@@ -411,7 +411,7 @@ window.EE = (function () {
       </nav>
       <div class="mobile-menu" id="eeMobileMenu">
         <div class="mobile-menu-head">
-          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <a href="index.html" class="logo"><span class="mark"></span>ElevateEdge</a>
           <button class="mobile-menu-close" id="eeMenuClose" aria-label="Close menu">&times;</button>
         </div>
         <div class="mobile-menu-links">${mobileNavHtml}</div>
@@ -449,13 +449,13 @@ window.EE = (function () {
     el.innerHTML = `
       <div class="wrap footer-grid">
         <div>
-          <a href="marketplace.html" class="logo"><span class="mark"></span>ElevateEdge</a>
+          <a href="index.html" class="logo"><span class="mark"></span>ElevateEdge</a>
           <p>The global marketplace where entrepreneurs — in any field — get discovered by the clients who need them.</p>
         </div>
         <div>
           <h5>Platform</h5>
           <ul>
-            <li><a href="marketplace.html#browse">Browse services</a></li>
+            <li><a href="services.html">Browse services</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="entrepreneur.html">Post a service</a></li>
           </ul>
@@ -464,7 +464,7 @@ window.EE = (function () {
           <h5>Company</h5>
           <ul>
             <li><a href="about.html">About</a></li>
-            <li><a href="marketplace.html#auth">Log in / Register</a></li>
+            <li><a href="registration.html">Log in / Register</a></li>
             <li><a href="dashboard.html">Dashboard</a></li>
           </ul>
         </div>
@@ -519,13 +519,13 @@ window.EE = (function () {
           <h1>You're not signed in yet.</h1>
           <p>Log in or create a free account to see your dashboard — whether you're browsing as a client or posting services as an entrepreneur.</p>
           <div style="margin-top:32px;">
-            <a href="marketplace.html#auth" class="btn btn-brass">Log in / Register</a>
+            <a href="registration.html" class="btn btn-brass">Log in / Register</a>
           </div>
         </div>
         <div class="gate-dark">
           <h2>New here?</h2>
           <p>It takes under a minute to register as a client looking to hire, or an entrepreneur ready to list what you offer.</p>
-          <a href="marketplace.html#auth" class="btn btn-outline-dark">Create a free account</a>
+          <a href="registration.html" class="btn btn-outline-dark">Create a free account</a>
         </div>
       </div>`;
   } else {
